@@ -69,7 +69,7 @@ void Pump::stopPumpOffTimer() {
 
 // Pump routines
 OnTick_t Pump::startWatering() {
-  if (reservoir->check_reservoir()) {
+  if (reservoir->above_threshold()) {
     digitalWrite(pin, HIGH);
     pumpOn = true;
     stopPumpOnTimer();

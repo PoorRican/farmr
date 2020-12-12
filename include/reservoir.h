@@ -23,26 +23,43 @@ public:
 
   /**
    * Checks reservoir to see if water level is above threshold.
-   * @returns true if water is above threshold
+   * @var depth (unsigned int) : debugging argument simulating returned sensor value
+   * @return true if water is above threshold
    */
-  bool check_reservoir();
+  bool above_threshold(unsigned int = 0);
+
+  /**
+   * Measures remaining fill volume of reservoir.
+   * @var depth (unsigned int) : debugging argument simulating returned sensor value
+   * @return Amount of liquid left in reservoir, as a fraction of 1.
+   */
+  double measure_volume(unsigned int = 0);
   // =====================
   // Calibration Functions
   // =====================
+
   /**
    * Used to calibrate sensor when reservoir is full.
    */
-  void calibrateFull();
+  void calibrateFull(unsigned int = 0);
+
   /**
    * Calibrate reservoir empty
    */
-  void calibrateEmpty();
+  void calibrateEmpty(unsigned int = 0);
+
+
+  // Getter functions
+  unsigned int getEmpty();
+  unsigned int getFull();
+  double getThreshold();
+
 private:
   Ultrasonic* sensor;
   /**
    * Pump should stop when reservoir reaches 25%
    */
-  const float reservoir_thresh = .25;
+  const double reservoir_thresh = .25;
 
   // Distances (in CM)
   unsigned int fullDepth = 0;

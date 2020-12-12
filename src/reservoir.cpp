@@ -25,16 +25,35 @@ const Reservoir& Reservoir::operator=(const Reservoir& other) {
 Reservoir::~Reservoir() = default;
 
 // Calibration Functions
-void Reservoir::calibrateEmpty() {
-  emptyDepth = sensor->read(CM);
+void Reservoir::calibrateEmpty(unsigned int val) {
+  emptyDepth = val ? val : sensor->read(CM);
 }
 
-void Reservoir::calibrateFull() {
-  fullDepth = sensor->read(CM);
+void Reservoir::calibrateFull(unsigned int val) {
+  fullDepth = val ? val : sensor->read(CM);
 }
 
-// TODO: this needs to be tested
-bool Reservoir::check_reservoir() {
-  double actual_thresh = (float)(emptyDepth - fullDepth) * (1 - reservoir_thresh);
-  return sensor->read(CM) < floor(actual_thresh);
+// Getter Functions
+unsigned int Reservoir::getEmpty() const {
+  return emptyDepth;
+}
+
+unsigned int Reservoir::getFull() const {
+  return fullDepth;
+}
+
+double Reservoir::getThreshold() const {
+  return reservoir_thresh;
+}
+
+
+bool Reservoir::above_threshold(unsigned int depth) {
+  return measure_volume(depth) > reservoir_thresh;
+}
+
+double Reservoir::measure_volume(unsigned int depth) const {
+  if (!depth) {
+    depth = sensor->read(CM);
+  }
+  return depth / (double)(emptyDepth - fullDepth);
 }
