@@ -30,4 +30,4 @@ add_custom_target(
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-add_executable(Z_DUMMY_TARGET ${SRC_LIST} include/timer.h src/pump.cpp test/test_pump.cpp test/test_reservoir.cpp)
+add_executable(Z_DUMMY_TARGET ${SRC_LIST})
