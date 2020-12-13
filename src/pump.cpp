@@ -5,6 +5,21 @@
 #include "pump.h"
 
 
+Pump::Pump(const Pump& other) {
+  pin = other.pin;
+  duration = other.duration;
+  interval = other.interval;
+  sonar = other.sonar;
+}
+
+Pump& Pump::operator=(const Pump &other) {
+  pin = other.pin;
+  duration = other.duration;
+  interval = other.interval;
+  sonar = other.sonar;
+  return *this;
+}
+
 void Pump::startPumpOnTimer() {
   if (!pumpTimer.enabled) {
     int time = calcNextOnTime();
@@ -26,7 +41,6 @@ void Pump::startPumpOffTimer() {
   if (!pumpOffTimer.enabled) {
     pumpOffTimer.id = Alarm.timerOnce(duration, stopWatering);
     pumpOffTimer.enabled = true;
-    startPumpOnTimer();
   }
 }
 
@@ -38,6 +52,23 @@ void Pump::stopPumpOffTimer() {
   }
 }
 
+
+// Getters
+bool Pump::getPumpOn() const {
+  return pumpOn;
+}
+
+uint16_t Pump::getDuration() const {
+  return duration;
+}
+
+uint16_t Pump::getInterval() const {
+  return interval;
+}
+
+uint8_t Pump::getPin() const {
+  return pin;
+}
 
 // Pump routines
 OnTick_t Pump::startWatering() {
@@ -52,6 +83,7 @@ OnTick_t Pump::stopWatering() {
   digitalWrite(pin, LOW);
   pumpOn = false;
   stopPumpOffTimer();
+  startPumpOnTimer();
 }
 
 

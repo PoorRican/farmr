@@ -9,10 +9,7 @@
 
 struct timer {
   AlarmID_t id;
-  boolean enabled;
+  boolean enabled = false;
 };
-
-timer pumpTimer;
-timer pumpOffTimer;
 
 #endif //FARMR_TIMER_H

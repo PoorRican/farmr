@@ -10,55 +10,33 @@
 #include <Time.h>
 #include <TimeAlarms.h>
 #include "timer.h"
-#include "reservoir.h"
+#include "pump.h"
+#include "sensor_ping.h"
 
-/**
- * TODO: this should be repurposed to run buffer pumps
- */
-class WaterPump {
+class WaterPump : public Pump {
 public:
   // Constructors
-  WaterPump(const int&, Reservoir*);
-  WaterPump(const WaterPump&);
-  const WaterPump& operator=(const WaterPump&);
+  WaterPump(uint8_t &pin, uint16_t &duration, uint16_t &interval,
+            SensorPing *sonar);
+  WaterPump(const WaterPump &other) : Pump(other) {};
+  WaterPump& operator=(const WaterPump&);
 
   // Destructor
-  ~WaterPump();
+  ~WaterPump() = default;
 
-  // ===========================
-  // Timer Routines
-  // ===========================
-
+  // Setters
   /**
-   * Timer for initiating pumping.
-   * Automatically starts timer to turn off pump.
+   * Sets duration that water pump should be run in.
+   * Converts minutes to seconds.
+   * @var min (uint16_t) : minutes
+   * @return true if min greater-than 0 and less-than or equal to 12
    */
-  void startPumpOnTimer();
-
-  /**
-   * Cancels `startWaterTimer`.
-   *
-   * Automatically calls `stopPumpOffTimer`.
-   *
-   * This is used during `startWatering`,
-   * and can be used when settings are changed or when reservoir is empty.
-   *
+  bool setDuration(uint16_t&) final;
+  /** Sets frequency interval of water pump cycles.
+   * @var freq (uint16_t) : count of cycles to run daily
+   * @return true if freq greater-than 0 and less-than or equal to 12
    */
-  void stopPumpOnTimer();
-
-  /**
-   * Timer for stopping pumping.
-   *
-   * Automatically calls next `startPumpOnTimer` using pumpInterval.
-   *
-   * @var min (int) : Turn off pump after x minutes
-   */
-  void startPumpOffTimer();
-
-  /**
-   * Cancels `startWaterOffTimer`
-   */
-  void stopPumpOffTimer();
+  bool setInterval(uint16_t&) final;
 
   /**
    * Calculate when next cycle will begin
@@ -69,60 +47,7 @@ public:
    *
    * @return (int) hours until next alarm
    */
-  int calcNextCycleTime(const int& hour) const;
-
-  // Getters
-  bool getPumpOn() const;
-  int getFrequency() const;
-  int getFloodTime() const;
-  int getPin() const;
-
-  // Setters
-  /**
-   * Sets `pumpInterval.flood` time in between 1 and 12 minutes.
-   * @var min (int&) : desired cycle length
-   * @return
-   */
-  bool setFloodTime(int &min);
-
-  /**
-   * Sets frequency of cycling to no more than 12 times per day.
-   * @var freq (int&) : desired cycle frequency
-   * @return true if parameter is valid
-   */
-  bool setFrequency(int &freq);
-
-private:
-  int pin;
-  Reservoir* reservoir;
-  boolean pumpOn = false;
-
-  /**
-   * Timers for when pump will be turned on or off
-   */
-  timer pumpTimer;
-  timer pumpOffTimer;
-
-  /**
-   * Defines how long to run pumps (in minutes)
-   */
-  struct pump_interval_t {
-    int flood = 10;         // duration of how long pump will be run for
-    int frequency = 4;      // how many times a day to cycle
-  } pumpInterval;
-
-  // ===========================
-  // WaterPump Routines
-  // ===========================
-  /**
-   * Callback function to turn on pump
-   */
-  OnTick_t startWatering();
-  /**
-   * Callback function to turn off pump
-   */
-  OnTick_t stopWatering();
-
+  int calcNextOnTime() const final;
 };
 
 #endif //FARMR_PUMP_WATER_H
