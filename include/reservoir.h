@@ -57,7 +57,7 @@ public:
 private:
   Ultrasonic* sensor;
   /**
-   * Pump should stop when reservoir reaches 25%
+   * WaterPump should stop when reservoir reaches 25%
    */
   const double reservoir_thresh = .25;
 

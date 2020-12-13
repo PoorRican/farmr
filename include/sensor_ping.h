@@ -25,6 +25,7 @@ public:
   uint8_t get() const;
   uint16_t getRaw();
   uint8_t getPercent();
+  bool above_threshold();
 
   // Calibration functions
   void setMax(uint16_t = 0);

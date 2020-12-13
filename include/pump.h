@@ -1,92 +1,55 @@
 //
-// Created by Josue Figueroa on 12/11/20.
+// Created by Josue Figueroa on 12/12/20.
 //
-// TODO: should night-pumping be allowed?
-// TODO: ability to reset watering cycles
 
 #ifndef FARMR_PUMP_H
 #define FARMR_PUMP_H
 
+#include <Arduino.h>
 #include "timer.h"
-#include "reservoir.h"
-#include <TimeAlarms.h>
+#include "sensor_ping.h"
 
-/**
- * TODO: this should be repurposed to run buffer pumps
- */
+
 class Pump {
 public:
-  // Constructors
-  Pump(int, Reservoir*);
+  Pump(uint8_t pin, uint16_t duration, uint16_t interval, SensorPing &sonar)
+  : pin(pin), duration(duration), interval(interval), sonar(sonar) {};
   Pump(const Pump&);
   const Pump& operator=(const Pump&);
 
-  // Destructor
-  ~Pump();
+  ~Pump() = default;
 
-  // ===========================
   // Timer Routines
-  // ===========================
-
-  /**
-   * Timer for initiating pumping.
-   * Automatically starts timer to turn off pump.
-   * @var min (int) : Turn on pump after x minutes
-   */
-  void startPumpOnTimer(int min = 0);
-
-  /**
-   * Cancels `startWaterTimer`.
-   *
-   * Automatically calls `stopPumpOffTimer`.
-   *
-   * This is used during `startWatering`,
-   * and can be used when settings are changed or when reservoir is empty.
-   *
-   */
-  static void stopPumpOnTimer();
-
-  /**
-   * Timer for stopping pumping.
-   *
-   * Automatically calls next `startPumpOnTimer` using pumpInterval.
-   *
-   * @var min (int) : Turn off pump after x minutes
-   */
-  void startPumpOffTimer(int min = 0);
-
-  /**
-   * Cancels `startWaterOffTimer`
-   */
-  static void stopPumpOffTimer();
+  void startPumpOnTimer();
+  void stopPumpOnTimer();
+  void startPumpOffTimer();
+  void stopPumpOffTimer();
+  virtual int calcNextOnTime() = 0;
 
   // Getters
-  bool getPumpOn();
+  bool getPumpOn() const;
+  uint16_t getDuration() const;
+  uint16_t getFloodTime() const;
+  uint8_t getPin() const;
 
-private:
-  int pin;
-  Reservoir* reservoir;
-  boolean pumpOn = false;
+  // Setters
+  virtual bool setDuration(uint16_t&) = 0;
+  virtual bool setInterval(uint16_t&) = 0;
 
-  /**
-   * Defines how long to run pumps (in minutes)
-   */
-  struct pump_interval_t {
-    int flood = 5;  // duration of how long pump will be run for
-    int gap = 55;   // intervals between flooding
-  } pumpInterval;
+protected:
+  SensorPing &sonar;
+  bool pumpOn = false;
+  uint8_t pin;
+  uint16_t duration;   // Max duration to keep pump active
+  uint16_t interval;   // Min interval in-between pump activations
 
-  // ===========================
-  // Pump Routines
-  // ===========================
-  /**
-   * Callback function to turn on pump
-   */
+  timer pumpTimer;
+  timer pumpOffTimer;
+
+  // Callback functions
   OnTick_t startWatering();
-  /**
-   * Callback function to turn off pump
-   */
   OnTick_t stopWatering();
+
 
 };
 
