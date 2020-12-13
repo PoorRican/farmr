@@ -20,6 +20,12 @@ Pump& Pump::operator=(const Pump &other) {
   return *this;
 }
 
+
+void Pump::init() {
+  pinMode(pin, OUTPUT);
+}
+
+
 void Pump::startPumpOnTimer() {
   if (!pumpTimer.enabled) {
     int time = calcNextOnTime();

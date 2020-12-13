@@ -19,6 +19,8 @@ public:
 
   ~Pump() = default;
 
+  void init();
+
   // Timer Routines
   void startPumpOnTimer();
   void stopPumpOnTimer();
