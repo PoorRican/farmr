@@ -109,10 +109,10 @@ void SensorPH::adjustTemp(float temp) {
 
 void SensorPH::smooth() {
   float res = 0;
-  for (uint8_t i = 0; i < sample_size; i++) {
+  for (uint8_t i = 0; i < sample_counter; i++) {
     res += readings[i];
   }
-  pH = (float)(res / sample_size);
+  pH = (float)(res / sample_counter);
 }
 
 void SensorPH::clearBuffer() {
