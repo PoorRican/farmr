@@ -10,23 +10,6 @@ SensorPH::SensorPH(const int &pin, SoftwareSerial* serial) : Sensor(pin) {
   }
 }
 
-SensorPH::SensorPH(const SensorPH &other) : Sensor(other) {
-  sample_counter = other.sample_counter;
-  for (uint8_t i = 0; i < sample_size; i++) {
-    readings[i] = 0;
-  }
-  pH = other.pH;
-}
-
-SensorPH& SensorPH::operator=(const SensorPH &other) {
-  sample_counter = other.sample_counter;
-  for (uint8_t i = 0; i < sample_size; i++) {
-    readings[i] = 0;
-  }
-  pH = other.pH;
-  return *this;
-}
-
 Sensor::SensName SensorPH::getType() const {
   return Sensor::pH;
 }

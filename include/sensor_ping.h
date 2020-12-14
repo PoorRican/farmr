@@ -12,9 +12,9 @@
 class SensorPing: public Sensor {
 public:
   SensorPing(int, int);
-  SensorPing(const SensorPing&);
-  SensorPing& operator=(const SensorPing&);
-  ~SensorPing();
+  SensorPing(const SensorPing&) = default;
+  SensorPing& operator=(const SensorPing&) = default;
+  ~SensorPing() override = default;
 
   SensName getType() const;
 

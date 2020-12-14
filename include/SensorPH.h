@@ -11,9 +11,9 @@
 class SensorPH : public Sensor {
 public:
   explicit SensorPH(const int &pin, SoftwareSerial*);
-  SensorPH(const SensorPH&);
-  SensorPH& operator=(const SensorPH&);
-  ~SensorPH() = default;
+  SensorPH(const SensorPH&) = default;
+  SensorPH& operator=(const SensorPH&) = default;
+  ~SensorPH() override = default;
 
   SensName getType() const;
   void init() final;

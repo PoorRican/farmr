@@ -13,14 +13,6 @@ WaterPump::WaterPump(uint8_t &pin, uint16_t &duration, uint16_t &interval, Senso
   setDuration(duration);
 }
 
-WaterPump& WaterPump::operator=(const WaterPump& other) {
-  pin = other.pin;
-  sonar = other.sonar;
-  interval = other.interval;
-  duration = other.duration;
-  return *this;
-}
-
 
 int WaterPump::calcNextOnTime() const {
   const int cycle_len = 24 / interval;  // cycle length (in hours)

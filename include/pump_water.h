@@ -18,10 +18,9 @@ public:
   // Constructors
   WaterPump(uint8_t &pin, uint16_t &duration, uint16_t &interval,
             SensorPing *sonar);
-  WaterPump(const WaterPump &other) : Pump(other) {};
-  WaterPump& operator=(const WaterPump&);
+  WaterPump(const WaterPump &other) = default;
+  WaterPump& operator=(const WaterPump&) = default;
 
-  // Destructor
   ~WaterPump() = default;
 
   // Setters

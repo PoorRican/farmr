@@ -24,8 +24,8 @@ public:
   };
   // Constructors
   explicit Sensor(const int &pin);
-  Sensor(const Sensor&);
-  const Sensor& operator=(const Sensor&);
+  Sensor(const Sensor&) = default;
+  Sensor& operator=(const Sensor&) = default;
 
   // Destructor
   virtual ~Sensor();
