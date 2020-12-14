@@ -5,7 +5,7 @@
 #include "pump.h"
 
 
-Pump::Pump(const Pump& other) {
+Pump::Pump(const Pump &other) {
   pin = other.pin;
   duration = other.duration;
   interval = other.interval;
@@ -21,7 +21,7 @@ Pump& Pump::operator=(const Pump &other) {
 }
 
 
-void Pump::init() {
+void Pump::init() const {
   pinMode(pin, OUTPUT);
 }
 
@@ -78,7 +78,7 @@ uint8_t Pump::getPin() const {
 
 // Pump routines
 OnTick_t Pump::startWatering() {
-  if (sonar.above_threshold()) {
+  if (sonar->above_threshold()) {
     digitalWrite(pin, HIGH);
     pumpOn = true;
     stopPumpOnTimer();
@@ -89,7 +89,7 @@ OnTick_t Pump::stopWatering() {
   digitalWrite(pin, LOW);
   pumpOn = false;
   stopPumpOffTimer();
-  startPumpOnTimer();
+  if (!oneShot) { startPumpOnTimer(); }
 }
 
 

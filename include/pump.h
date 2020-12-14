@@ -12,14 +12,14 @@
 
 class Pump {
 public:
-  Pump(uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar)
+  explicit Pump(uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar)
   : pin(pin), duration(duration), interval(interval), sonar(sonar) {};
   Pump(const Pump&);
   Pump& operator=(const Pump&);
 
   ~Pump() = default;
 
-  void init();
+  void init() const;
 
   // Timer Routines
   void startPumpOnTimer();
@@ -40,6 +40,7 @@ public:
 
 protected:
   bool pumpOn = false;
+  bool oneShot = false;
   uint8_t pin;
   uint16_t duration;   // Max duration to keep pump active
   uint16_t interval;   // Min interval in-between pump activations

@@ -4,14 +4,8 @@
 
 #include "pump_ph.h"
 
-
-Pump_pH& Pump_pH::operator=(const Pump_pH &other) {
-  pin = other.pin;
-  sonar = other.sonar;
-  interval = other.interval;
-  duration = other.duration;
-  return *this;
-}
+Pump_pH::Pump_pH(uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar)
+: Pump(pin, duration, interval, sonar) {};
 
 bool Pump_pH::setDuration(uint16_t &sec) {
   if (sec > 0 && sec < 10) {

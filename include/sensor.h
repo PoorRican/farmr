@@ -23,7 +23,7 @@ public:
     NH3
   };
   // Constructors
-  Sensor(const int &pin);
+  explicit Sensor(const int &pin);
   Sensor(const Sensor&);
   const Sensor& operator=(const Sensor&);
 

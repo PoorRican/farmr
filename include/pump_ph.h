@@ -11,10 +11,9 @@
 
 
 class Pump_pH : public Pump {
-  Pump_pH(uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar)
-  : Pump(pin, duration, interval, sonar) {};
-  Pump_pH(const Pump_pH &other) : Pump(other) {}
-  Pump_pH& operator=(const Pump_pH&);
+  explicit Pump_pH(uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar);
+  Pump_pH(const Pump_pH &) = default;
+  Pump_pH& operator=(const Pump_pH&) = default;
 
   ~Pump_pH() = default;
 
@@ -35,6 +34,9 @@ class Pump_pH : public Pump {
    * @return 1
    */
   int calcNextOnTime() const final;
+
+protected:
+  bool oneShot = true;
 };
 
 
