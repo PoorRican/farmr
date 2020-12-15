@@ -30,4 +30,4 @@ add_custom_target(
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-add_executable(Z_DUMMY_TARGET ${SRC_LIST} src/ProcessMonitor.cpp src/monitor_ph.cpp include/SensorEC.h src/SensorEC.cpp)
+add_executable(Z_DUMMY_TARGET ${SRC_LIST})
