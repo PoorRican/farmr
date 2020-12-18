@@ -6,6 +6,11 @@
 
 pHMonitor::pHMonitor(float &ideal, uint16_t &interval, SensorPH &sensor, Pump_pH &acidPump, Pump_pH &basePump)
 : ProcessMonitor(ideal, interval), sensor(sensor), acidPump(acidPump), basePump(basePump) {
+
+  setIdeal(ideal);
+
+  pollingTimer = new Task(interval, TASK_FOREVER, &pollPH, &ts);
+  pollingTimer->setLtsPointer(this);
 }
 
 ProcessMonitor::ProcessType pHMonitor::getType() const {
@@ -28,7 +33,7 @@ bool pHMonitor::setInterval(uint16_t &val) {
   return false;
 }
 
-OnTick_t pHMonitor::poll() {
+void pHMonitor::poll() {
   sensor.update();
   float _ph = sensor.get();
   // NOTE: avr `abs` does not seem to support float types
@@ -47,4 +52,10 @@ void pHMonitor::increase() {
 
 void pHMonitor::decrease() {
   acidPump.startPumpOnTimer();
+}
+
+void pollPH() {
+  Task& t = ts.currentTask();
+  pHMonitor& p = *((pHMonitor*) t.getLtsPointer());
+  p.poll();
 }

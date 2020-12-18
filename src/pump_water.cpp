@@ -7,10 +7,16 @@
 
 // Constructors
 
-WaterPump::WaterPump(uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar) : Pump(pin, duration,
+WaterPump::WaterPump(const uint8_t &pin, const uint16_t &duration, const uint16_t &interval, SensorPing *sonar) : Pump(pin, duration,
                                                                                                      interval, sonar) {
   // convert minutes to seconds
+  setInterval(interval);
   setDuration(duration);
+
+  pumpTimer = new Task(duration, TASK_FOREVER, startWatering, &ts);
+  pumpTimer->setLtsPointer(this);
+  pumpOffTimer = new Task(duration, TASK_FOREVER, stopWatering, &ts);
+  pumpOffTimer->setLtsPointer(this);
 }
 
 
@@ -23,7 +29,7 @@ int WaterPump::calcNextOnTime() const {
 
 
 // Setters
-bool WaterPump::setDuration(uint16_t &min) {
+bool WaterPump::setDuration(const uint16_t &min) {
   if (min >= 1 && min <= 12) {
     duration = min * 60;    // convert minutes to seconds
     return true;
@@ -31,7 +37,7 @@ bool WaterPump::setDuration(uint16_t &min) {
   return false;
 }
 
-bool WaterPump::setInterval(uint16_t &freq) {
+bool WaterPump::setInterval(const uint16_t &freq) {
   if (freq >= 1 && freq <= 12) {
     duration = freq;
     return true;

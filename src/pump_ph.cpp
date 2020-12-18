@@ -5,7 +5,16 @@
 #include "pump_ph.h"
 
 Pump_pH::Pump_pH(uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar)
-: Pump(pin, duration, interval, sonar) {};
+: Pump(pin, duration, interval, sonar) {
+
+  setInterval(interval);
+  setDuration(duration);
+
+  pumpTimer = new Task(duration, TASK_ONCE, &startWatering, &ts);
+  pumpTimer->setLtsPointer(this);
+  pumpOffTimer = new Task(duration, TASK_ONCE, &stopWatering, &ts);
+  pumpOffTimer->setLtsPointer(this);
+};
 
 bool Pump_pH::setDuration(uint16_t &sec) {
   if (sec > 0 && sec < 10) {

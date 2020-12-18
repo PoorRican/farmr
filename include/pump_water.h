@@ -9,14 +9,13 @@
 
 #include <Time.h>
 #include <TimeAlarms.h>
-#include "timer.h"
 #include "pump.h"
 #include "sensor_ping.h"
 
 class WaterPump : public Pump {
 public:
   // Constructors
-  WaterPump(uint8_t &pin, uint16_t &duration, uint16_t &interval,
+  WaterPump(const uint8_t &pin, const uint16_t &duration, const uint16_t &interval,
             SensorPing *sonar);
   WaterPump(const WaterPump &other) = default;
   WaterPump& operator=(const WaterPump&) = default;
@@ -30,12 +29,12 @@ public:
    * @var min (uint16_t) : minutes
    * @return true if min greater-than 0 and less-than or equal to 12
    */
-  bool setDuration(uint16_t&) final;
+  bool setDuration(const uint16_t&) final;
   /** Sets frequency interval of water pump cycles.
    * @var freq (uint16_t) : count of cycles to run daily
    * @return true if freq greater-than 0 and less-than or equal to 12
    */
-  bool setInterval(uint16_t&) final;
+  bool setInterval(const uint16_t&) final;
 
   /**
    * Calculate when next cycle will begin

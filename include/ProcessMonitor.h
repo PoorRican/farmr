@@ -7,8 +7,10 @@
 
 
 #include <Arduino.h>
-#include "timer.h"
+#include "scheduler.h"
 
+
+extern Scheduler ts;
 
 /**
  * Abstract watchdog class for monitoring a process/metric (eg: pH, filtering, Nx) and controlling pumps.
@@ -22,6 +24,7 @@ public:
     pH
   };
   ProcessMonitor(float &ideal, uint16_t &interval);
+
   virtual ProcessType getType() const = 0;
   virtual bool setIdeal(float&) = 0;
   virtual bool setInterval(uint16_t&) = 0;
@@ -33,13 +36,13 @@ public:
    * Measure area of responsibility then attempt to get to ideal.
    * Uses `read`, `increase`, and `decrease`.
    */
-  virtual OnTick_t poll() = 0;
+  virtual void poll() = 0;
 
 protected:
   float ideal;         // Ideal value
   uint16_t interval;      // Interval to control polling
 
-  timer pollingTimer;
+  Task *pollingTimer = nullptr;
 
   virtual void increase() = 0;
   virtual void decrease() = 0;

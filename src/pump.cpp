@@ -4,21 +4,8 @@
 
 #include "pump.h"
 
-
-Pump::Pump(const Pump &other) {
-  pin = other.pin;
-  duration = other.duration;
-  interval = other.interval;
-  sonar = other.sonar;
-}
-
-Pump& Pump::operator=(const Pump &other) {
-  pin = other.pin;
-  duration = other.duration;
-  interval = other.interval;
-  sonar = other.sonar;
-  return *this;
-}
+Pump::Pump(uint8_t &pin, const uint16_t &duration, const uint16_t &interval, SensorPing *sonar)
+: pin(pin), duration(duration), interval(interval), sonar(sonar) {};
 
 
 void Pump::init() const {
@@ -27,35 +14,20 @@ void Pump::init() const {
 
 
 void Pump::startPumpOnTimer() {
-  if (!pumpTimer.enabled) {
-    int time = calcNextOnTime();
-    pumpTimer.id = Alarm.timerOnce(time, startWatering);
-    pumpTimer.enabled = true;
-    startPumpOffTimer();
-  }
+  pumpTimer->enable();
 }
 
 void Pump::stopPumpOnTimer() {
-  if (pumpTimer.enabled) {
-    Alarm.free(pumpTimer.id);
-    pumpTimer.enabled = false;
-    stopPumpOffTimer();
-  }
+  pumpTimer->disable();
 }
 
 void Pump::startPumpOffTimer() {
-  if (!pumpOffTimer.enabled) {
-    pumpOffTimer.id = Alarm.timerOnce(duration, stopWatering);
-    pumpOffTimer.enabled = true;
-  }
+  pumpOffTimer->enable();
 }
 
 
 void Pump::stopPumpOffTimer() {
-  if (pumpOffTimer.enabled) {
-    Alarm.free(pumpOffTimer.id);
-    pumpOffTimer.enabled = false;
-  }
+  pumpOffTimer->disable();
 }
 
 
@@ -76,20 +48,32 @@ uint8_t Pump::getPin() const {
   return pin;
 }
 
+void Pump::setPumpOn(bool val) {
+  pumpOn = val;
+}
+
+bool Pump::aboveThreshold() const {
+  return sonar->above_threshold();
+}
+
 // Pump routines
-OnTick_t Pump::startWatering() {
-  if (sonar->above_threshold()) {
-    digitalWrite(pin, HIGH);
-    pumpOn = true;
-    stopPumpOnTimer();
+void startWatering() {
+  Task& t = ts.currentTask();
+  Pump& p = *((Pump*) t.getLtsPointer());
+  if (p.aboveThreshold()) {
+    digitalWrite(p.getPin(), HIGH);
+    p.setPumpOn(true);
+    p.startPumpOffTimer();
+  }
+  else {
+    p.stopPumpOffTimer();
+    // TODO: give error
   }
 }
 
-OnTick_t Pump::stopWatering() {
-  digitalWrite(pin, LOW);
-  pumpOn = false;
-  stopPumpOffTimer();
-  if (!oneShot) { startPumpOnTimer(); }
+void stopWatering() {
+  Task& t = ts.currentTask();
+  Pump& p = *((Pump*) t.getLtsPointer());
+  digitalWrite(p.getPin(), LOW);
+  p.setPumpOn(false);
 }
-
-

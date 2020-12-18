@@ -28,7 +28,7 @@ public:
    */
   bool setInterval(uint16_t &) final;
 
-  OnTick_t poll() final;
+  void poll() final;
 
 private:
                                     // to prevent buffer solution from continually being used
@@ -42,5 +42,7 @@ private:
   void decrease() final;
 
 };
+
+void pollPH();
 
 #endif //FARMR_MONITOR_PH_H

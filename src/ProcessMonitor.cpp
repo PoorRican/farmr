@@ -4,21 +4,12 @@
 
 #include "ProcessMonitor.h"
 
-ProcessMonitor::ProcessMonitor(float &ideal, uint16_t &interval) : interval(interval) {
-  setIdeal(ideal);
-};
+ProcessMonitor::ProcessMonitor(float &ideal, uint16_t &interval) : ideal(ideal), interval(interval) {};
 
 void ProcessMonitor::startPolling() {
-  if (!pollingTimer.enabled) {
-    pollingTimer.id = Alarm.timerRepeat(interval, poll);
-    pollingTimer.enabled = true;
-  }
+  pollingTimer->enable();
 }
 
 void ProcessMonitor::stopPolling() {
-  if (pollingTimer.enabled) {
-    Alarm.free(pollingTimer.id);
-    pollingTimer.enabled = false;
-  }
+  pollingTimer->disable();
 }
-
