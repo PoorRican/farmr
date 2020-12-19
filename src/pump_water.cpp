@@ -4,21 +4,17 @@
 
 #include "pump_water.h"
 
-
-// Constructors
-
-WaterPump::WaterPump(const uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar) : Pump(pin, duration,
-                                                                                                     interval, sonar) {
+WaterPump::WaterPump(const uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar, Scheduler *scheduler)
+: Pump(pin, duration),sonar(sonar) {
   // convert minutes to seconds
   setInterval(interval);
   setDuration(duration);
 
-  pumpTimer = new Task(duration, TASK_FOREVER, startWatering, &ts);
+  pumpTimer = new Task(duration, TASK_FOREVER, &startWatering, scheduler, true);
   pumpTimer->setLtsPointer(this);
-  pumpOffTimer = new Task(duration, TASK_FOREVER, stopWatering, &ts);
+  pumpOffTimer = new Task(duration, TASK_FOREVER, &stopWatering, scheduler, true);
   pumpOffTimer->setLtsPointer(this);
 }
-
 
 int WaterPump::calcNextOnTime() const {
   const int cycle_len = 24 / interval;  // cycle length (in hours)
@@ -27,11 +23,10 @@ int WaterPump::calcNextOnTime() const {
   return _return % 24;                                // normalize
 }
 
-
 // Setters
 bool WaterPump::setDuration(const uint16_t &min) {
   if (min >= 1 && min <= 12) {
-    duration = min * 60;    // convert minutes to seconds
+    duration = min * TASK_MINUTE;    // convert minutes to seconds
     return true;
   }
   return false;
@@ -39,8 +34,16 @@ bool WaterPump::setDuration(const uint16_t &min) {
 
 bool WaterPump::setInterval(const uint16_t &freq) {
   if (freq >= 1 && freq <= 12) {
-    duration = freq;
+    duration = freq * TASK_HOUR;
     return true;
   }
   return false;
+}
+
+uint16_t WaterPump::getInterval() const {
+  return interval;
+}
+
+bool WaterPump::aboveThreshold() const {
+  return sonar->above_threshold();
 }

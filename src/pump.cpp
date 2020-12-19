@@ -2,31 +2,38 @@
 // Created by Josue Figueroa on 12/12/20.
 //
 
+#include "scheduler.h"
 #include "pump.h"
 
-Pump::Pump(const uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar)
-: pin(pin), duration(duration), interval(interval), sonar(sonar) {};
+Pump::Pump(const uint8_t &pin, uint16_t &duration)
+: pin(pin), duration(duration) {};
 
 
 void Pump::init() const {
   pinMode(pin, OUTPUT);
 }
 
-
-void Pump::startPumpOnTimer() {
+void Pump::addTasks(Scheduler &scheduler) {
+  scheduler.addTask(*(pumpTimer));
+  scheduler.addTask(*(pumpOffTimer));
   pumpTimer->enable();
 }
 
-void Pump::stopPumpOnTimer() {
+
+void Pump::startPumpOnTimer() const {
+  pumpTimer->enable();
+}
+
+void Pump::stopPumpOnTimer() const {
   pumpTimer->disable();
 }
 
-void Pump::startPumpOffTimer() {
+void Pump::startPumpOffTimer() const {
   pumpOffTimer->enable();
 }
 
 
-void Pump::stopPumpOffTimer() {
+void Pump::stopPumpOffTimer() const {
   pumpOffTimer->disable();
 }
 
@@ -40,20 +47,12 @@ uint16_t Pump::getDuration() const {
   return duration;
 }
 
-uint16_t Pump::getInterval() const {
-  return interval;
-}
-
 uint8_t Pump::getPin() const {
   return pin;
 }
 
 void Pump::setPumpOn(bool val) {
   pumpOn = val;
-}
-
-bool Pump::aboveThreshold() const {
-  return sonar->above_threshold();
 }
 
 // Pump routines
@@ -64,8 +63,11 @@ void startWatering() {
     digitalWrite(p.getPin(), HIGH);
     p.setPumpOn(true);
     p.startPumpOffTimer();
+    p.stopPumpOnTimer();
   }
   else {
+    digitalWrite(p.getPin(), LOW);
+    p.stopPumpOnTimer();
     p.stopPumpOffTimer();
     // TODO: give error
   }
@@ -76,4 +78,5 @@ void stopWatering() {
   Pump& p = *((Pump*) t.getLtsPointer());
   digitalWrite(p.getPin(), LOW);
   p.setPumpOn(false);
+  p.startPumpOnTimer();
 }

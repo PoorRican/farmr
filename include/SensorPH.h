@@ -5,12 +5,11 @@
 #ifndef FARMR_SENSORPH_H
 #define FARMR_SENSORPH_H
 
-#include <SoftwareSerial.h>
 #include "sensor.h"
 
 class SensorPH : public Sensor {
 public:
-  explicit SensorPH(const int &pin, SoftwareSerial*);
+  explicit SensorPH(const int &pin);
   SensorPH(const SensorPH&) = default;
   SensorPH& operator=(const SensorPH&) = default;
   ~SensorPH() override = default;
@@ -48,7 +47,6 @@ public:
 #endif
 
 protected:
-  SoftwareSerial *serial = nullptr;
   boolean isCalibrating = false;
   uint8_t sample_counter = 0;
 

@@ -7,8 +7,7 @@
 
 
 #include <Arduino.h>
-#include "scheduler.h"
-
+#include <TaskSchedulerDeclarations.h>
 
 extern Scheduler ts;
 
@@ -23,7 +22,7 @@ public:
     Nitrobacter,
     pH
   };
-  ProcessMonitor(float &ideal, uint16_t &interval);
+  explicit ProcessMonitor(float &ideal, uint16_t &interval);
 
   virtual ProcessType getType() const = 0;
   virtual bool setIdeal(float&) = 0;
@@ -31,6 +30,7 @@ public:
   virtual bool setInterval(uint16_t&) = 0;
   uint16_t getInterval() const;
 
+  void addTasks(Scheduler&);
 
   void startPolling();
   void stopPolling();

@@ -7,8 +7,9 @@
 
 #define _TASK_LTS_POINTER       // Compile with support for local task storage pointer
 
-#include <TaskScheduler.h>
+#include <TaskSchedulerDeclarations.h>
+#include "settings.h"
 
-Scheduler ts;
+extern Scheduler ts;
 
 #endif //FARMR_SCHEDULER_H

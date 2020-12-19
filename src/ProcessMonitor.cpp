@@ -6,8 +6,13 @@
 
 ProcessMonitor::ProcessMonitor(float &ideal, uint16_t &interval) : ideal(ideal), interval(interval) {};
 
-void ProcessMonitor::startPolling() {
+void ProcessMonitor::addTasks(Scheduler &scheduler) {
+  scheduler.addTask(*(pollingTimer));
   pollingTimer->enable();
+}
+
+void ProcessMonitor::startPolling() {
+  pollingTimer->enableDelayed();
 }
 
 void ProcessMonitor::stopPolling() {

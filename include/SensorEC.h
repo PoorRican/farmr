@@ -5,12 +5,11 @@
 #ifndef FARMR_SENSOREC_H
 #define FARMR_SENSOREC_H
 
-#include <SoftwareSerial.h>
 #include "sensor.h"
 
 class SensorEC: public Sensor {
 public:
-  SensorEC(const int &pin, SoftwareSerial*);
+  explicit SensorEC(const int &pin);
   SensorEC(const SensorEC&) = default;
   SensorEC& operator=(const SensorEC&) = default;
 
@@ -37,7 +36,6 @@ public:
   void adjustTemp(float);
 
 protected:
-  SoftwareSerial* serial;
   boolean isCalibrating = false;
   uint8_t sample_counter = 0;
   uint16_t readings[sample_size];

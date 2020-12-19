@@ -2,14 +2,15 @@
 // Created by Josue Figueroa on 12/13/20.
 //
 
+#include "scheduler.h"
 #include "monitor_ph.h"
 
-pHMonitor::pHMonitor(float &ideal, uint16_t &interval, SensorPH &sensor, Pump_pH &acidPump, Pump_pH &basePump)
+pHMonitor::pHMonitor(float &ideal, uint16_t &interval, SensorPH &sensor, Pump_pH &acidPump, Pump_pH &basePump, Scheduler *scheduler)
 : ProcessMonitor(ideal, interval), sensor(sensor), acidPump(acidPump), basePump(basePump) {
 
   setIdeal(ideal);
 
-  pollingTimer = new Task(interval, TASK_FOREVER, &pollPH, &ts);
+  pollingTimer = new Task(interval, TASK_FOREVER, &pollPH, scheduler, true);
   pollingTimer->setLtsPointer(this);
 }
 
@@ -47,10 +48,12 @@ void pHMonitor::poll() {
 }
 
 void pHMonitor::increase() {
+  basePump.restart();
   basePump.startPumpOnTimer();
 }
 
 void pHMonitor::decrease() {
+  acidPump.restart();
   acidPump.startPumpOnTimer();
 }
 

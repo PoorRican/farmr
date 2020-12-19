@@ -4,8 +4,8 @@
 
 #include "SensorEC.h"
 
-SensorEC::SensorEC(const int &pin, SoftwareSerial *serial)
-: Sensor(pin), serial(serial) {
+SensorEC::SensorEC(const int &pin)
+: Sensor(pin) {
   for (uint8_t i = 0; i < sample_size; i++ ) {
     readings[i] = 0;
   }
@@ -17,8 +17,8 @@ Sensor::SensName SensorEC::getType() const {
 
 void SensorEC::init() {
   // Open communication
-  serial->begin(38400);
-  serial->print("E\r");
+  Serial3.begin(38400);
+  Serial3.print("E\r");
   setContinuous();
 }
 
@@ -42,8 +42,8 @@ uint16_t SensorEC::get() const {
 
 uint16_t SensorEC::getRaw() const {
   if (!isCalibrating) {
-    if (serial->available() > 0) {
-      uint16_t res = serial->parseInt();
+    if (Serial3.available() > 0) {
+      uint16_t res = Serial3.parseInt();
       clearECBuffer();
       return res;
     }
@@ -60,40 +60,40 @@ void SensorEC::calibrating(boolean c) {
 
 void SensorEC::reset() {
   clearECBuffer();
-  serial->print("X\r");
+  Serial3.print("X\r");
   delay(2750);
   ecToSerial();
 }
 
 void SensorEC::getInfo() {
   clearECBuffer();
-  serial->print("I\r");
+  Serial3.print("I\r");
   delay(1450);
   ecToSerial();
 }
 
 void SensorEC::setLed(boolean state) {
-  state ? serial->print("L1\r") : serial->print("L0\r");
+  state ? Serial3.print("L1\r") : Serial3.print("L0\r");
 }
 
 void SensorEC::setContinuous() {
-  serial->print("C\r");
+  Serial3.print("C\r");
 }
 
 void SensorEC::setStandby() {
-  serial->print("E\r");
+  Serial3.print("E\r");
 }
 
 void SensorEC::setProbeType() {
-  serial->print("P,2\r");
+  Serial3.print("P,2\r");
 }
 
 void SensorEC::setDry() {
-  serial->print("Z0\r");
+  Serial3.print("Z0\r");
 }
 
 void SensorEC::setFortyThousand() {
-  serial->print("Z40\r");
+  Serial3.print("Z40\r");
 }
 
 void SensorEC::adjustTemp(float temp) {
@@ -101,7 +101,7 @@ void SensorEC::adjustTemp(float temp) {
     char tempArray[4];
     dtostrf(temp, 4, 2, tempArray);
     String command = (String)tempArray + ",C\r";
-    serial->print(command);
+    Serial3.print(command);
   }
 }
 
@@ -114,15 +114,15 @@ void SensorEC::smooth() {
 }
 
 void SensorEC::ecToSerial() {
-  if (serial->available() > 0) {
+  if (Serial3.available() > 0) {
     String sensorString = "";
     sensorString.reserve(30);
     char inChar;
-    while (serial->peek() != '\r') {
-      inChar = (char)serial->read();
+    while (Serial3.peek() != '\r') {
+      inChar = (char)Serial3.read();
       sensorString += inChar;
     }
-    serial->read();     // discard <CR>
+    Serial3.read();     // discard <CR>
     Serial.println(sensorString);
   }
 }

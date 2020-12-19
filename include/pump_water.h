@@ -7,16 +7,16 @@
 #ifndef FARMR_PUMP_WATER_H
 #define FARMR_PUMP_WATER_H
 
-#include <Time.h>
-#include <TimeAlarms.h>
 #include "pump.h"
+#include <TaskSchedulerDeclarations.h>
+#include <Time.h>
 #include "sensor_ping.h"
 
 class WaterPump : public Pump {
 public:
   // Constructors
   WaterPump(const uint8_t &pin, uint16_t &duration, uint16_t &interval,
-            SensorPing *sonar);
+            SensorPing *sonar, Scheduler*);
   WaterPump(const WaterPump &other) = default;
   WaterPump& operator=(const WaterPump&) = default;
 
@@ -34,7 +34,8 @@ public:
    * @var freq (uint16_t) : count of cycles to run daily
    * @return true if freq greater-than 0 and less-than or equal to 12
    */
-  bool setInterval(const uint16_t&) final;
+  bool setInterval(const uint16_t&);
+  uint16_t getInterval() const;
 
   /**
    * Calculate when next cycle will begin
@@ -46,6 +47,13 @@ public:
    * @return (int) hours until next alarm
    */
   int calcNextOnTime() const final;
+
+  bool aboveThreshold() const final;
+
+protected:
+  SensorPing *sonar = nullptr;
+
+  uint16_t interval;   // Min interval in-between pin activations
 };
 
 #endif //FARMR_PUMP_WATER_H
