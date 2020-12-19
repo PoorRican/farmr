@@ -13,3 +13,11 @@ void ProcessMonitor::startPolling() {
 void ProcessMonitor::stopPolling() {
   pollingTimer->disable();
 }
+
+float ProcessMonitor::getIdeal() const {
+  return ideal;
+}
+
+uint16_t ProcessMonitor::getInterval() const {
+  return interval;
+}

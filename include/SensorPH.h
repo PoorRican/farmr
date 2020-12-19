@@ -15,7 +15,7 @@ public:
   SensorPH& operator=(const SensorPH&) = default;
   ~SensorPH() override = default;
 
-  SensName getType() const;
+  SensName getType() const final;
   void init() final;
   void update() final;
   void fastUpdate() final;
@@ -37,6 +37,15 @@ public:
 
   // adjust pH readings
   void adjustTemp(float);
+
+#ifdef SENSORLESS_OPERATION
+  /**
+   * Debug flag used for manually setting `pH`
+   */
+  void setPH(float val) {
+    pH = val;
+  }
+#endif
 
 protected:
   SoftwareSerial *serial = nullptr;

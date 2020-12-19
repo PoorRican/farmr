@@ -4,7 +4,7 @@
 
 #include "SensorPH.h"
 
-SensorPH::SensorPH(const int &pin, SoftwareSerial* serial) : Sensor(pin) {
+SensorPH::SensorPH(const int &pin, SoftwareSerial* serial) : Sensor(pin), serial(serial) {
   for (uint8_t i = 0; i < sample_size; i++) {
     readings[i] = 0;
   }
@@ -24,9 +24,11 @@ void SensorPH::init() {
 }
 
 void SensorPH::update() {
+#ifndef SENSORLESS_OPERATION
   readings[sample_counter++] = getRaw();
   sample_counter = sample_counter % sample_size;
   smooth();
+#endif
 }
 
 void SensorPH::fastUpdate() {

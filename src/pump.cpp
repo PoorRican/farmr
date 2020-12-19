@@ -4,7 +4,7 @@
 
 #include "pump.h"
 
-Pump::Pump(uint8_t &pin, const uint16_t &duration, const uint16_t &interval, SensorPing *sonar)
+Pump::Pump(const uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar)
 : pin(pin), duration(duration), interval(interval), sonar(sonar) {};
 
 

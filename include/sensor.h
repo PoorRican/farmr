@@ -5,6 +5,7 @@
 #ifndef FARMR_SENSOR_H
 #define FARMR_SENSOR_H
 
+#define SENSORLESS_OPERATION
 
 #include <Arduino.h>
 

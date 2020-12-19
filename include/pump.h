@@ -13,7 +13,7 @@ extern Scheduler ts;
 
 class Pump {
 public:
-  explicit Pump(uint8_t &pin, const uint16_t &duration, const uint16_t &interval, SensorPing *sonar);
+  explicit Pump(const uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar);
   Pump(const Pump&) = default;
   Pump& operator=(const Pump&) = default;
 

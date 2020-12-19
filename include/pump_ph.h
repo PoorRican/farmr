@@ -11,7 +11,8 @@
 
 
 class Pump_pH : public Pump {
-  explicit Pump_pH(uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar);
+public:
+  explicit Pump_pH(const uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar);
   Pump_pH(const Pump_pH &) = default;
   Pump_pH& operator=(const Pump_pH&) = default;
 
@@ -22,12 +23,12 @@ class Pump_pH : public Pump {
    * Ensures that duration is an integer less than 10 seconds
    * @return true if given duration is valid.
    */
-  bool setDuration(uint16_t&) final;
+  bool setDuration(const uint16_t&) final;
   /**
    * Ensures that interval is in-between 10 and 120 seconds.
    * @return true if given interval is valid.
    */
-  bool setInterval(uint16_t&) final;
+  bool setInterval(const uint16_t&) final;
 
   /**
    * Start pump immediately

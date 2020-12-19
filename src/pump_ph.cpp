@@ -4,7 +4,7 @@
 
 #include "pump_ph.h"
 
-Pump_pH::Pump_pH(uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar)
+Pump_pH::Pump_pH(const uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar)
 : Pump(pin, duration, interval, sonar) {
 
   setInterval(interval);
@@ -16,7 +16,7 @@ Pump_pH::Pump_pH(uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPin
   pumpOffTimer->setLtsPointer(this);
 };
 
-bool Pump_pH::setDuration(uint16_t &sec) {
+bool Pump_pH::setDuration(const uint16_t &sec) {
   if (sec > 0 && sec < 10) {
     duration = sec;
     return true;
@@ -24,7 +24,7 @@ bool Pump_pH::setDuration(uint16_t &sec) {
   return false;
 }
 
-bool Pump_pH::setInterval(uint16_t &sec) {
+bool Pump_pH::setInterval(const uint16_t &sec) {
   if (sec >= 10 && sec <= 120 ) {
     interval = sec;
     return true;

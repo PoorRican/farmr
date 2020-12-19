@@ -27,7 +27,10 @@ public:
 
   virtual ProcessType getType() const = 0;
   virtual bool setIdeal(float&) = 0;
+  float getIdeal() const;
   virtual bool setInterval(uint16_t&) = 0;
+  uint16_t getInterval() const;
+
 
   void startPolling();
   void stopPolling();
