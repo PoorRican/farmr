@@ -4,6 +4,8 @@
 
 #include "sensorless_operation.h"
 
+#ifdef SENSORLESS_OPERATION
+
 void init_sCmd() {
   sCmd.setDefaultHandler(unrecognized_command);
 
@@ -237,3 +239,5 @@ void get_base_pump_interval() {
   Serial.print("base_pump interval is currently ");
   Serial.println(base_pump.getInterval());
 }
+
+#endif

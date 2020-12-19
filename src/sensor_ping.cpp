@@ -26,10 +26,10 @@ void SensorPing::init() {
 
 void SensorPing::update() {
 #ifndef SENSORLESS_OPERATION
-  levels[samples] = getPercent();
+  levels[samples++] = getPercent();
 
   // Update sample counter
-  samples = (++samples) % sample_size;
+  samples = samples % sample_size;
 
   smooth();
 #endif

@@ -5,6 +5,8 @@
 #ifndef FARMR_SENSORLESS_OPERATION_H
 #define FARMR_SENSORLESS_OPERATION_H
 
+#ifdef SENSORLESS_OPERATION
+
 #include <SerialCommand.h>
 #include "settings.h"
 
@@ -55,5 +57,7 @@ void get_base_pump_duration();
 
 void set_base_pump_interval();
 void get_base_pump_interval();
+
+#endif
 
 #endif //FARMR_SENSORLESS_OPERATION_H
