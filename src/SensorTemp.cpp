@@ -21,7 +21,7 @@ void SensorTemp::init() {
 
 void SensorTemp::update() {
   readings[sample_counter++] = getRaw();
-  sample_counter % sample_size;
+  sample_counter = sample_counter % sample_size;
   smooth();
 }
 

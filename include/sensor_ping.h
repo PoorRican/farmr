@@ -4,7 +4,6 @@
 #ifndef FARMR_SENSOR_PING_H
 #define FARMR_SENSOR_PING_H
 
-
 #include <NewPing.h>
 #include "sensor.h"
 

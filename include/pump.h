@@ -43,8 +43,8 @@ public:
 protected:
   bool pumpOn = false;
   uint8_t pin;
-  uint16_t duration;   // Max duration to keep pump active
-  uint16_t interval;   // Min interval in-between pump activations
+  uint16_t duration;   // Max duration to keep pin active
+  uint16_t interval;   // Min interval in-between pin activations
   SensorPing *sonar = nullptr;
 
   Task *pumpTimer = nullptr;

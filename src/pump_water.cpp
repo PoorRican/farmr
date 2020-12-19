@@ -7,7 +7,7 @@
 
 // Constructors
 
-WaterPump::WaterPump(const uint8_t &pin, const uint16_t &duration, const uint16_t &interval, SensorPing *sonar) : Pump(pin, duration,
+WaterPump::WaterPump(const uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar) : Pump(pin, duration,
                                                                                                      interval, sonar) {
   // convert minutes to seconds
   setInterval(interval);

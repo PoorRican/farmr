@@ -73,7 +73,7 @@ void SensorEC::getInfo() {
 }
 
 void SensorEC::setLed(boolean state) {
-  state ? serial->print("L1\r") : serial.print("L0\r");
+  state ? serial->print("L1\r") : serial->print("L0\r");
 }
 
 void SensorEC::setContinuous() {

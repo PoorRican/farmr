@@ -11,11 +11,11 @@ void init_sCmd() {
   sCmd.addCommand("start reservoir pumping", start_reservoir_pumping);
   sCmd.addCommand("stop reservoir pumping", stop_reservoir_pumping);
 
-  sCmd.addCommand("set reservoir pump duration", set_reservoir_pump_duration);
-  sCmd.addCommand("get reservoir pump duration", get_reservoir_pump_duration);
+  sCmd.addCommand("set reservoir pin duration", set_reservoir_pump_duration);
+  sCmd.addCommand("get reservoir pin duration", get_reservoir_pump_duration);
 
-  sCmd.addCommand("set reservoir pump interval", set_reservoir_pump_interval);
-  sCmd.addCommand("get reservoir pump interval", get_reservoir_pump_interval);
+  sCmd.addCommand("set reservoir pin interval", set_reservoir_pump_interval);
+  sCmd.addCommand("get reservoir pin interval", get_reservoir_pump_interval);
 
   // pH sensor commands
   sCmd.addCommand("set ph", set_ph);

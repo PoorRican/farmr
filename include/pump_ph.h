@@ -31,7 +31,7 @@ public:
   bool setInterval(const uint16_t&) final;
 
   /**
-   * Start pump immediately
+   * Start pin immediately
    * @return 1
    */
   int calcNextOnTime() const final;

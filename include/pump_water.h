@@ -15,7 +15,7 @@
 class WaterPump : public Pump {
 public:
   // Constructors
-  WaterPump(const uint8_t &pin, const uint16_t &duration, const uint16_t &interval,
+  WaterPump(const uint8_t &pin, uint16_t &duration, uint16_t &interval,
             SensorPing *sonar);
   WaterPump(const WaterPump &other) = default;
   WaterPump& operator=(const WaterPump&) = default;
@@ -24,13 +24,13 @@ public:
 
   // Setters
   /**
-   * Sets duration that water pump should be run in.
+   * Sets duration that water pin should be run in.
    * Converts minutes to seconds.
    * @var min (uint16_t) : minutes
    * @return true if min greater-than 0 and less-than or equal to 12
    */
   bool setDuration(const uint16_t&) final;
-  /** Sets frequency interval of water pump cycles.
+  /** Sets frequency interval of water pin cycles.
    * @var freq (uint16_t) : count of cycles to run daily
    * @return true if freq greater-than 0 and less-than or equal to 12
    */
