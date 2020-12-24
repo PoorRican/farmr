@@ -37,17 +37,6 @@ public:
   bool setInterval(const uint16_t&);
   uint16_t getInterval() const;
 
-  /**
-   * Calculate when next cycle will begin
-   *
-   * TODO: handle fractions of an hour and uneven intervals
-   *
-   * @var hour (const int&) : current hour
-   *
-   * @return (int) hours until next alarm
-   */
-  int calcNextOnTime() const final;
-
   bool aboveThreshold() const final;
 
 protected:

@@ -16,7 +16,8 @@ void Pump::init() const {
 void Pump::addTasks(Scheduler &scheduler) {
   scheduler.addTask(*(pumpTimer));
   scheduler.addTask(*(pumpOffTimer));
-  pumpTimer->enable();
+
+  // pumpTimer->enable();
 }
 
 
@@ -64,12 +65,15 @@ void startWatering() {
     p.setPumpOn(true);
     p.startPumpOffTimer();
     p.stopPumpOnTimer();
+    String feedback = "Pump at pin" + (String)p.getPin() + "turned on";
+    Serial.print(feedback);
   }
   else {
     digitalWrite(p.getPin(), LOW);
     p.stopPumpOnTimer();
     p.stopPumpOffTimer();
-    // TODO: give error
+    String feedback = "Error turning pump on (Pin" + (String)p.getPin();
+    Serial.println(feedback);
   }
 }
 
@@ -79,4 +83,6 @@ void stopWatering() {
   digitalWrite(p.getPin(), LOW);
   p.setPumpOn(false);
   p.startPumpOnTimer();
+  String feedback = "Pump at pin" + (String)p.getPin() + "turned off";
+  Serial.print(feedback);
 }

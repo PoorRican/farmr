@@ -13,6 +13,16 @@
 
 extern SerialCommand sCmd;
 
+/**
+ * Wrapper to read serial accessible from the global scope
+ */
+void read_serial();
+
+/**
+ * Simply prints "heartbeat"
+ */
+void heartbeat();
+
 void init_sCmd();
 
 void unrecognized_command(const char*);
@@ -26,6 +36,9 @@ void init_sonar_levels();
 // reservoir operations
 void start_reservoir_pumping();
 void stop_reservoir_pumping();
+
+void reservoir_above_threshold();
+void reservoir_pump_on();
 
 void set_reservoir_pump_duration();
 void get_reservoir_pump_duration();

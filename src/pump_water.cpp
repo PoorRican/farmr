@@ -10,23 +10,20 @@ WaterPump::WaterPump(const uint8_t &pin, uint16_t &duration, uint16_t &interval,
   setInterval(interval);
   setDuration(duration);
 
-  pumpTimer = new Task(duration, TASK_FOREVER, &startWatering, scheduler, true);
+  pumpTimer = new Task(interval, TASK_FOREVER, &startWatering, scheduler, true);
   pumpTimer->setLtsPointer(this);
   pumpOffTimer = new Task(duration, TASK_FOREVER, &stopWatering, scheduler, true);
   pumpOffTimer->setLtsPointer(this);
 }
 
-int WaterPump::calcNextOnTime() const {
-  const int cycle_len = 24 / interval;  // cycle length (in hours)
-  const int until_next = (24 - hour()) % cycle_len;     // hours until next cycle
-  int _return = until_next ? until_next : cycle_len;  // calculate next cycle time
-  return _return % 24;                                // normalize
-}
-
 // Setters
 bool WaterPump::setDuration(const uint16_t &min) {
   if (min >= 1 && min <= 12) {
+#ifdef BASIC_TESTING
+    duration = min * TASK_SECOND;    // convert minutes to seconds
+#else
     duration = min * TASK_MINUTE;    // convert minutes to seconds
+#endif
     return true;
   }
   return false;
@@ -34,7 +31,11 @@ bool WaterPump::setDuration(const uint16_t &min) {
 
 bool WaterPump::setInterval(const uint16_t &freq) {
   if (freq >= 1 && freq <= 12) {
+#ifdef BASIC_TESTING
+    duration = freq * TASK_MINUTE;
+#else
     duration = freq * TASK_HOUR;
+#endif
     return true;
   }
   return false;

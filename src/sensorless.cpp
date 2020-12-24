@@ -9,56 +9,85 @@
 
 SerialCommand sCmd;
 
+void read_serial() {
+  sCmd.readSerial();
+}
+
+void heartbeat() {
+  Serial.println("heartbeat");
+}
+
 void init_sCmd() {
   sCmd.setDefaultHandler(unrecognized_command);
 
   // reservoir commands
-  sCmd.addCommand("start reservoir pumping", start_reservoir_pumping);
-  sCmd.addCommand("stop reservoir pumping", stop_reservoir_pumping);
+  sCmd.addCommand("start.reservoir.pumping", start_reservoir_pumping);
+  sCmd.addCommand("stop.reservoir.pumping", stop_reservoir_pumping);
 
-  sCmd.addCommand("set reservoir pin duration", set_reservoir_pump_duration);
-  sCmd.addCommand("get reservoir pin duration", get_reservoir_pump_duration);
+  sCmd.addCommand("reservoir.above.threshold", reservoir_above_threshold);
+  sCmd.addCommand("reservoir.pump.on", reservoir_pump_on);
 
-  sCmd.addCommand("set reservoir pin interval", set_reservoir_pump_interval);
-  sCmd.addCommand("get reservoir pin interval", get_reservoir_pump_interval);
+  sCmd.addCommand("set.reservoir.pin.duration", set_reservoir_pump_duration);
+  sCmd.addCommand("get.reservoir.pin.duration", get_reservoir_pump_duration);
+
+  sCmd.addCommand("set.reservoir.pin.interval", set_reservoir_pump_interval);
+  sCmd.addCommand("get.reservoir.pin.interval", get_reservoir_pump_interval);
 
   // pH sensor commands
-  sCmd.addCommand("set ph", set_ph);
-  sCmd.addCommand("get ph", get_ph);
+  sCmd.addCommand("set.ph", set_ph);
+  sCmd.addCommand("get.ph", get_ph);
 
   // pH monitor commands
-  sCmd.addCommand("start ph monitor polling", start_ph_monitor_polling);
-  sCmd.addCommand("stop ph monitor polling", stop_ph_monitor_polling);
+  sCmd.addCommand("start.ph.monitor.polling", start_ph_monitor_polling);
+  sCmd.addCommand("stop.ph.monitor.polling", stop_ph_monitor_polling);
 
-  sCmd.addCommand("set ph monitor interval", set_ph_monitor_polling_interval);
-  sCmd.addCommand("get ph monitor interval", get_ph_monitor_polling_interval);
+  sCmd.addCommand("set.ph.monitor.interval", set_ph_monitor_polling_interval);
+  sCmd.addCommand("get.ph.monitor.interval", get_ph_monitor_polling_interval);
 
-  sCmd.addCommand("set ph ideal", set_ph_monitor_ideal);
-  sCmd.addCommand("get ph ideal", get_ph_monitor_ideal);
+  sCmd.addCommand("set.ph.ideal", set_ph_monitor_ideal);
+  sCmd.addCommand("get.ph.ideal", get_ph_monitor_ideal);
 
-  sCmd.addCommand("set acid_pump duration", set_acid_pump_duration);
-  sCmd.addCommand("get acid_pump duration", get_acid_pump_duration);
+  sCmd.addCommand("set.acid_pump.duration", set_acid_pump_duration);
+  sCmd.addCommand("get.acid_pump.duration", get_acid_pump_duration);
 
-  sCmd.addCommand("set base_pump duration", set_base_pump_duration);
-  sCmd.addCommand("get base_pump duration", get_base_pump_duration);
+  sCmd.addCommand("set.base_pump.duration", set_base_pump_duration);
+  sCmd.addCommand("get.base_pump.duration", get_base_pump_duration);
+
+  sCmd.addCommand("test", heartbeat);
+
+  Serial.println("Serial commands initialized...");
 }
 
 void unrecognized_command(const char* command) {
-  Serial.println("Unrecognized command...");
+  String s = "'" + (String)command + "' is an unrecognized command...";
+  Serial.println(s);
 }
 
 void init_sonar_levels() {
   reservoir_sonar.setMax(100);
   reservoir_sonar.setMin(0);
   reservoir_sonar.setLevel(50);
+  Serial.println("Sonar levels set...");
 }
 
 // Reservoir Operations
 void start_reservoir_pumping() {
+  Serial.println("Starting reservoir pumping");
   reservoir_pump.startPumpOnTimer();
 }
 void stop_reservoir_pumping() {
+  Serial.println("Stopping reservoir pumping");
   reservoir_pump.stopPumpOnTimer();
+}
+
+void reservoir_above_threshold() {
+  String s = "Reservoir is " + (String)(reservoir_pump.aboveThreshold() ? "above" : "below") + " threshold";
+  Serial.println(s);
+}
+
+void reservoir_pump_on() {
+  String s = "Reservoir pump is " + (String)(reservoir_pump.getPumpOn() ? "on" : "off");
+  Serial.println(s);
 }
 
 void set_reservoir_pump_duration() {

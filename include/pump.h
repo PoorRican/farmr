@@ -35,7 +35,6 @@ public:
   void stopPumpOnTimer() const;
   void startPumpOffTimer() const;
   void stopPumpOffTimer() const;
-  virtual int calcNextOnTime() const = 0;
 
   // Getters
   bool getPumpOn() const;

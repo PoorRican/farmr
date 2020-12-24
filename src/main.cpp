@@ -3,19 +3,17 @@
 #include <Arduino.h>
 #include <TaskScheduler.h>
 #include "settings.h"
-#include "monitor_ph.h"
-#include "pump_water.h"
-#include "sensor_ping.h"
-#include "SensorPH.h"
+
 #ifdef SENSORLESS_OPERATION
 #include "sensorless.h"
 #endif
 
 Scheduler ts;
 
+Task readSerial(TASK_IMMEDIATE, TASK_FOREVER, &read_serial, &ts, true);
+
 /**
  * Adds individual tasks for pumps and sensor operations to scheduler.
- * TaskScheduler does not seem to recognize Task when it is a class-member of an object.
  */
 void init_tasks() {
   // TOOD: convert this to a for-loop
@@ -39,18 +37,15 @@ void setup() {
   base_pump.init();
 
 #ifdef SENSORLESS_OPERATION
+  Serial.println("Operating sensorless...");
   init_sonar_levels();
   init_sCmd();
 #endif
 
   // TaskScheduler Initialisations
-  ts.init();
   init_tasks();
 }
 
 void loop() {
-#ifdef SENSORLESS_OPERATION
-  sCmd.readSerial();
-#endif
   ts.execute();
 }

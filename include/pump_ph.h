@@ -24,12 +24,6 @@ public:
    */
   bool setDuration(const uint16_t&) final;
 
-  /**
-   * Start pin immediately
-   * @return 1
-   */
-  int calcNextOnTime() const final;
-
   bool aboveThreshold() const final;
 
   void restart();
