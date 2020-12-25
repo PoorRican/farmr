@@ -12,4 +12,9 @@
 
 extern Scheduler ts;
 
+/**
+ * Adds individual tasks for pumps and sensor operations to scheduler.
+ */
+void init_tasks();
+
 #endif //FARMR_SCHEDULER_H
