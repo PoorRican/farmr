@@ -9,9 +9,9 @@ Pump_pH::Pump_pH(const uint8_t &pin, uint16_t &duration, Scheduler* scheduler)
 
   setDuration(duration);
 
-  pumpTimer = new Task(TASK_IMMEDIATE, TASK_ONCE, startWatering);
+  pumpTimer = new Task(TASK_IMMEDIATE, TASK_ONCE, startPump);
   pumpTimer->setLtsPointer(this);
-  pumpOffTimer = new Task(this->duration, TASK_ONCE, stopWatering);
+  pumpOffTimer = new Task(this->duration, TASK_ONCE, stopPump);
   pumpOffTimer->setLtsPointer(this);
 };
 

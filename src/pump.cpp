@@ -11,6 +11,7 @@ Pump::Pump(const uint8_t &pin, uint16_t &duration)
 
 void Pump::init() const {
   pinMode(pin, OUTPUT);
+  digitalWrite(pin, HIGH);            // immediately de-energize coil upon power applied
 }
 
 void Pump::addTasks(Scheduler &scheduler) {
@@ -66,12 +67,12 @@ void Pump::setPumpOn(bool val) {
 }
 
 // Pump routines
-void startWatering() {
+void startPump() {
   Task& t = ts.currentTask();
   Pump& p = *((Pump*) t.getLtsPointer());
 
   if (p.aboveThreshold()) {
-    digitalWrite(p.getPin(), HIGH);
+    digitalWrite(p.getPin(), LOW);        // logic LOW energizes relay
     p.setPumpOn(true);
 
     p.startPumpOffTimer();
@@ -82,7 +83,8 @@ void startWatering() {
 #endif
   }
   else {
-    digitalWrite(p.getPin(), LOW);
+    digitalWrite(p.getPin(), HIGH);     // logic HIGH de-energizes relay
+    p.setPumpOn(false);
     p.stopPumpOnTimer();
     p.stopPumpOffTimer();
 
@@ -93,11 +95,11 @@ void startWatering() {
   }
 }
 
-void stopWatering() {
+void stopPump() {
   Task& t = ts.currentTask();
   Pump& p = *((Pump*) t.getLtsPointer());
 
-  digitalWrite(p.getPin(), LOW);
+  digitalWrite(p.getPin(), HIGH);     // logic HIGH de-energizes relay
   p.setPumpOn(false);
 
 #ifdef BASIC_TESTING

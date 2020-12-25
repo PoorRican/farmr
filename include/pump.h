@@ -55,8 +55,8 @@ protected:
   Task *pumpOffTimer = nullptr;
 };
 
-void startWatering();
-void stopWatering();
+void startPump();
+void stopPump();
 
 
 #endif //FARMR_PUMP_H

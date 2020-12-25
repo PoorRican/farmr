@@ -10,9 +10,9 @@ WaterPump::WaterPump(const uint8_t &pin, uint16_t &duration, uint16_t &interval,
   setInterval(interval);
   setDuration(duration);
 
-  pumpTimer = new Task(this->interval, TASK_FOREVER, startWatering);
+  pumpTimer = new Task(this->interval, TASK_FOREVER, startPump);
   pumpTimer->setLtsPointer(this);
-  pumpOffTimer = new Task(this->duration, TASK_FOREVER, stopWatering);
+  pumpOffTimer = new Task(this->duration, TASK_FOREVER, stopPump);
   pumpOffTimer->setLtsPointer(this);
 }
 
