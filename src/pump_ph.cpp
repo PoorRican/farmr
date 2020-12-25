@@ -11,7 +11,7 @@ Pump_pH::Pump_pH(const uint8_t &pin, uint16_t &duration, Scheduler* scheduler)
 
   pumpTimer = new Task(TASK_IMMEDIATE, TASK_ONCE, startWatering);
   pumpTimer->setLtsPointer(this);
-  pumpOffTimer = new Task(duration, TASK_ONCE, stopWatering);
+  pumpOffTimer = new Task(this->duration, TASK_ONCE, stopWatering);
   pumpOffTimer->setLtsPointer(this);
 };
 
@@ -29,5 +29,5 @@ bool Pump_pH::aboveThreshold() const {
 
 void Pump_pH::restart() {
   pumpTimer->restart();
-  pumpOffTimer->restartDelayed(duration * TASK_SECOND);
+  pumpOffTimer->restartDelayed(duration);
 }

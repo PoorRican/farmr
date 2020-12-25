@@ -8,14 +8,19 @@ ProcessMonitor::ProcessMonitor(float &ideal, uint16_t &interval) : ideal(ideal),
 
 void ProcessMonitor::addTasks(Scheduler &scheduler) {
   scheduler.addTask(*(pollingTimer));
-  pollingTimer->enable();
 }
 
 void ProcessMonitor::startPolling() {
+#ifdef VERBOSE_OUTPUT
+  Serial.println("Starting ph monitor polling");
+#endif
   pollingTimer->enableDelayed();
 }
 
 void ProcessMonitor::stopPolling() {
+#ifdef VERBOSE_OUTPUT
+  Serial.println("Stopped ph monitor polling");
+#endif
   pollingTimer->disable();
 }
 

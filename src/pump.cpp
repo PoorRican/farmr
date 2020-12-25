@@ -70,10 +70,6 @@ void startWatering() {
   Task& t = ts.currentTask();
   Pump& p = *((Pump*) t.getLtsPointer());
 
-#ifdef VERBOSE_OUTPUT
-  Serial.println("Entered 'startWatering' function");
-#endif
-
   if (p.aboveThreshold()) {
     digitalWrite(p.getPin(), HIGH);
     p.setPumpOn(true);
@@ -100,10 +96,6 @@ void startWatering() {
 void stopWatering() {
   Task& t = ts.currentTask();
   Pump& p = *((Pump*) t.getLtsPointer());
-
-#ifdef VERBOSE_OUTPUT
-  Serial.println("Entered 'stopWatering' function");
-#endif
 
   digitalWrite(p.getPin(), LOW);
   p.setPumpOn(false);

@@ -55,7 +55,9 @@ void init_sCmd() {
 
   sCmd.addCommand("test", heartbeat);
 
-  Serial.println("Serial commands initialized...");
+#ifdef VERBOSE_OUTPUT
+  Serial.println("Serial commands initialized...\n");
+#endif
 }
 
 void unrecognized_command(const char* command) {
@@ -183,7 +185,7 @@ void set_ph_monitor_ideal() {
 }
 void get_ph_monitor_ideal() {
   Serial.print("ideal pH is currently ");
-  Serial.println(ph_monitor.getInterval());
+  Serial.println(ph_monitor.getIdeal());
 }
 
 void set_acid_pump_duration() {

@@ -22,7 +22,7 @@ struct pump_t {
 
 struct {
   float ideal = 7.5;
-  uint16_t interval = 10;
+  uint16_t interval = 15;
   uint8_t pin = 8;
 } ph_sensor_t;
 

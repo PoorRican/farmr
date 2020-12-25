@@ -9,8 +9,9 @@ pHMonitor::pHMonitor(float &ideal, uint16_t &interval, SensorPH &sensor, Pump_pH
 : ProcessMonitor(ideal, interval), sensor(sensor), acidPump(acidPump), basePump(basePump) {
 
   setIdeal(ideal);
+  setInterval(interval);
 
-  pollingTimer = new Task(interval, TASK_FOREVER, &pollPH, scheduler, true);
+  pollingTimer = new Task(this->interval, TASK_FOREVER, pollPH);
   pollingTimer->setLtsPointer(this);
 }
 
@@ -28,7 +29,7 @@ bool pHMonitor::setIdeal(float &val) {
 
 bool pHMonitor::setInterval(uint16_t &val) {
   if (val >= 5 && val <= 120 ) {
-    ideal = val;
+    interval = val * TASK_SECOND;
     return true;
   }
   return false;
@@ -38,21 +39,36 @@ void pHMonitor::poll() {
   sensor.update();
   float _ph = sensor.get();
   // NOTE: avr `abs` does not seem to support float types
-  // TODO: add PID
-  if (_ph < ideal && (ideal - _ph) <= tolerance) {
+  // TODO: implement PID
+#ifdef VERBOSE_OUTPUT
+  String s = "\npH is " + (String)_ph + ". Ideal is " + (String)ideal;
+  Serial.println(s);
+#endif
+  if (_ph < ideal && (ideal - _ph) >= tolerance) {
     increase();
   }
-  else if (_ph > ideal && (_ph - ideal) <= tolerance) {
+  else if (_ph > ideal && (_ph - ideal) >= tolerance) {
     decrease();
   }
+#ifdef VERBOSE_OUTPUT
+  else {
+    Serial.println("pH is within tolerance...");
+  }
+#endif
 }
 
 void pHMonitor::increase() {
+#ifdef VERBOSE_OUTPUT
+  Serial.println("Attempting to increase pH");
+#endif
   basePump.restart();
   basePump.startPumpOnTimer();
 }
 
 void pHMonitor::decrease() {
+#ifdef VERBOSE_OUTPUT
+  Serial.println("Attempting to decrease pH");
+#endif
   acidPump.restart();
   acidPump.startPumpOnTimer();
 }
