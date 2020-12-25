@@ -3,19 +3,21 @@
 //
 
 #include "settings.h"
+#include "pins.h"
 
 // PH Pumps/Sensor
-pump_t acid_array = {25, 26, 27, 5};
-Pump_pH acid_pump(acid_array.pin, acid_array.duration, &ts);
-
-pump_t base_array = {28, 29, 13, 5};
-Pump_pH base_pump(base_array.pin, base_array.duration, &ts);
+uint16_t ph_pump_duration = 2;
+uint16_t ph_pump_interval = 10;
+float ideal_ph = 7.5;
+Pump_pH acid_pump(ph_monitor_t.acidPin, ph_pump_duration, &ts);
+Pump_pH base_pump(ph_monitor_t.basePin, ph_pump_duration, &ts);
 
 // PH Monitor
-SensorPH ph_sensor(ph_sensor_t.pin);
-pHMonitor ph_monitor(ph_sensor_t.ideal, ph_sensor_t.interval, ph_sensor, acid_pump, base_pump, &ts);
+SensorPH ph_sensor(ph_monitor_t.sensorPin);
+pHMonitor ph_monitor(ideal_ph, ph_pump_interval, ph_sensor, acid_pump, base_pump, &ts);
 
 // Reservoir
-pump_t reservoir_array = {23, 24, 12, 4, 12};
-SensorPing reservoir_sonar(23, 24);
-WaterPump reservoir_pump(reservoir_array.pin, reservoir_array.duration, reservoir_array.interval, &reservoir_sonar, &ts);
+uint16_t reservoir_duration = 4;
+uint16_t reservoir_interval = 12;
+SensorPing reservoir_sonar(reservoir_t.trigger, reservoir_t.echo);
+WaterPump reservoir_pump(reservoir_t.pin, reservoir_duration, reservoir_interval, &reservoir_sonar, &ts);
