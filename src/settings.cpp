@@ -16,7 +16,6 @@ SensorPH ph_sensor(ph_sensor_t.pin);
 pHMonitor ph_monitor(ph_sensor_t.ideal, ph_sensor_t.interval, ph_sensor, acid_pump, base_pump, &ts);
 
 // Reservoir
-pump_t reservoir_array = {13, 24, 10, 10, 4};
+pump_t reservoir_array = {23, 24, 13, 4, 12};
 SensorPing reservoir_sonar(23, 24);
-WaterPump reservoir_pump(reservoir_array.pin, reservoir_array.interval, reservoir_array.interval, &reservoir_sonar, &ts);
-
+WaterPump reservoir_pump(reservoir_array.pin, reservoir_array.duration, reservoir_array.interval, &reservoir_sonar, &ts);

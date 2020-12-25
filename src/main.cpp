@@ -31,13 +31,27 @@ void setup() {
   Serial.begin(9600);
   while (!Serial);
 
+  // TODO: consolidate this to a dedicated function
+  Serial.println("*******************");
+  Serial.println("*      FARMR      *");
+  Serial.println("*******************\n");
+
   // IO Initializations
   reservoir_pump.init();
   acid_pump.init();
   base_pump.init();
 
+  // Build flags
+  // TODO: Consolidate this to a dedicated function
+  Serial.println("==============================================================");
+  Serial.println("Features/Flags:");
+#ifdef BASIC_TESTING
+  Serial.println("BASIC_TESTING enabled...          All timing will be in seconds.");
+#endif
+
 #ifdef SENSORLESS_OPERATION
-  Serial.println("Operating sensorless...");
+  Serial.println("SENSORLESS_OPERATION enabled...   Serial debugging is enabled.");
+  Serial.println("==============================================================\n");
   init_sonar_levels();
   init_sCmd();
 #endif

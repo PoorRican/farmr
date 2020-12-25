@@ -16,25 +16,34 @@ void Pump::init() const {
 void Pump::addTasks(Scheduler &scheduler) {
   scheduler.addTask(*(pumpTimer));
   scheduler.addTask(*(pumpOffTimer));
-
-  // pumpTimer->enable();
 }
 
 
 void Pump::startPumpOnTimer() const {
+#ifdef VERBOSE_OUTPUT
+  Serial.println("'startPumpOnTimer' called");
+#endif
   pumpTimer->enable();
 }
 
 void Pump::stopPumpOnTimer() const {
+#ifdef VERBOSE_OUTPUT
+  Serial.println("'stopPumpOnTimer' called");
+#endif
   pumpTimer->disable();
 }
 
 void Pump::startPumpOffTimer() const {
-  pumpOffTimer->enable();
+#ifdef VERBOSE_OUTPUT
+  Serial.println("'startPumpOffTimer' called");
+#endif
+  pumpOffTimer->enableDelayed();
 }
 
-
 void Pump::stopPumpOffTimer() const {
+#ifdef VERBOSE_OUTPUT
+  Serial.println("'stopPumpOffTimer' called");
+#endif
   pumpOffTimer->disable();
 }
 
@@ -60,29 +69,47 @@ void Pump::setPumpOn(bool val) {
 void startWatering() {
   Task& t = ts.currentTask();
   Pump& p = *((Pump*) t.getLtsPointer());
+
+#ifdef VERBOSE_OUTPUT
+  Serial.println("Entered 'startWatering' function");
+#endif
+
   if (p.aboveThreshold()) {
     digitalWrite(p.getPin(), HIGH);
     p.setPumpOn(true);
+
     p.startPumpOffTimer();
-    p.stopPumpOnTimer();
-    String feedback = "Pump at pin" + (String)p.getPin() + "turned on";
-    Serial.print(feedback);
+
+#ifdef BASIC_TESTING
+    String feedback = "Pump (at pin " + (String)p.getPin() + ") turned on";
+    Serial.println(feedback);
+#endif
   }
   else {
     digitalWrite(p.getPin(), LOW);
     p.stopPumpOnTimer();
     p.stopPumpOffTimer();
-    String feedback = "Error turning pump on (Pin" + (String)p.getPin();
+
+#ifdef BASIC_TESTING
+    String feedback = "Error turning pump on (pin " + (String)p.getPin() + ")";
     Serial.println(feedback);
+#endif
   }
 }
 
 void stopWatering() {
   Task& t = ts.currentTask();
   Pump& p = *((Pump*) t.getLtsPointer());
+
+#ifdef VERBOSE_OUTPUT
+  Serial.println("Entered 'stopWatering' function");
+#endif
+
   digitalWrite(p.getPin(), LOW);
   p.setPumpOn(false);
-  p.startPumpOnTimer();
-  String feedback = "Pump at pin" + (String)p.getPin() + "turned off";
-  Serial.print(feedback);
+
+#ifdef BASIC_TESTING
+  String feedback = "Pump (pin " + (String)p.getPin() + ") turned off";
+  Serial.println(feedback);
+#endif
 }

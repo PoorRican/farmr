@@ -21,37 +21,37 @@ void init_sCmd() {
   sCmd.setDefaultHandler(unrecognized_command);
 
   // reservoir commands
-  sCmd.addCommand("start.reservoir.pumping", start_reservoir_pumping);
-  sCmd.addCommand("stop.reservoir.pumping", stop_reservoir_pumping);
+  sCmd.addCommand("start_reservoir_pumping", start_reservoir_pumping);
+  sCmd.addCommand("stop_reservoir_pumping", stop_reservoir_pumping);
 
-  sCmd.addCommand("reservoir.above.threshold", reservoir_above_threshold);
-  sCmd.addCommand("reservoir.pump.on", reservoir_pump_on);
+  sCmd.addCommand("reservoir_pump_on", reservoir_pump_on);
+  sCmd.addCommand("reservoir_above_threshold", reservoir_above_threshold);
 
-  sCmd.addCommand("set.reservoir.pin.duration", set_reservoir_pump_duration);
-  sCmd.addCommand("get.reservoir.pin.duration", get_reservoir_pump_duration);
+  sCmd.addCommand("set_reservoir_duration", set_reservoir_pump_duration);
+  sCmd.addCommand("get_reservoir_duration", get_reservoir_pump_duration);
 
-  sCmd.addCommand("set.reservoir.pin.interval", set_reservoir_pump_interval);
-  sCmd.addCommand("get.reservoir.pin.interval", get_reservoir_pump_interval);
+  sCmd.addCommand("set_reservoir_interval", set_reservoir_pump_interval);
+  sCmd.addCommand("get_reservoir_interval", get_reservoir_pump_interval);
 
   // pH sensor commands
-  sCmd.addCommand("set.ph", set_ph);
-  sCmd.addCommand("get.ph", get_ph);
+  sCmd.addCommand("set_ph", set_ph);
+  sCmd.addCommand("get_ph", get_ph);
 
   // pH monitor commands
-  sCmd.addCommand("start.ph.monitor.polling", start_ph_monitor_polling);
-  sCmd.addCommand("stop.ph.monitor.polling", stop_ph_monitor_polling);
+  sCmd.addCommand("start_ph_polling", start_ph_monitor_polling);
+  sCmd.addCommand("stop_ph_polling", stop_ph_monitor_polling);
 
-  sCmd.addCommand("set.ph.monitor.interval", set_ph_monitor_polling_interval);
-  sCmd.addCommand("get.ph.monitor.interval", get_ph_monitor_polling_interval);
+  sCmd.addCommand("set_ph_interval", set_ph_monitor_polling_interval);
+  sCmd.addCommand("get_ph_interval", get_ph_monitor_polling_interval);
 
-  sCmd.addCommand("set.ph.ideal", set_ph_monitor_ideal);
-  sCmd.addCommand("get.ph.ideal", get_ph_monitor_ideal);
+  sCmd.addCommand("set_ph.ideal", set_ph_monitor_ideal);
+  sCmd.addCommand("get_ph.ideal", get_ph_monitor_ideal);
 
-  sCmd.addCommand("set.acid_pump.duration", set_acid_pump_duration);
-  sCmd.addCommand("get.acid_pump.duration", get_acid_pump_duration);
+  sCmd.addCommand("set_acid_pump_duration", set_acid_pump_duration);
+  sCmd.addCommand("get_acid_pump_duration", get_acid_pump_duration);
 
-  sCmd.addCommand("set.base_pump.duration", set_base_pump_duration);
-  sCmd.addCommand("get.base_pump.duration", get_base_pump_duration);
+  sCmd.addCommand("set_base_pump_duration", set_base_pump_duration);
+  sCmd.addCommand("get_base_pump_duration", get_base_pump_duration);
 
   sCmd.addCommand("test", heartbeat);
 
