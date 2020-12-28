@@ -4,7 +4,7 @@
 #include <TaskScheduler.h>
 #include "settings.h"
 #include "scheduler.h"
-#include "ui.h"
+#include "UI_Main.h"
 #include "buttons.h"
 
 #ifdef SENSORLESS_OPERATION
@@ -67,7 +67,7 @@ void setup() {
   // LCD
   lcd.begin(16,2);
   lcd_startup_msg();
-  nav.showTitle = false;
+  //nav.showTitle = false;
 
   startup_msg();
   show_flags();
