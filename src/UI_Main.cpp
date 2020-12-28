@@ -12,7 +12,7 @@ LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
 chainStream<0> in(NULL);
 
-// TODO: initialize default values for fields
+// TODO: reservoir depth calibration
 
 // Reservoir Menus
 TOGGLE(pumpingOn, toggleReservoirPump, "Pump: ", doExit, enterEvent, noStyle

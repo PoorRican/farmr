@@ -31,3 +31,4 @@ add_custom_target(
 )
 
 add_executable(Z_DUMMY_TARGET ${SRC_LIST} src/UI_Reservoir.cpp include/UI_Reservoir.h src/UI_Reservoir.cpp include/UI_Reservoir.h src/UI_PhMonitor.cpp include/UI_PhMonitor.h)
+add_executable(Z_DUMMY_TARGET ${SRC_LIST} include/pins.h)

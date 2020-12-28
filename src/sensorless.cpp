@@ -66,29 +66,29 @@ void unrecognized_command(const char* command) {
 }
 
 void init_sonar_levels() {
-  reservoir_sonar.setMax(100);
-  reservoir_sonar.setMin(0);
-  reservoir_sonar.setLevel(50);
+  reservoir_sonar->setMax(100);
+  reservoir_sonar->setMin(0);
+  reservoir_sonar->setLevel(50);
   Serial.println("Sonar levels set...");
 }
 
 // Reservoir Operations
 void start_reservoir_pumping() {
   Serial.println("Starting reservoir pumping");
-  reservoir_pump.startPumpOnTimer();
+  reservoir_pump->startPumpOnTimer();
 }
 void stop_reservoir_pumping() {
   Serial.println("Stopping reservoir pumping");
-  reservoir_pump.stopPumpOnTimer();
+  reservoir_pump->stopPumpOnTimer();
 }
 
 void reservoir_above_threshold() {
-  String s = "Reservoir is " + (String)(reservoir_pump.aboveThreshold() ? "above" : "below") + " threshold";
+  String s = "Reservoir is " + (String)(reservoir_pump->aboveThreshold() ? "above" : "below") + " threshold";
   Serial.println(s);
 }
 
 void reservoir_pump_on() {
-  String s = "Reservoir pump is " + (String)(reservoir_pump.getPumpOn() ? "on" : "off");
+  String s = "Reservoir pump is " + (String)(reservoir_pump->getPumpOn() ? "on" : "off");
   Serial.println(s);
 }
 
@@ -96,7 +96,7 @@ void set_reservoir_pump_duration() {
   char* arg;
   arg = sCmd.next();
   if (arg != nullptr) {
-    reservoir_pump.setDuration(atoi(arg));
+    reservoir_pump->setDuration(atoi(arg));
     Serial.print("reservoir duration set to ");
     Serial.println(arg);
   }
@@ -106,14 +106,14 @@ void set_reservoir_pump_duration() {
 }
 void get_reservoir_pump_duration() {
   Serial.print("reservoir duration is set to ");
-  Serial.println(reservoir_pump.getDuration());
+  Serial.println(reservoir_pump->getDuration());
 }
 
 void set_reservoir_pump_interval() {
   char* arg;
   arg = sCmd.next();
   if (arg != nullptr) {
-    reservoir_pump.setInterval(atoi(arg));
+    reservoir_pump->setInterval(atoi(arg));
     Serial.print("reservoir interval set to ");
     Serial.println(arg);
   }
@@ -123,7 +123,7 @@ void set_reservoir_pump_interval() {
 }
 void get_reservoir_pump_interval() {
   Serial.print("reservoir interval is set to ");
-  Serial.println(reservoir_pump.getInterval());
+  Serial.println(reservoir_pump->getInterval());
 }
 
 // pH Sensor Operations
@@ -131,7 +131,7 @@ void set_ph() {
   char* arg;
   arg = sCmd.next();
   if (arg != nullptr) {
-    ph_sensor.setPH(atof(arg));
+    ph_sensor->setPH(atof(arg));
     Serial.print("pH set to ");
     Serial.println(arg);
   }
@@ -141,15 +141,15 @@ void set_ph() {
 }
 void get_ph() {
   Serial.print("pH is currently ");
-  Serial.println(ph_sensor.get());
+  Serial.println(ph_sensor->get());
 }
 
 // pH Monitor Operations
 void start_ph_monitor_polling() {
-  ph_monitor.startPolling();
+  ph_monitor->startPolling();
 }
 void stop_ph_monitor_polling() {
-  ph_monitor.stopPolling();
+  ph_monitor->stopPolling();
 }
 
 void set_ph_monitor_polling_interval() {
@@ -157,7 +157,7 @@ void set_ph_monitor_polling_interval() {
   arg = sCmd.next();
   if (arg != nullptr) {
     uint16_t i = atoi(arg);
-    ph_monitor.setInterval(i);
+    ph_monitor->setInterval(i);
     Serial.print("pH polling interval set to ");
     Serial.println(arg);
   }
@@ -167,7 +167,7 @@ void set_ph_monitor_polling_interval() {
 }
 void get_ph_monitor_polling_interval() {
   Serial.print("pH polling interval is currently ");
-  Serial.println(ph_monitor.getInterval());
+  Serial.println(ph_monitor->getInterval());
 }
 
 void set_ph_monitor_ideal() {
@@ -175,7 +175,7 @@ void set_ph_monitor_ideal() {
   arg = sCmd.next();
   if (arg != nullptr) {
     float i = atof(arg);
-    ph_monitor.setIdeal(i);
+    ph_monitor->setIdeal(i);
     Serial.print("ideal pH set to ");
     Serial.println(arg);
   }
@@ -185,7 +185,7 @@ void set_ph_monitor_ideal() {
 }
 void get_ph_monitor_ideal() {
   Serial.print("ideal pH is currently ");
-  Serial.println(ph_monitor.getIdeal());
+  Serial.println(ph_monitor->getIdeal());
 }
 
 void set_acid_pump_duration() {
@@ -193,7 +193,7 @@ void set_acid_pump_duration() {
   arg = sCmd.next();
   if (arg != nullptr) {
     float i = atof(arg);
-    acid_pump.setDuration(i);
+    acid_pump->setDuration(i);
     Serial.print("acid_pump duration set to ");
     Serial.println(arg);
   }
@@ -203,7 +203,7 @@ void set_acid_pump_duration() {
 }
 void get_acid_pump_duration() {
   Serial.print("acid_pump duration is currently ");
-  Serial.println(acid_pump.getDuration());
+  Serial.println(acid_pump->getDuration());
 }
 
 void set_base_pump_duration() {
@@ -211,7 +211,7 @@ void set_base_pump_duration() {
   arg = sCmd.next();
   if (arg != nullptr) {
     float i = atof(arg);
-    base_pump.setDuration(i);
+    base_pump->setDuration(i);
     Serial.print("base_pump duration set to ");
     Serial.println(arg);
   }
@@ -221,6 +221,6 @@ void set_base_pump_duration() {
 }
 void get_base_pump_duration() {
   Serial.print("base_pump duration is currently ");
-  Serial.println(base_pump.getDuration());
+  Serial.println(base_pump->getDuration());
 }
 #endif

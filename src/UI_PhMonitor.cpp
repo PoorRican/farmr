@@ -5,17 +5,12 @@
 #include "UI_PhMonitor.h"
 #include "settings.h"
 
-float idealPh = 7.5;
-bool phMonitoring = false;
-uint16_t phPollInterval = 15;
-uint16_t phPumpDuration = 2;
-
 result setIdealPh(eventMask e, navNode& _nav, prompt &item) {
 #ifdef VERBOSE_OUTPUT
   Serial.print("Ideal pH set to ");
   Serial.println(idealPh);
 #endif
-  ph_monitor.setIdeal(idealPh);
+  ph_monitor->setIdeal(idealPh);
   return proceed;
 }
 
@@ -24,7 +19,7 @@ result setPhPollInterval(eventMask e, navNode& _nav, prompt &item) {
   Serial.print("pH Poll Interval set to ");
   Serial.println(phPollInterval);
 #endif
-  ph_monitor.setInterval(phPollInterval);
+  ph_monitor->setInterval(phPollInterval);
   return proceed;
 }
 
@@ -33,13 +28,13 @@ result setPhPumpDuration(eventMask e, navNode& _nav, prompt &item) {
   Serial.print("pH Pump Duration set to ");
   Serial.println(phPumpDuration);
 #endif
-  ph_monitor.setDuration(phPumpDuration);
+  ph_monitor->setDuration(phPumpDuration);
   return proceed;
 }
 
 void turnOnPhMonitor() {
-  ph_monitor.startPolling();
+  ph_monitor->startPolling();
 }
 void turnOffPhMonitor() {
-  ph_monitor.stopPolling();
+  ph_monitor->stopPolling();
 }

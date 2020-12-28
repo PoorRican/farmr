@@ -72,10 +72,12 @@ void setup() {
   startup_msg();
   show_flags();
 
+  settings.init_objects();
+
   // IO Initializations
-  reservoir_pump.init();
-  acid_pump.init();
-  base_pump.init();
+  reservoir_pump->init();
+  acid_pump->init();
+  base_pump->init();
 
   init_buttons();
 

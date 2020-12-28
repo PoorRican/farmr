@@ -8,10 +8,10 @@ void init_tasks() {
   // TOOD: convert this to a for-loop
 
   // Pump tasks
-  acid_pump.addTasks(ts);
-  base_pump.addTasks(ts);
-  reservoir_pump.addTasks(ts);
+  acid_pump->addTasks(ts);
+  base_pump->addTasks(ts);
+  reservoir_pump->addTasks(ts);
 
   // Monitor Tasks
-  ph_monitor.addTasks(ts);
+  ph_monitor->addTasks(ts);
 }

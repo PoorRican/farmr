@@ -7,11 +7,6 @@
 
 #include <menu.h>
 
-extern bool phMonitoring;
-extern float idealPh;
-extern uint16_t phPollInterval;
-extern uint16_t phPumpDuration;
-
 void turnOnPhMonitor();
 void turnOffPhMonitor();
 
