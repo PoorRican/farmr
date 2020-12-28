@@ -22,11 +22,6 @@ extern LiquidCrystal lcd;
 
 void pollUi();
 
-void bDwn();
-void bUp();
-void bSel();
-void bEsc();
-
 // Reservoir Pump
 extern bool pumpingOn;
 extern unsigned int threshold;
@@ -54,11 +49,6 @@ result setPhPollInterval(eventMask,navNode&, prompt&);
 result setPhPumpDuration(eventMask,navNode&, prompt&);
 
 extern AnalogButtons analogButtons;
-extern Button b1;
-extern Button b2;
-extern Button b3;
-extern Button b4;
-//Button b5 = Button(640, &b5Click);        // select
 
 extern chainStream<0> in;
 

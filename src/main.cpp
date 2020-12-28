@@ -2,10 +2,10 @@
 
 #include <Arduino.h>
 #include <TaskScheduler.h>
-#include <LiquidCrystal.h>
 #include "settings.h"
 #include "scheduler.h"
 #include "ui.h"
+#include "buttons.h"
 
 #ifdef SENSORLESS_OPERATION
 #include "sensorless.h"
@@ -77,11 +77,7 @@ void setup() {
   acid_pump.init();
   base_pump.init();
 
-  // Analog Buttons
-  analogButtons.add(b1);
-  analogButtons.add(b2);
-  analogButtons.add(b3);
-  analogButtons.add(b4);
+  init_buttons();
 
   // Build flags
 #ifdef SENSORLESS_OPERATION
