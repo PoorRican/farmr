@@ -28,6 +28,21 @@
 #include "monitor_ph.h"
 #include <EEPROMex.h>
 
+// pH Pumps/Sensors/Monitor
+extern Pump_pH *acid_pump;
+extern Pump_pH *base_pump;
+
+extern SensorPH *ph_sensor;
+extern pHMonitor *ph_monitor;
+
+// Reservoir
+extern SensorPing *reservoir_sonar;
+extern WaterPump *reservoir_pump;
+
+// Global Variables
+extern bool updateEEPROM;
+extern double swVersion;
+
 // pH Monitor Variables
 extern bool phMonitoring;
 extern float idealPh;
@@ -67,7 +82,7 @@ public:
   /**
    * Initializes global objects
    */
-  void init_objects() const;
+  static void init_objects();
 
   /**
    * Writes default values to EEPROM.
@@ -79,9 +94,10 @@ public:
    * @return
    */
   bool checkVersion() const;
+  void updateVersion() const;
 
 private:
-  mem_t<float> version;
+  mem_t<double> version;
 
   mem_t<bool> ph_mon_enabled;
   mem_t<float> ideal_ph;
@@ -98,15 +114,6 @@ private:
 
 extern Settings settings;
 
-// pH Pumps/Sensors/Monitor
-extern Pump_pH *acid_pump;
-extern Pump_pH *base_pump;
-
-extern SensorPH *ph_sensor;
-extern pHMonitor *ph_monitor;
-
-// Reservoir
-extern SensorPing *reservoir_sonar;
-extern WaterPump *reservoir_pump;
+void update_settings();
 
 #endif //FARMR_SETTINGS_H

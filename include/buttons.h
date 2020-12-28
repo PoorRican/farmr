@@ -7,6 +7,7 @@
 
 #include <AnalogButtons.h>
 #include <menu.h>
+#include "settings.h"
 
 extern navRoot nav;
 
@@ -17,7 +18,7 @@ extern Button b1;   // right
 extern Button b2;   // down
 extern Button b3;   // up
 extern Button b4;   // left
-//Button b5 = Button(640, &b5Click);        // select
+extern Button b5;   // select
 
 void init_buttons();
 
@@ -26,5 +27,7 @@ void bDwn();
 void bUp();
 void bSel();
 void bEsc();
+
+void cancelUpdate();
 
 #endif //FARMR_BUTTONS_H

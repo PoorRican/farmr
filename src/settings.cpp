@@ -17,7 +17,8 @@ pHMonitor *ph_monitor = nullptr;
 SensorPing *reservoir_sonar = nullptr;
 WaterPump *reservoir_pump = nullptr;
 
-float swVersion = VERSION;
+double swVersion = VERSION;
+bool updateEEPROM = false;
 
 // pH Monitor Variables
 bool phMonitoring = PH_MONITOR_ENABLED;
@@ -90,22 +91,20 @@ void Settings::readValues() {
 }
 
 void Settings::updateValues() const {
-  EEPROM.updateFloat(version.address, swVersion);
-
   EEPROM.updateInt(ph_mon_enabled.address, (int)phMonitoring);
   EEPROM.updateFloat(ideal_ph.address, idealPh);
   EEPROM.updateInt(ph_pump_duration.address, phPumpDuration);
   EEPROM.updateInt(ph_polling_interval.address, phPollInterval);
 
   EEPROM.updateInt(reservoir_pump_enabled.address, (int)pumpingOn);
-  EEPROM.updateInt(reservoir_pump_enabled.address, threshold);
+  EEPROM.updateInt(reservoir_threshold.address, threshold);
   EEPROM.updateInt(reservoir_pump_duration.address, reservoirDuration);
   EEPROM.updateInt(reservoir_pump_interval.address, reservoirInterval);
   EEPROM.updateInt(reservoir_calibration_max.address, reservoirMax);
   EEPROM.updateInt(reservoir_calibration_min.address, reservoirMin);
 }
 
-void Settings::init_objects() const {
+void Settings::init_objects() {
   // Init pH Monitor Objects
   acid_pump = new Pump_pH(ph_monitor_t.acidPin, phPumpDuration, &ts);
   base_pump = new Pump_pH(ph_monitor_t.basePin, phPumpDuration, &ts);
@@ -118,6 +117,11 @@ void Settings::init_objects() const {
 }
 
 void Settings::writeDefaults() const {
+#ifdef BASIC_TESTING
+  Serial.println("Restoring default values...");
+#endif
+  updateVersion();
+
   // pH Pump/Monitor
   EEPROM.updateInt(ph_mon_enabled.address, (int)PH_MONITOR_ENABLED);
   EEPROM.updateFloat(ideal_ph.address, IDEAL_PH);
@@ -131,4 +135,26 @@ void Settings::writeDefaults() const {
   EEPROM.updateInt(reservoir_calibration_max.address, RESERVOIR_CALIBRATION_MAX);
   EEPROM.updateInt(reservoir_calibration_min.address, RESERVOIR_CALIBRATION_MIN);
   EEPROM.updateInt(reservoir_threshold.address, RESERVOIR_THRESHOLD);
+}
+
+bool Settings::checkVersion() const {
+  double storedVersion = EEPROM.readDouble(version.address);
+#ifdef BASIC_TESTING
+  Serial.print("SW Version: ");
+  Serial.println(swVersion);
+  Serial.print("EEPROM Version: ");
+  Serial.println(storedVersion);
+#endif
+  return swVersion != storedVersion;
+}
+
+void Settings::updateVersion() const {
+#ifdef VERBOSE_OUTPUT
+  Serial.println("Updated version value on EEPROM");
+#endif
+  EEPROM.writeDouble(version.address, swVersion);
+}
+
+void update_settings() {
+  settings.updateValues();
 }
