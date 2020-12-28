@@ -43,6 +43,14 @@ void SensorPing::fastUpdate() {
   smooth();
 }
 
+bool SensorPing::setThreshold(const unsigned int &val) {
+  if (val >= 1 && val <= 100) {
+    threshold = val;
+    return true;
+  }
+  return false;
+}
+
 uint8_t SensorPing::get() const {
   return level;
 }

@@ -41,6 +41,10 @@ bool WaterPump::setInterval(const uint16_t &freq) {
   return false;
 }
 
+bool WaterPump::setThreshold(const unsigned int &val) {
+  return sonar->setThreshold(val);
+}
+
 uint16_t WaterPump::getInterval() const {
   return interval;
 }

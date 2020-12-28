@@ -16,7 +16,7 @@ Pump_pH::Pump_pH(const uint8_t &pin, uint16_t &duration, Scheduler* scheduler)
 };
 
 bool Pump_pH::setDuration(const uint16_t &sec) {
-  if (sec > 0 && sec < 10) {
+  if (sec > 0 && sec <= 10) {
     duration = sec * TASK_SECOND;
     return true;
   }

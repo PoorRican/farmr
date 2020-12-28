@@ -27,6 +27,7 @@ public:
    * Interval should not be too small.
    */
   bool setInterval(uint16_t &) final;
+  bool setDuration(uint16_t&);
 
   void poll() final;
 

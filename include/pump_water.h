@@ -35,6 +35,8 @@ public:
    * @return true if freq greater-than 0 and less-than or equal to 12
    */
   bool setInterval(const uint16_t&);
+  bool setThreshold(const unsigned int&);
+
   uint16_t getInterval() const;
 
   bool aboveThreshold() const final;

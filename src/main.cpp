@@ -2,21 +2,47 @@
 
 #include <Arduino.h>
 #include <TaskScheduler.h>
+#include <LiquidCrystal.h>
 #include "settings.h"
 #include "scheduler.h"
+#include "ui.h"
 
 #ifdef SENSORLESS_OPERATION
 #include "sensorless.h"
 #endif
 
+// Task Scheduler
 Scheduler ts;
-
 Task readSerial(TASK_IMMEDIATE, TASK_FOREVER, &read_serial, &ts, true);
+Task ui(TASK_IMMEDIATE, TASK_FOREVER, &pollUi, &ts, true);
 
 void startup_msg() {
   Serial.println("*******************");
   Serial.println("*      FARMR      *");
   Serial.println("*******************\n");
+}
+void lcd_startup_msg() {
+  lcd.setCursor(0, 1);
+  lcd.print("*****************");
+  delay(300);
+
+  lcd.setCursor(0, 0);
+  lcd.print("*****************");
+  lcd.setCursor(0, 1);
+  lcd.print("<**** FARMR ****>");
+  delay(750);
+
+  lcd.setCursor(0, 0);
+  lcd.print("<**** FARMR ****>");
+  lcd.setCursor(0, 1);
+  lcd.print("*****************");
+  delay(750);
+
+  lcd.setCursor(0, 0);
+  lcd.print("*****************");
+  lcd.setCursor(0, 1);
+  lcd.print("                 ");
+  delay(300);
 }
 
 void show_flags() {
@@ -38,7 +64,11 @@ void setup() {
   Serial.begin(9600);
   while (!Serial);
 
-  // Serial Startup
+  // LCD
+  lcd.begin(16,2);
+  lcd_startup_msg();
+  nav.showTitle = false;
+
   startup_msg();
   show_flags();
 
@@ -47,8 +77,13 @@ void setup() {
   acid_pump.init();
   base_pump.init();
 
-  // Build flags
+  // Analog Buttons
+  analogButtons.add(b1);
+  analogButtons.add(b2);
+  analogButtons.add(b3);
+  analogButtons.add(b4);
 
+  // Build flags
 #ifdef SENSORLESS_OPERATION
   init_sonar_levels();
   init_sCmd();

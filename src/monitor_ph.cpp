@@ -35,6 +35,18 @@ bool pHMonitor::setInterval(uint16_t &val) {
   return false;
 }
 
+bool pHMonitor::setDuration(uint16_t &val) {
+  bool _return = true;
+  _return = acidPump.setDuration(val);
+  if (_return) {
+    _return = basePump.setDuration(val);
+  }
+  else {
+    basePump.setDuration(val);
+  }
+  return _return;
+}
+
 void pHMonitor::poll() {
   sensor.update();
   float _ph = sensor.get();
