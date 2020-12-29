@@ -7,6 +7,7 @@
 #include "UI_Main.h"
 #include "buttons.h"
 #include "startup.h"
+#include "tasks.h"
 
 #ifdef SENSORLESS_OPERATION
 #include "sensorless.h"
@@ -17,6 +18,7 @@ Scheduler ts;
 Task readSerialCmd(TASK_IMMEDIATE, TASK_FOREVER, &read_serial, &ts, true);
 Task ui(TASK_IMMEDIATE, TASK_FOREVER, &pollUi, &ts, true);
 Task updateSettings(100, TASK_FOREVER, &update_settings, &ts, true);
+Task updateSensors(100, TASK_FOREVER, &update_sensors, &ts, true);
 
 void setup() {
   Serial.begin(9600);

@@ -38,6 +38,7 @@ TOGGLE(phMonitoring, togglePhMonitor, "Monitor: ", doExit, enterEvent, noStyle
 
 MENU(phMonitorMenu, "pH Monitor", doNothing, noEvent, noStyle
      ,SUBMENU(togglePhMonitor)
+     ,FIELD(currentPh, "Current pH","", 0,0,0,0, doNothing, noEvent, noStyle)
      ,FIELD(idealPh, "Ideal pH","", 1,14,1,0.1, setIdealPh, enterEvent, noStyle)
      ,FIELD(phPumpDuration, "Duration", "s", 1,10,1,1, setPhPumpDuration, enterEvent, noStyle)
      ,FIELD(phPollInterval, "Interval", "m", 5,120,5,1, setPhPollInterval, enterEvent, noStyle)

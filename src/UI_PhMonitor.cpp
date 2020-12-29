@@ -5,6 +5,8 @@
 #include "UI_PhMonitor.h"
 #include "settings.h"
 
+float currentPh = 0.0;      // Placeholder
+
 result setIdealPh(eventMask e, navNode& _nav, prompt &item) {
 #ifdef VERBOSE_OUTPUT
   Serial.print("Ideal pH set to ");

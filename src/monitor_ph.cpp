@@ -27,9 +27,14 @@ bool pHMonitor::setIdeal(float &val) {
   return false;
 }
 
+float pHMonitor::getCurrentPh() const {
+  return sensor.get();
+}
+
 bool pHMonitor::setInterval(uint16_t &val) {
   if (val >= 5 && val <= 120 ) {
     interval = val * TASK_SECOND;
+    pollingTimer->setInterval(interval);
     return true;
   }
   return false;

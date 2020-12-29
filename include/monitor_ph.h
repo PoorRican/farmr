@@ -22,6 +22,8 @@ public:
    */
   bool setIdeal(float &) final;
 
+  float getCurrentPh() const;
+
   /**
    * Constrains value to 5 to 120 seconds.
    * Interval should not be too small.

@@ -7,6 +7,8 @@
 
 #include <menu.h>
 
+extern float currentPh;
+
 void turnOnPhMonitor();
 void turnOffPhMonitor();
 
