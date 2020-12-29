@@ -5,6 +5,8 @@
 #include "UI_Reservoir.h"
 #include "settings.h"
 
+uint16_t reservoirLevel = 0;    // placeholder
+
 void turnOnReservoirPump() {
   reservoir_pump->startPumpOnTimer();
 }

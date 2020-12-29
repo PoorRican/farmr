@@ -7,6 +7,8 @@
 
 #include <menu.h>
 
+extern uint16_t reservoirLevel;
+
 void turnOnReservoirPump();
 void turnOffReservoirPump();
 

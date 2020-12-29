@@ -25,7 +25,7 @@ void setup() {
   while (!Serial);
 
   lcd.begin(16,2);
-  //nav.showTitle = false;
+  nav.showTitle = false;
 
   init_buttons();
 
