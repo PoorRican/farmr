@@ -7,6 +7,7 @@
 #include "UI_Main.h"
 #include "UI_Reservoir.h"
 #include "UI_PhMonitor.h"
+#include "UI_Settings.h"
 
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
@@ -43,9 +44,24 @@ MENU(phMonitorMenu, "pH Monitor", doNothing, noEvent, noStyle
      ,EXIT("< Back")
      );
 
+
+/// Settings Menu
+
+MENU(restoreDefaultsMenu, "Reset All", doNothing, enterEvent, noStyle
+     ,OP("Yes", restoreDefaults, enterEvent)
+     ,OP("No", doExit, enterEvent));
+
+MENU(settingsMenu, "Settings", doNothing, noEvent, noStyle
+     ,SUBMENU(restoreDefaultsMenu)
+     ,EXIT("< Back")
+);
+
+/// Main Menu
+
 MENU(mainMenu, "Home", doNothing, noEvent, wrapStyle
      ,SUBMENU(reservoirMenu)
      ,SUBMENU(phMonitorMenu)
+     ,SUBMENU(settingsMenu)
      );
 
 MENU_OUTPUTS(out, MAX_DEPTH
