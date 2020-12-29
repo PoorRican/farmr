@@ -9,7 +9,8 @@ void turnOnReservoirPump() {
   reservoir_pump->startPumpOnTimer();
 }
 void turnOffReservoirPump() {
-  reservoir_pump->startPumpOnTimer();
+  reservoir_pump->stopPumpOnTimer();
+  reservoir_pump->stopPumpOffTimer();
 }
 
 result setReservoirThreshold(eventMask e, navNode& _nav, prompt &item) {

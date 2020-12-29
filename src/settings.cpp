@@ -135,6 +135,8 @@ void Settings::writeDefaults() const {
   EEPROM.updateInt(reservoir_calibration_max.address, RESERVOIR_CALIBRATION_MAX);
   EEPROM.updateInt(reservoir_calibration_min.address, RESERVOIR_CALIBRATION_MIN);
   EEPROM.updateInt(reservoir_threshold.address, RESERVOIR_THRESHOLD);
+
+  init_objects();
 }
 
 bool Settings::checkVersion() const {

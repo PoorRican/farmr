@@ -8,11 +8,11 @@
 pHMonitor::pHMonitor(float &ideal, uint16_t &interval, SensorPH &sensor, Pump_pH &acidPump, Pump_pH &basePump, Scheduler *scheduler)
 : ProcessMonitor(ideal, interval), sensor(sensor), acidPump(acidPump), basePump(basePump) {
 
-  setIdeal(ideal);
-  setInterval(interval);
-
   pollingTimer = new Task(this->interval, TASK_FOREVER, pollPH);
   pollingTimer->setLtsPointer(this);
+
+  setIdeal(ideal);
+  setInterval(interval);
 }
 
 ProcessMonitor::ProcessType pHMonitor::getType() const {
@@ -33,8 +33,8 @@ float pHMonitor::getCurrentPh() const {
 
 bool pHMonitor::setInterval(uint16_t &val) {
   if (val >= 5 && val <= 120 ) {
-    interval = val * TASK_SECOND;
-    pollingTimer->setInterval(interval);
+    interval = val;
+    pollingTimer->setInterval(interval * TASK_SECOND);
     return true;
   }
   return false;

@@ -80,6 +80,7 @@ void start_reservoir_pumping() {
 void stop_reservoir_pumping() {
   Serial.println("Stopping reservoir pumping");
   reservoir_pump->stopPumpOnTimer();
+  reservoir_pump->stopPumpOffTimer();
 }
 
 void reservoir_above_threshold() {
