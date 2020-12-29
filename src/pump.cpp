@@ -20,7 +20,7 @@ void Pump::addTasks(Scheduler &scheduler) {
 }
 
 
-void Pump::startPumpOnTimer() const {
+void Pump::startPumpOnTimer() {
 #ifdef VERBOSE_OUTPUT
   Serial.println("'startPumpOnTimer' called");
 #endif
@@ -34,10 +34,12 @@ void Pump::stopPumpOnTimer() const {
   pumpTimer->disable();
 }
 
-void Pump::startPumpOffTimer() const {
+void Pump::startPumpOffTimer() {
 #ifdef VERBOSE_OUTPUT
   Serial.println("'startPumpOffTimer' called");
 #endif
+  pumpOffTimer->set(duration, TASK_ONCE, stopPump);
+  setDuration(duration);
   pumpOffTimer->enableDelayed();
 }
 

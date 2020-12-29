@@ -30,5 +30,5 @@ bool Pump_pH::aboveThreshold() const {
 
 void Pump_pH::restart() {
   pumpTimer->restart();
-  pumpOffTimer->restartDelayed(duration);
+  pumpOffTimer->restartDelayed(duration * TASK_SECOND);
 }

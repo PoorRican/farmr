@@ -25,7 +25,7 @@ MENU(reservoirMenu, "Reservoir", doNothing, noEvent, noStyle
      ,SUBMENU(toggleReservoirPump)
      ,FIELD(threshold, "Threshold", "%", 1, 100, 10, 1, setReservoirThreshold, enterEvent, noStyle)
      ,FIELD(reservoirDuration, "Duration", "s", 1, 12, 1, 1, setReservoirDuration, enterEvent, noStyle)
-     ,FIELD(reservoirInterval, "Interval", "s", 1, 12, 1, 1, setReservoirInterval, enterEvent, noStyle)
+     ,FIELD(reservoirInterval, "Interval", "h", 1, 12, 1, 1, setReservoirInterval, enterEvent, noStyle)
      ,EXIT("< Back")
      );
 

@@ -31,9 +31,9 @@ public:
   void addTasks(Scheduler&);
 
   // Timer Routines
-  void startPumpOnTimer() const;
+  void startPumpOnTimer();
   void stopPumpOnTimer() const;
-  void startPumpOffTimer() const;
+  void startPumpOffTimer();
   void stopPumpOffTimer() const;
 
   // Getters

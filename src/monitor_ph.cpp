@@ -32,9 +32,13 @@ float pHMonitor::getCurrentPh() const {
 }
 
 bool pHMonitor::setInterval(uint16_t &val) {
-  if (val >= 5 && val <= 120 ) {
+  if (val >= 1 && val <= 120 ) {
     interval = val;
+#ifdef BASIC_TESTING
     pollingTimer->setInterval(interval * TASK_SECOND);
+#else
+    pollingTimer->setInterval(interval * TASK_MINUTE);
+#endif
     return true;
   }
   return false;

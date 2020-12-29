@@ -8,7 +8,7 @@ WaterPump::WaterPump(const uint8_t &pin, uint16_t &duration, uint16_t &interval,
 : Pump(pin, duration), sonar(sonar) {
   pumpTimer = new Task(this->interval, TASK_FOREVER, startPump);
   pumpTimer->setLtsPointer(this);
-  pumpOffTimer = new Task(this->duration, TASK_FOREVER, stopPump);
+  pumpOffTimer = new Task(this->duration, TASK_ONCE, stopPump);
   pumpOffTimer->setLtsPointer(this);
 
   setInterval(interval);
@@ -23,7 +23,7 @@ bool WaterPump::setDuration(const uint16_t &min) {
 #ifdef BASIC_TESTING
     pumpOffTimer->setInterval(duration * TASK_SECOND);
 #else
-    pumpOffTimer->setInterval(duration * TASK_HOUR);
+    pumpOffTimer->setInterval(duration * TASK_MINUTE);
 #endif
     return true;
   }
