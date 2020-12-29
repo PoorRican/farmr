@@ -65,11 +65,16 @@ void unrecognized_command(const char* command) {
   Serial.println(s);
 }
 
-void init_sonar_levels() {
+void init_sensor_levels() {
+  Serial.println("Simulating sensor levels...");
+
+  // Reservoir Sonar
   reservoir_sonar->setMax(100);
   reservoir_sonar->setMin(0);
   reservoir_sonar->setLevel(50);
-  Serial.println("Sonar levels set...");
+
+  // pH Sensor
+  ph_sensor->setPH(7.0);
 }
 
 // Reservoir Operations

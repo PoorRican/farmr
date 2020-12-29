@@ -93,7 +93,7 @@ void init_io() {
 }
 
 void init_serial_operation() {
-  init_sonar_levels();
+  init_sensor_levels();
   init_sCmd();
 }
 
