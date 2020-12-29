@@ -42,6 +42,8 @@ void setup() {
 
   // TaskScheduler Initialisations
   init_tasks();
+
+  start_services();
 }
 
 void loop() {

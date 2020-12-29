@@ -103,3 +103,12 @@ void init_memory() {
   settings.readValues();
   Settings::init_objects();
 }
+
+void start_services() {
+  if (pumpingOn) {
+    reservoir_pump->startPumpOnTimer();
+  }
+  if (phMonitoring) {
+    ph_monitor->startPolling();
+  }
+}

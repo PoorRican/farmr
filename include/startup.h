@@ -41,4 +41,9 @@ void init_serial_operation();
  */
 void init_memory();
 
+/**
+ * Starts polling services.
+ */
+void start_services();
+
 #endif //FARMR_STARTUP_H
