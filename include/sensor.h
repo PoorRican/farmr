@@ -16,7 +16,7 @@ public:
     Light,
     Ec,
     pH,
-    Ping,
+    Level,
     Nitrate,
     Nitrite,
     NH3
@@ -35,7 +35,7 @@ public:
   virtual void fastUpdate() = 0;
 
 protected:
-  int _pin;
+  int pin;
   static const uint8_t sample_size = 10;  // Controls smoothness and responsiveness
 
   virtual void smooth() = 0;

@@ -16,7 +16,7 @@ SensorPing::SensorPing(const int &trigger, const int &echo)
 }
 
 Sensor::SensName SensorPing::getType() const {
-  return Sensor::Ping;
+  return Sensor::Level;
 }
 
 void SensorPing::init() {

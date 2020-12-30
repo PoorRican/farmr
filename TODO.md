@@ -4,3 +4,6 @@
   
 ## Implementations
 * Implement [PID](https://playground.arduino.cc/Code/PIDLibrary/) for pH and temperature control 
+
+## Testing
+* Test SensorLevel::update()
