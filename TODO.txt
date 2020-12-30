@@ -1,3 +1,0 @@
-TODO
-
-* Implement sending sensor values over Ethernet for logging (maybe a RasPi can be implemented)
