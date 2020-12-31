@@ -3,11 +3,11 @@
 //
 
 #include "Reservoir.h"
-#include "pump.h"
+#include "Relay.h"
 
 extern Scheduler ts;
 
-Reservoir::Reservoir(const uint16_t &interval, const uint8_t &threshold, WaterPump *waterPump, SensorLevel *sensorLevel)
+Reservoir::Reservoir(const uint16_t &interval, const uint8_t &threshold, PumpWater *waterPump, SensorLevel *sensorLevel)
 : interval(interval), threshold(threshold), pump(waterPump), level(sensorLevel) {
 
   cycleTimer = new Task(interval, TASK_FOREVER, cycleWater);

@@ -9,13 +9,13 @@ extern Scheduler ts;
 
 Settings settings;
 
-Pump_pH *acid_pump = nullptr;
-Pump_pH *base_pump = nullptr;
+PumpPh *acid_pump = nullptr;
+PumpPh *base_pump = nullptr;
 SensorPH *ph_sensor = nullptr;
 MonitorPh *ph_monitor = nullptr;
 
 SensorLevel *reservoir_level = nullptr;
-WaterPump *reservoir_pump = nullptr;
+PumpWater *reservoir_pump = nullptr;
 Reservoir *reservoir = nullptr;
 
 SensorTemp *sensor_temp = nullptr;
@@ -62,7 +62,7 @@ void Settings::getAddresses() {
 
   version.address = EEPROM.getAddress(sizeof(float));
 
-  // pH Pump/Monitor
+  // pH Relay/Monitor
   ph_mon_enabled.address = EEPROM.getAddress(sizeof(int));
   ideal_ph.address = EEPROM.getAddress(sizeof(float));
   ph_pump_duration.address = EEPROM.getAddress(sizeof(unsigned int));
@@ -78,7 +78,7 @@ void Settings::getAddresses() {
 }
 
 void Settings::readValues() {
-  // pH Pump/Monitor
+  // pH Relay/Monitor
   *(ph_mon_enabled.value) = (bool)EEPROM.readInt(ph_mon_enabled.address);
   *(ideal_ph.value) = EEPROM.readFloat(ideal_ph.address);
   *(ph_pump_duration.value) = EEPROM.readInt(ph_pump_duration.address);
@@ -109,14 +109,14 @@ void Settings::updateValues() const {
 
 void Settings::init_objects() {
   // Init pH Monitor Objects
-  acid_pump = new Pump_pH(ph_monitor_t.acidPin, phPumpDuration, &ts);
-  base_pump = new Pump_pH(ph_monitor_t.basePin, phPumpDuration, &ts);
+  acid_pump = new PumpPh(ph_monitor_t.acidPin, phPumpDuration);
+  base_pump = new PumpPh(ph_monitor_t.basePin, phPumpDuration);
   ph_sensor = new SensorPH(ph_monitor_t.sensorPin);
   ph_monitor = new MonitorPh(idealPh, phPollInterval, *ph_sensor, *acid_pump, *base_pump, &ts);
 
   // Init Reservoir Objects
   reservoir_level = new SensorLevel(reservoir_t.sensorPin);
-  reservoir_pump = new WaterPump(reservoir_t.pumpPin, reservoirDuration);
+  reservoir_pump = new PumpWater(reservoir_t.pumpPin, reservoirDuration);
   reservoir = new Reservoir(reservoirInterval, threshold, reservoir_pump, reservoir_level);
 
   // Temperature Objects
@@ -129,7 +129,7 @@ void Settings::writeDefaults() const {
 #endif
   updateVersion();
 
-  // pH Pump/Monitor
+  // pH Relay/Monitor
   EEPROM.updateInt(ph_mon_enabled.address, (int)PH_MONITOR_ENABLED);
   EEPROM.updateFloat(ideal_ph.address, IDEAL_PH);
   EEPROM.updateInt(ph_pump_duration.address, PH_POLL_DURATION);

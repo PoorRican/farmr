@@ -16,7 +16,7 @@ chainStream<0> in(NULL);
 // TODO: reservoir depth calibration
 
 // Reservoir Menus
-TOGGLE(pumpingOn, toggleReservoirPump, "Pump: ", doExit, enterEvent, noStyle
+TOGGLE(pumpingOn, toggleReservoirPump, "Relay: ", doExit, enterEvent, noStyle
        , VALUE("On", true, turnOnReservoirCycle, noEvent)
        , VALUE("Off", false, turnOffReservoirCycle, noEvent)
        );

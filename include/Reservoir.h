@@ -5,12 +5,12 @@
 #ifndef FARMR_RESERVOIR_H
 #define FARMR_RESERVOIR_H
 
-#include "pump_water.h"
+#include "PumpWater.h"
 #include "SensorLevel.h"
 
 class Reservoir {
 public:
-  Reservoir(const uint16_t &, const uint8_t &, WaterPump*, SensorLevel *);
+  Reservoir(const uint16_t &, const uint8_t &, PumpWater*, SensorLevel *);
   Reservoir(const Reservoir &) = default;
   Reservoir& operator=(const Reservoir&) = default;
 
@@ -44,7 +44,7 @@ public:
 
 protected:
   SensorLevel *level;
-  WaterPump *pump;
+  PumpWater *pump;
   Task *cycleTimer;
 
   uint16_t interval;

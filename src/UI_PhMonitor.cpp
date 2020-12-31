@@ -27,7 +27,7 @@ result setPhPollInterval(eventMask e, navNode& _nav, prompt &item) {
 
 result setPhPumpDuration(eventMask e, navNode& _nav, prompt &item) {
 #ifdef VERBOSE_OUTPUT
-  Serial.print("pH Pump Duration set to ");
+  Serial.print("pH Relay Duration set to ");
   Serial.println(phPumpDuration);
 #endif
   ph_monitor->setDuration(phPumpDuration);

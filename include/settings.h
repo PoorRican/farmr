@@ -24,22 +24,22 @@
 #include <Arduino.h>
 #include "SensorTemp.h"
 #include "SensorLevel.h"
-#include "pump_water.h"
-#include "pump_ph.h"
+#include "PumpWater.h"
+#include "PumpPh.h"
 #include "MonitorPh.h"
 #include "Reservoir.h"
 #include <EEPROMex.h>
 
 // pH Pumps/Sensors/Monitor
-extern Pump_pH *acid_pump;
-extern Pump_pH *base_pump;
+extern PumpPh *acid_pump;
+extern PumpPh *base_pump;
 
 extern SensorPH *ph_sensor;
 extern MonitorPh *ph_monitor;
 
 // Reservoir
 extern SensorLevel *reservoir_level;
-extern WaterPump *reservoir_pump;
+extern PumpWater *reservoir_pump;
 extern Reservoir *reservoir;
 
 // Temperature

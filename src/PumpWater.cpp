@@ -2,21 +2,15 @@
 // Created by Josue Figueroa on 12/11/20.
 //
 
-#include "pump_water.h"
+#include "PumpWater.h"
 
-WaterPump::WaterPump(const uint8_t &pin, uint16_t &duration)
-: Pump(pin, duration) {
-  pumpTimer = new Task(TASK_IMMEDIATE, TASK_ONCE, startPump);
-  pumpTimer->setLtsPointer(this);
-  pumpOffTimer = new Task(this->duration, TASK_ONCE, stopPump);
-  pumpOffTimer->setLtsPointer(this);
-
+PumpWater::PumpWater(const uint8_t &pin, uint16_t &duration)
+: Relay(pin, duration) {
   setDuration(duration);
-
 }
 
 // Setters
-bool WaterPump::setDuration(const uint16_t &min) {
+bool PumpWater::setDuration(const uint16_t &min) {
   if (min >= 1 && min <= 12) {
     duration = min;
 #ifdef BASIC_TESTING
@@ -29,11 +23,7 @@ bool WaterPump::setDuration(const uint16_t &min) {
   return false;
 }
 
-bool WaterPump::aboveThreshold() const {
-  return true;
-}
-
-void WaterPump::restart() {
+void PumpWater::restart() {
   pumpTimer->restart();
 #ifdef BASIC_TESTING
   pumpOffTimer->restartDelayed(duration * TASK_SECOND);

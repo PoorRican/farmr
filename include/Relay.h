@@ -2,8 +2,8 @@
 // Created by Josue Figueroa on 12/12/20.
 //
 
-#ifndef FARMR_PUMP_H
-#define FARMR_PUMP_H
+#ifndef FARMR_RELAY_H
+#define FARMR_RELAY_H
 
 #define _TASK_LTS_POINTER       // Compile with support for local task storage pointer
 
@@ -13,7 +13,11 @@
 
 extern Scheduler ts;
 
-class Pump {
+/**
+ * Represents a relay controlled by a relay circuit, where a logic-LOW turns on the relay.
+ * All timing tasks are handled internally. Derivative classes only need to overwrite `setDuration`
+ */
+class Relay {
 public:
   /**
    *
@@ -21,11 +25,11 @@ public:
    * @param duration : duration of pump being applied (in minutes)
    * @param interval : time between pump activations (in hours)
    */
-  explicit Pump(const uint8_t &pin, uint16_t &duration);
-  Pump(const Pump&) = default;
-  Pump& operator=(const Pump&) = default;
+  explicit Relay(const uint8_t &pin, uint16_t &duration);
+  Relay(const Relay&) = default;
+  Relay& operator=(const Relay&) = default;
 
-  ~Pump() = default;
+  ~Relay() = default;
 
   void init() const;
   void addTasks(Scheduler&);
@@ -40,7 +44,6 @@ public:
   bool getPumpOn() const;
   uint16_t getDuration() const;
   uint8_t getPin() const;
-  virtual bool aboveThreshold() const = 0;
 
   // Setters
   void setPumpOn(bool);
@@ -49,7 +52,7 @@ public:
 protected:
   bool pumpOn = false;
   uint8_t pin;
-  unsigned long duration;   // Max duration to keep pumpPin active
+  uint16_t duration;   /// Stores the raw value of time to keep pump activated
 
   Task *pumpTimer = nullptr;
   Task *pumpOffTimer = nullptr;
@@ -59,4 +62,4 @@ void startPump();
 void stopPump();
 
 
-#endif //FARMR_PUMP_H
+#endif //FARMR_RELAY_H

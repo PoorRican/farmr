@@ -10,7 +10,7 @@
         - Separate reservoir filled with mineral water, with both heating and cooling elements around the exterior.
         - A tube bended to be a coil contains liquid to be cooled or heated.
         - Recirculating pump is used to force liquid through tank.
-- [12V Peristaltic Pump](https://www.adafruit.com/product/1150)
+- [12V Peristaltic Relay](https://www.adafruit.com/product/1150)
 - [12" eTape Liquid Level Sensor (w/ Teflon Jacket)](https://www.adafruit.com/product/1786)
 - Tubing:
     * 2mm:

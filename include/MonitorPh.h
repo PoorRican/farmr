@@ -8,11 +8,11 @@
 #include <Arduino.h>
 #include "ProcessMonitor.h"
 #include "SensorPH.h"
-#include "pump_ph.h"
+#include "PumpPh.h"
 
 class MonitorPh : public ProcessMonitor {
 public:
-  MonitorPh(float &, uint16_t &, SensorPH &, Pump_pH &, Pump_pH &, Scheduler*);
+  MonitorPh(float &, uint16_t &, SensorPH &, PumpPh &, PumpPh &, Scheduler*);
 
   ProcessType getType() const final;
 
@@ -37,8 +37,8 @@ private:
                                     // to prevent buffer solution from continually being used
   const float tolerance = 0.2;      // tolerance between ideal and actual values
   SensorPH &sensor;
-  Pump_pH &acidPump;
-  Pump_pH &basePump;
+  PumpPh &acidPump;
+  PumpPh &basePump;
 
   void increase() final;
 
