@@ -4,10 +4,10 @@
 
 #define MAX_DEPTH 3
 
-#include "UI_Main.h"
-#include "UI_Reservoir.h"
-#include "UI_PhMonitor.h"
-#include "UI_Settings.h"
+#include "ui/UI_Main.h"
+#include "ui/UI_Reservoir.h"
+#include "ui/UI_PhMonitor.h"
+#include "ui/UI_Settings.h"
 
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 

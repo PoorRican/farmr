@@ -4,8 +4,8 @@
 
 #include "tasks.h"
 #include "settings.h"
-#include "UI_PhMonitor.h"
-#include "UI_Reservoir.h"
+#include "ui/UI_PhMonitor.h"
+#include "ui/UI_Reservoir.h"
 
 void update_sensors() {
   currentPh = ph_monitor->getCurrentPh();
