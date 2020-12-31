@@ -2,7 +2,7 @@
 // Created by Josue Figueroa on 12/13/20.
 //
 
-#include "SensorPH.h"
+#include "sensors/SensorPH.h"
 
 SensorPH::SensorPH(const int &pin) : Sensor(pin) {
   for (uint8_t i = 0; i < sample_size; i++) {

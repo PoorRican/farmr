@@ -3,7 +3,7 @@
 //
 
 
-#include "sensor_ping.h"
+#include "sensors/sensor_ping.h"
 
 SensorPing::SensorPing(const int &trigger, const int &echo)
 : Sensor(0), pinTrigger(trigger), pinEcho(echo), sonar(pinTrigger,pinEcho) {

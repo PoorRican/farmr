@@ -6,7 +6,7 @@
 #define FARMR_RESERVOIR_H
 
 #include "PumpWater.h"
-#include "SensorLevel.h"
+#include "sensors/SensorLevel.h"
 
 class Reservoir {
 public:

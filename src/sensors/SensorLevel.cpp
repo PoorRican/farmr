@@ -2,7 +2,7 @@
 // Created by Josue Figueroa on 12/29/20.
 //
 
-#include "SensorLevel.h"
+#include "sensors/SensorLevel.h"
 
 SensorLevel::SensorLevel(const uint8_t &pin) : Sensor(pin) {}
 

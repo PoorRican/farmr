@@ -7,7 +7,7 @@
 
 #include <Arduino.h>
 #include "ProcessMonitor.h"
-#include "SensorPH.h"
+#include "sensors/SensorPH.h"
 #include "PumpPh.h"
 
 class MonitorPh : public ProcessMonitor {

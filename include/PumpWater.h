@@ -10,7 +10,7 @@
 #include "Relay.h"
 #include <TaskSchedulerDeclarations.h>
 #include <Time.h>
-#include "SensorLevel.h"
+#include "sensors/SensorLevel.h"
 
 /**
  * Represents a pump that is activated for minutes at a time.

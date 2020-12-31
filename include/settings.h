@@ -22,8 +22,8 @@
 #define RESERVOIR_CALIBRATION_MIN 10
 
 #include <Arduino.h>
-#include "SensorTemp.h"
-#include "SensorLevel.h"
+#include "sensors/SensorTemp.h"
+#include "sensors/SensorLevel.h"
 #include "PumpWater.h"
 #include "PumpPh.h"
 #include "MonitorPh.h"

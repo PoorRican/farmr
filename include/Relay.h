@@ -9,7 +9,7 @@
 
 #include <Arduino.h>
 #include <TaskSchedulerDeclarations.h>
-#include "sensor_ping.h"
+#include "sensors/sensor_ping.h"
 
 extern Scheduler ts;
 

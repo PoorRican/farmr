@@ -2,7 +2,7 @@
 // Created by Josue Figueroa on 12/14/20.
 //
 
-#include "SensorTemp.h"
+#include "sensors/SensorTemp.h"
 
 DallasTemperature temperatureSensor(&oneWire);
 

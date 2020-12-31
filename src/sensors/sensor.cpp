@@ -2,7 +2,7 @@
 // Created by Josue Figueroa on 12/12/20.
 //
 
-#include "sensor.h"
+#include "sensors/sensor.h"
 
 // Constructors
 Sensor::Sensor(const int &pin) : pin(pin) {}
