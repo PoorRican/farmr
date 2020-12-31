@@ -12,7 +12,7 @@ Settings settings;
 Pump_pH *acid_pump = nullptr;
 Pump_pH *base_pump = nullptr;
 SensorPH *ph_sensor = nullptr;
-pHMonitor *ph_monitor = nullptr;
+MonitorPh *ph_monitor = nullptr;
 
 SensorLevel *reservoir_level = nullptr;
 WaterPump *reservoir_pump = nullptr;
@@ -111,7 +111,7 @@ void Settings::init_objects() {
   acid_pump = new Pump_pH(ph_monitor_t.acidPin, phPumpDuration, &ts);
   base_pump = new Pump_pH(ph_monitor_t.basePin, phPumpDuration, &ts);
   ph_sensor = new SensorPH(ph_monitor_t.sensorPin);
-  ph_monitor = new pHMonitor(idealPh, phPollInterval, *ph_sensor, *acid_pump, *base_pump, &ts);
+  ph_monitor = new MonitorPh(idealPh, phPollInterval, *ph_sensor, *acid_pump, *base_pump, &ts);
 
   // Init Reservoir Objects
   reservoir_level = new SensorLevel(reservoir_t.sensorPin);

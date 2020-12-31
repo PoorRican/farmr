@@ -3,9 +3,9 @@
 //
 
 #include "scheduler.h"
-#include "monitor_ph.h"
+#include "MonitorPh.h"
 
-pHMonitor::pHMonitor(float &ideal, uint16_t &interval, SensorPH &sensor, Pump_pH &acidPump, Pump_pH &basePump, Scheduler *scheduler)
+MonitorPh::MonitorPh(float &ideal, uint16_t &interval, SensorPH &sensor, Pump_pH &acidPump, Pump_pH &basePump, Scheduler *scheduler)
 : ProcessMonitor(ideal, interval), sensor(sensor), acidPump(acidPump), basePump(basePump) {
 
   pollingTimer = new Task(this->interval, TASK_FOREVER, pollPH);
@@ -15,11 +15,11 @@ pHMonitor::pHMonitor(float &ideal, uint16_t &interval, SensorPH &sensor, Pump_pH
   setInterval(interval);
 }
 
-ProcessMonitor::ProcessType pHMonitor::getType() const {
+ProcessMonitor::ProcessType MonitorPh::getType() const {
   return pH;
 }
 
-bool pHMonitor::setIdeal(float &val) {
+bool MonitorPh::setIdeal(float &val) {
   if (val >= 1.0 && val <= 14.0 ) {
     ideal = val;
     return true;
@@ -27,11 +27,11 @@ bool pHMonitor::setIdeal(float &val) {
   return false;
 }
 
-float pHMonitor::getCurrentPh() const {
+float MonitorPh::getCurrentPh() const {
   return sensor.get();
 }
 
-bool pHMonitor::setInterval(uint16_t &val) {
+bool MonitorPh::setInterval(uint16_t &val) {
   if (val >= 1 && val <= 120 ) {
     interval = val;
 #ifdef BASIC_TESTING
@@ -44,7 +44,7 @@ bool pHMonitor::setInterval(uint16_t &val) {
   return false;
 }
 
-bool pHMonitor::setDuration(uint16_t &val) {
+bool MonitorPh::setDuration(uint16_t &val) {
   bool _return = true;
   _return = acidPump.setDuration(val);
   if (_return) {
@@ -56,7 +56,7 @@ bool pHMonitor::setDuration(uint16_t &val) {
   return _return;
 }
 
-void pHMonitor::poll() {
+void MonitorPh::poll() {
   sensor.update();
   float _ph = sensor.get();
   // NOTE: avr `abs` does not seem to support float types
@@ -78,7 +78,7 @@ void pHMonitor::poll() {
 #endif
 }
 
-void pHMonitor::increase() {
+void MonitorPh::increase() {
 #ifdef VERBOSE_OUTPUT
   Serial.println("Attempting to increase pH");
 #endif
@@ -86,7 +86,7 @@ void pHMonitor::increase() {
   basePump.startPumpOnTimer();
 }
 
-void pHMonitor::decrease() {
+void MonitorPh::decrease() {
 #ifdef VERBOSE_OUTPUT
   Serial.println("Attempting to decrease pH");
 #endif
@@ -96,6 +96,6 @@ void pHMonitor::decrease() {
 
 void pollPH() {
   Task& t = ts.currentTask();
-  pHMonitor& p = *((pHMonitor*) t.getLtsPointer());
+  MonitorPh& p = *((MonitorPh*) t.getLtsPointer());
   p.poll();
 }

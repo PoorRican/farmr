@@ -2,17 +2,17 @@
 // Created by Josue Figueroa on 12/13/20.
 //
 
-#ifndef FARMR_MONITOR_PH_H
-#define FARMR_MONITOR_PH_H
+#ifndef FARMR_MONITORPH_H
+#define FARMR_MONITORPH_H
 
 #include <Arduino.h>
 #include "ProcessMonitor.h"
 #include "SensorPH.h"
 #include "pump_ph.h"
 
-class pHMonitor : public ProcessMonitor {
+class MonitorPh : public ProcessMonitor {
 public:
-  pHMonitor(float &, uint16_t &, SensorPH &, Pump_pH &, Pump_pH &, Scheduler*);
+  MonitorPh(float &, uint16_t &, SensorPH &, Pump_pH &, Pump_pH &, Scheduler*);
 
   ProcessType getType() const final;
 
@@ -48,4 +48,4 @@ private:
 
 void pollPH();
 
-#endif //FARMR_MONITOR_PH_H
+#endif //FARMR_MONITORPH_H
