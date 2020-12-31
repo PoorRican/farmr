@@ -4,7 +4,7 @@
 
 #include "SensorLevel.h"
 
-SensorLevel::SensorLevel(const int &pin) : Sensor(pin) {}
+SensorLevel::SensorLevel(const uint8_t &pin) : Sensor(pin) {}
 
 Sensor::SensName SensorLevel::getType() const {
   return Sensor::Level;

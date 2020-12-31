@@ -11,9 +11,10 @@
 
 class SensorLevel : public Sensor {
 public:
-  explicit SensorLevel(const int &pin);
+  explicit SensorLevel(const uint8_t &pin);
   SensorLevel(const SensorLevel&) = default;
   SensorLevel& operator=(const SensorLevel&) = default;
+
 
   ~SensorLevel() override = default;
 
@@ -36,11 +37,14 @@ public:
   uint8_t getThreshold() const;
   bool setThreshold(const uint8_t&);
 
+  // Placeholder
+  void fastUpdate() final {}
+
 #ifdef SENSORLESS_OPERATION
   /**
    * Debug function used for simulating water level
    */
-   void setLevel(uint8_t &val) {
+   void setLevel(uint8_t val) {
      level = val;
    }
 #endif
@@ -52,10 +56,13 @@ protected:
   uint8_t level = 0;
 
   /**
-   * Returns resistance of analog pin in Ohms
+   * Returns resistance of analog pumpPin in Ohms
    * Taken from https://www.adafruit.com/products/1786
    */
   float readResistance() const;
+
+  // Placeholder function
+  void smooth() final {}
 };
 
 #endif //FARMR_SENSORLEVEL_H

@@ -33,7 +33,7 @@ void setup() {
   show_flags();
 
   init_memory();
-  init_io();            // objects must be created before pin initialization
+  init_io();            // objects must be created before pumpPin initialization
 
   // Build flags
 #ifdef SENSORLESS_OPERATION

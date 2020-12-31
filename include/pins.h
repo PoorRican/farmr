@@ -14,9 +14,8 @@ struct {
 } ph_monitor_t;
 
 struct {
-  const uint8_t trigger = 3;
-  const uint8_t echo = 4;
-  const uint8_t pin = 50;
+  const uint8_t sensorPin = 0;
+  const uint8_t pumpPin = 50;
 } reservoir_t;
 
 #endif //FARMR_PINS_H

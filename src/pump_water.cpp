@@ -4,8 +4,8 @@
 
 #include "pump_water.h"
 
-WaterPump::WaterPump(const uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorPing *sonar, Scheduler *scheduler)
-: Pump(pin, duration), sonar(sonar) {
+WaterPump::WaterPump(const uint8_t &pin, uint16_t &duration, uint16_t &interval, SensorLevel *level, Scheduler *scheduler)
+: Pump(pin, duration), level(level) {
   pumpTimer = new Task(this->interval, TASK_FOREVER, startPump);
   pumpTimer->setLtsPointer(this);
   pumpOffTimer = new Task(this->duration, TASK_ONCE, stopPump);
@@ -43,8 +43,8 @@ bool WaterPump::setInterval(const uint16_t &freq) {
   return false;
 }
 
-bool WaterPump::setThreshold(const unsigned int &val) {
-  return sonar->setThreshold(val);
+bool WaterPump::setThreshold(const uint8_t &val) {
+  return level->setThreshold(val);
 }
 
 uint16_t WaterPump::getInterval() const {
@@ -52,5 +52,5 @@ uint16_t WaterPump::getInterval() const {
 }
 
 bool WaterPump::aboveThreshold() const {
-  return sonar->above_threshold();
+  return level->aboveThreshold();
 }

@@ -80,7 +80,7 @@ void startPump() {
     p.startPumpOffTimer();
 
 #ifdef BASIC_TESTING
-    String feedback = "Pump (at pin " + (String)p.getPin() + ") turned on";
+    String feedback = "Pump (at pumpPin " + (String)p.getPin() + ") turned on";
     Serial.println(feedback);
 #endif
   }
@@ -91,7 +91,7 @@ void startPump() {
     p.stopPumpOffTimer();
 
 #ifdef BASIC_TESTING
-    String feedback = "Error turning pump on (pin " + (String)p.getPin() + ")";
+    String feedback = "Error turning pump on (pumpPin " + (String)p.getPin() + ")";
     Serial.println(feedback);
 #endif
   }
@@ -105,7 +105,7 @@ void stopPump() {
   p.setPumpOn(false);
 
 #ifdef BASIC_TESTING
-  String feedback = "Pump (pin " + (String)p.getPin() + ") turned off";
+  String feedback = "Pump (pumpPin " + (String)p.getPin() + ") turned off";
   Serial.println(feedback);
 #endif
 }

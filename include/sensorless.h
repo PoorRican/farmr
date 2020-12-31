@@ -29,7 +29,7 @@ void unrecognized_command(const char*);
 
 /**
  * Initializes preset levels of all mock sonar sensors
- * so that pin-protection is not activated.
+ * so that pumpPin-protection is not activated.
  */
 void init_sensor_levels();
 

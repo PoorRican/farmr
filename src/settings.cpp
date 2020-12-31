@@ -14,7 +14,7 @@ Pump_pH *base_pump = nullptr;
 SensorPH *ph_sensor = nullptr;
 pHMonitor *ph_monitor = nullptr;
 
-SensorPing *reservoir_sonar = nullptr;
+SensorLevel *reservoir_level = nullptr;
 WaterPump *reservoir_pump = nullptr;
 
 double swVersion = VERSION;
@@ -112,8 +112,8 @@ void Settings::init_objects() {
   ph_monitor = new pHMonitor(idealPh, phPollInterval, *ph_sensor, *acid_pump, *base_pump, &ts);
 
   // Init Reservoir Objects
-  reservoir_sonar = new SensorPing(reservoir_t.trigger, reservoir_t.echo);
-  reservoir_pump = new WaterPump(reservoir_t.pin, reservoirDuration, reservoirInterval, reservoir_sonar, &ts);
+  reservoir_level = new SensorLevel(reservoir_t.sensorPin);
+  reservoir_pump = new WaterPump(reservoir_t.pumpPin, reservoirDuration, reservoirInterval, reservoir_level, &ts);
 }
 
 void Settings::writeDefaults() const {

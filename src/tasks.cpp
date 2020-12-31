@@ -9,5 +9,5 @@
 
 void update_sensors() {
   currentPh = ph_monitor->getCurrentPh();
-  reservoirLevel = reservoir_sonar->get();
+  reservoirLevel = reservoir_level->get();
 }

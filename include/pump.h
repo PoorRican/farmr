@@ -17,7 +17,7 @@ class Pump {
 public:
   /**
    *
-   * @param pin : Output pin of pump
+   * @param pin : Output pumpPin of pump
    * @param duration : duration of pump being applied (in minutes)
    * @param interval : time between pump activations (in hours)
    */
@@ -49,7 +49,7 @@ public:
 protected:
   bool pumpOn = false;
   uint8_t pin;
-  unsigned long duration;   // Max duration to keep pin active
+  unsigned long duration;   // Max duration to keep pumpPin active
 
   Task *pumpTimer = nullptr;
   Task *pumpOffTimer = nullptr;
