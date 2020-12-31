@@ -25,7 +25,6 @@ void init_sCmd() {
   sCmd.addCommand("stop_reservoir_pumping", stop_reservoir_pumping);
 
   sCmd.addCommand("reservoir_pump_on", reservoir_pump_on);
-  sCmd.addCommand("reservoir_above_threshold", reservoir_above_threshold);
 
   sCmd.addCommand("set_reservoir_duration", set_reservoir_duration);
   sCmd.addCommand("get_reservoir_duration", get_reservoir_duration);
@@ -84,11 +83,6 @@ void stop_reservoir_pumping() {
   Serial.println("Stopping reservoir pumping");
   reservoir_pump->stopPumpOnTimer();
   reservoir_pump->stopPumpOffTimer();
-}
-
-void reservoir_above_threshold() {
-  String s = "Reservoir is " + (String)(reservoir_pump->aboveThreshold() ? "above" : "below") + " threshold";
-  Serial.println(s);
 }
 
 void reservoir_pump_on() {
