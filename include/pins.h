@@ -7,6 +7,8 @@
 
 #include "Arduino.h"
 
+#define ONE_WIRE_BUS 1
+
 struct {
   const uint8_t acidPin = 52;
   const uint8_t basePin = 53;
@@ -17,5 +19,11 @@ struct {
   const uint8_t sensorPin = 0;
   const uint8_t pumpPin = 50;
 } reservoir_t;
+
+struct {
+  const uint8_t sensorPin = ONE_WIRE_BUS;
+  const uint8_t heaterPin = 54;
+  const uint8_t coolerPin = 55;
+} temp_t;
 
 #endif //FARMR_PINS_H

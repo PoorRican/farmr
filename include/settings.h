@@ -22,6 +22,7 @@
 #define RESERVOIR_CALIBRATION_MIN 10
 
 #include <Arduino.h>
+#include "SensorTemp.h"
 #include "SensorLevel.h"
 #include "pump_water.h"
 #include "pump_ph.h"
@@ -38,6 +39,10 @@ extern pHMonitor *ph_monitor;
 // Reservoir
 extern SensorLevel *reservoir_level;
 extern WaterPump *reservoir_pump;
+
+// Temperature
+extern DallasTemperature temperatureSensor;
+extern SensorTemp *sensor_temp;
 
 // Global Variables
 extern bool updateEEPROM;

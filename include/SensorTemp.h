@@ -8,31 +8,33 @@
 #include "sensor.h"
 #include <DallasTemperature.h>
 
-extern DallasTemperature temperature;
+extern OneWire oneWire;
+extern DallasTemperature temperatureSensor;
 
 class SensorTemp: Sensor {
 public:
-  SensorTemp(const int &pin);
+  SensorTemp(const uint8_t &, DallasTemperature*);
   SensorTemp(const SensorTemp&) = default;
   SensorTemp& operator=(const SensorTemp&) = default;
-  ~SensorTemp() = default;
+  ~SensorTemp() override = default;
 
-  SensName getType() const;
+  SensName getType()  const final;
 
-  void init();
-  void update();
-  void fastUpdate();
+  void init() final;
+  void update() final;
+  void fastUpdate() final {};
   float get() const;
-  float getRaw() const;
   void setCelsius(boolean);
 
 protected:
+  DallasTemperature *sensor;
+
   boolean celsiusMode = true;
   uint8_t sample_counter = 0;
   float readings[sample_size];
-  float temp;
+  float temperature;
 
-  void smooth();
+  void smooth() final {}
 };
 
 

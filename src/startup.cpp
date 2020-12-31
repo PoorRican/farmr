@@ -90,6 +90,7 @@ void init_io() {
   reservoir_pump->init();
   acid_pump->init();
   base_pump->init();
+  sensor_temp->init();
 }
 
 void init_serial_operation() {

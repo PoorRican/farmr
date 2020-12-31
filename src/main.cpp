@@ -2,11 +2,13 @@
 
 #include <Arduino.h>
 #include <TaskScheduler.h>
+#include <OneWire.h>
 #include "settings.h"
 #include "scheduler.h"
 #include "UI_Main.h"
 #include "buttons.h"
 #include "startup.h"
+#include "pins.h"
 #include "tasks.h"
 
 #ifdef SENSORLESS_OPERATION
@@ -19,6 +21,8 @@ Task readSerialCmd(TASK_IMMEDIATE, TASK_FOREVER, &read_serial, &ts, true);
 Task ui(TASK_IMMEDIATE, TASK_FOREVER, &pollUi, &ts, true);
 Task updateSettings(100, TASK_FOREVER, &update_settings, &ts, true);
 Task updateSensors(100, TASK_FOREVER, &update_sensors, &ts, true);
+
+OneWire oneWire(ONE_WIRE_BUS);
 
 void setup() {
   Serial.begin(9600);

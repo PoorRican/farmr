@@ -17,6 +17,8 @@ pHMonitor *ph_monitor = nullptr;
 SensorLevel *reservoir_level = nullptr;
 WaterPump *reservoir_pump = nullptr;
 
+SensorTemp *sensor_temp = nullptr;
+
 double swVersion = VERSION;
 bool updateEEPROM = false;
 
@@ -114,6 +116,9 @@ void Settings::init_objects() {
   // Init Reservoir Objects
   reservoir_level = new SensorLevel(reservoir_t.sensorPin);
   reservoir_pump = new WaterPump(reservoir_t.pumpPin, reservoirDuration, reservoirInterval, reservoir_level, &ts);
+
+  // Temperature Objects
+  sensor_temp = new SensorTemp(temp_t.sensorPin, &temperatureSensor);
 }
 
 void Settings::writeDefaults() const {
