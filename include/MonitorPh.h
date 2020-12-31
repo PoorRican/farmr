@@ -12,7 +12,7 @@
 
 class MonitorPh : public ProcessMonitor {
 public:
-  MonitorPh(float &, uint16_t &, SensorPH &, PumpPh &, PumpPh &, Scheduler*);
+  MonitorPh(float &, uint16_t &, SensorPH &, PumpPh &, PumpPh &);
 
   ProcessType getType() const final;
 

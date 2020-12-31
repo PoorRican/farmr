@@ -5,7 +5,7 @@
 #include "scheduler.h"
 #include "MonitorPh.h"
 
-MonitorPh::MonitorPh(float &ideal, uint16_t &interval, SensorPH &sensor, PumpPh &acidPump, PumpPh &basePump, Scheduler *scheduler)
+MonitorPh::MonitorPh(float &ideal, uint16_t &interval, SensorPH &sensor, PumpPh &acidPump, PumpPh &basePump)
 : ProcessMonitor(ideal, interval), sensor(sensor), acidPump(acidPump), basePump(basePump) {
 
   pollingTimer = new Task(this->interval, TASK_FOREVER, pollPH);
