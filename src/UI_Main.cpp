@@ -17,8 +17,8 @@ chainStream<0> in(NULL);
 
 // Reservoir Menus
 TOGGLE(pumpingOn, toggleReservoirPump, "Pump: ", doExit, enterEvent, noStyle
-       ,VALUE("On", true, turnOnReservoirPump, noEvent)
-       ,VALUE("Off", false, turnOffReservoirPump, noEvent)
+       , VALUE("On", true, turnOnReservoirCycle, noEvent)
+       , VALUE("Off", false, turnOffReservoirCycle, noEvent)
        );
 
 MENU(reservoirMenu, "Reservoir", doNothing, noEvent, noStyle

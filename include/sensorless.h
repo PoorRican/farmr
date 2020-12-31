@@ -40,11 +40,11 @@ void stop_reservoir_pumping();
 void reservoir_above_threshold();
 void reservoir_pump_on();
 
-void set_reservoir_pump_duration();
-void get_reservoir_pump_duration();
+void set_reservoir_duration();
+void get_reservoir_duration();
 
-void set_reservoir_pump_interval();
-void get_reservoir_pump_interval();
+void set_reservoir_interval();
+void get_reservoir_interval();
 
 // pH operations
 void set_ph();

@@ -27,11 +27,11 @@ void init_sCmd() {
   sCmd.addCommand("reservoir_pump_on", reservoir_pump_on);
   sCmd.addCommand("reservoir_above_threshold", reservoir_above_threshold);
 
-  sCmd.addCommand("set_reservoir_duration", set_reservoir_pump_duration);
-  sCmd.addCommand("get_reservoir_duration", get_reservoir_pump_duration);
+  sCmd.addCommand("set_reservoir_duration", set_reservoir_duration);
+  sCmd.addCommand("get_reservoir_duration", get_reservoir_duration);
 
-  sCmd.addCommand("set_reservoir_interval", set_reservoir_pump_interval);
-  sCmd.addCommand("get_reservoir_interval", get_reservoir_pump_interval);
+  sCmd.addCommand("set_reservoir_interval", set_reservoir_interval);
+  sCmd.addCommand("get_reservoir_interval", get_reservoir_interval);
 
   // pH sensor commands
   sCmd.addCommand("set_ph", set_ph);
@@ -96,11 +96,11 @@ void reservoir_pump_on() {
   Serial.println(s);
 }
 
-void set_reservoir_pump_duration() {
+void set_reservoir_duration() {
   char* arg;
   arg = sCmd.next();
   if (arg != nullptr) {
-    reservoir_pump->setDuration(atoi(arg));
+    reservoir->setDuration(atoi(arg));
     Serial.print("reservoir duration set to ");
     Serial.println(arg);
   }
@@ -108,16 +108,16 @@ void set_reservoir_pump_duration() {
     Serial.println("no argument given");
   }
 }
-void get_reservoir_pump_duration() {
+void get_reservoir_duration() {
   Serial.print("reservoir duration is set to ");
-  Serial.println(reservoir_pump->getDuration());
+  Serial.println(reservoir->getDuration());
 }
 
-void set_reservoir_pump_interval() {
+void set_reservoir_interval() {
   char* arg;
   arg = sCmd.next();
   if (arg != nullptr) {
-    reservoir_pump->setInterval(atoi(arg));
+    reservoir->setInterval(atoi(arg));
     Serial.print("reservoir interval set to ");
     Serial.println(arg);
   }
@@ -125,9 +125,9 @@ void set_reservoir_pump_interval() {
     Serial.println("no argument given");
   }
 }
-void get_reservoir_pump_interval() {
+void get_reservoir_interval() {
   Serial.print("reservoir interval is set to ");
-  Serial.println(reservoir_pump->getInterval());
+  Serial.println(reservoir->getInterval());
 }
 
 // pH Sensor Operations

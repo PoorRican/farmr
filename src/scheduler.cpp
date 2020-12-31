@@ -12,6 +12,8 @@ void init_tasks() {
   base_pump->addTasks(ts);
   reservoir_pump->addTasks(ts);
 
+  reservoir->addTasks(ts);
+
   // Monitor Tasks
   ph_monitor->addTasks(ts);
 }

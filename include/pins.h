@@ -17,7 +17,7 @@ struct {
 
 struct {
   const uint8_t sensorPin = 0;
-  const uint8_t pumpPin = 50;
+  const uint8_t pumpPin = 13;
 } reservoir_t;
 
 struct {

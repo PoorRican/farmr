@@ -5,14 +5,13 @@
 #include "UI_Reservoir.h"
 #include "settings.h"
 
-uint16_t reservoirLevel = 0;    // placeholder
+uint8_t reservoirLevel = 0;    // placeholder
 
-void turnOnReservoirPump() {
-  reservoir_pump->startPumpOnTimer();
+void turnOnReservoirCycle() {
+  reservoir->startCycle();
 }
-void turnOffReservoirPump() {
-  reservoir_pump->stopPumpOnTimer();
-  reservoir_pump->stopPumpOffTimer();
+void turnOffReservoirCycle() {
+  reservoir->stopCycle();
 }
 
 result setReservoirThreshold(eventMask e, navNode& _nav, prompt &item) {
@@ -20,7 +19,7 @@ result setReservoirThreshold(eventMask e, navNode& _nav, prompt &item) {
   Serial.print("Threshold set to ");
   Serial.println(threshold);
 #endif
-  reservoir_pump->setThreshold(threshold);
+  reservoir->setThreshold(threshold);
   return proceed;
 }
 
@@ -29,7 +28,7 @@ result setReservoirDuration(eventMask e, navNode& _nav, prompt &item) {
   Serial.print("Reservoir pump duration set to ");
   Serial.println(reservoirDuration);
 #endif
-  reservoir_pump->setDuration(reservoirDuration);
+  reservoir->setDuration(reservoirDuration);
   return proceed;
 }
 
@@ -38,6 +37,6 @@ result setReservoirInterval(eventMask e, navNode& _nav, prompt &item) {
   Serial.print("Reservoir pump interval set to ");
   Serial.println(reservoirInterval);
 #endif
-  reservoir_pump->setInterval(reservoirInterval);
+  reservoir->setInterval(reservoirInterval);
   return proceed;
 }

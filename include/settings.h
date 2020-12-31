@@ -27,6 +27,7 @@
 #include "pump_water.h"
 #include "pump_ph.h"
 #include "MonitorPh.h"
+#include "Reservoir.h"
 #include <EEPROMex.h>
 
 // pH Pumps/Sensors/Monitor
@@ -39,6 +40,7 @@ extern MonitorPh *ph_monitor;
 // Reservoir
 extern SensorLevel *reservoir_level;
 extern WaterPump *reservoir_pump;
+extern Reservoir *reservoir;
 
 // Temperature
 extern DallasTemperature temperatureSensor;

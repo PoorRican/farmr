@@ -7,10 +7,10 @@
 
 #include <menu.h>
 
-extern uint16_t reservoirLevel;
+extern uint8_t reservoirLevel;
 
-void turnOnReservoirPump();
-void turnOffReservoirPump();
+void turnOnReservoirCycle();
+void turnOffReservoirCycle();
 
 result setReservoirThreshold(eventMask,navNode&, prompt&);
 result setReservoirDuration(eventMask,navNode&, prompt&);

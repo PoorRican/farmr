@@ -16,6 +16,7 @@ MonitorPh *ph_monitor = nullptr;
 
 SensorLevel *reservoir_level = nullptr;
 WaterPump *reservoir_pump = nullptr;
+Reservoir *reservoir = nullptr;
 
 SensorTemp *sensor_temp = nullptr;
 
@@ -115,7 +116,8 @@ void Settings::init_objects() {
 
   // Init Reservoir Objects
   reservoir_level = new SensorLevel(reservoir_t.sensorPin);
-  reservoir_pump = new WaterPump(reservoir_t.pumpPin, reservoirDuration, reservoirInterval, reservoir_level, &ts);
+  reservoir_pump = new WaterPump(reservoir_t.pumpPin, reservoirDuration);
+  reservoir = new Reservoir(reservoirInterval, threshold, reservoir_pump, reservoir_level);
 
   // Temperature Objects
   sensor_temp = new SensorTemp(temp_t.sensorPin, &temperatureSensor);
