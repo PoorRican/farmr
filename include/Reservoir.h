@@ -5,7 +5,7 @@
 #ifndef FARMR_RESERVOIR_H
 #define FARMR_RESERVOIR_H
 
-#include "PumpWater.h"
+#include "appliances/PumpWater.h"
 #include "sensors/SensorLevel.h"
 
 class Reservoir {

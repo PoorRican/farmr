@@ -3,7 +3,7 @@
 //
 
 #include "Reservoir.h"
-#include "Relay.h"
+#include "appliances/Relay.h"
 
 extern Scheduler ts;
 

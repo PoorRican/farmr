@@ -2,7 +2,7 @@
 // Created by Josue Figueroa on 12/11/20.
 //
 
-#include "PumpWater.h"
+#include "appliances/PumpWater.h"
 
 PumpWater::PumpWater(const uint8_t &pin, uint16_t &duration)
 : Relay(pin, duration) {

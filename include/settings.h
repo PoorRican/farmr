@@ -24,8 +24,8 @@
 #include <Arduino.h>
 #include "sensors/SensorTemp.h"
 #include "sensors/SensorLevel.h"
-#include "PumpWater.h"
-#include "PumpPh.h"
+#include "appliances/PumpWater.h"
+#include "appliances/PumpPh.h"
 #include "MonitorPh.h"
 #include "Reservoir.h"
 #include <EEPROMex.h>

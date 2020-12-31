@@ -2,7 +2,7 @@
 // Created by Josue Figueroa on 12/12/20.
 //
 
-#include "PumpPh.h"
+#include "appliances/PumpPh.h"
 
 PumpPh::PumpPh(const uint8_t &pin, uint16_t &duration)
 : Relay(pin, duration) {

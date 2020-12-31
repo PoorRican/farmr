@@ -3,7 +3,7 @@
 //
 
 #include "scheduler.h"
-#include "Relay.h"
+#include "appliances/Relay.h"
 
 Relay::Relay(const uint8_t &pin, uint16_t &duration)
 : pin(pin), duration(duration) {
