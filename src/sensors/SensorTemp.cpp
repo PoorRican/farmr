@@ -32,3 +32,7 @@ float SensorTemp::get() const {
 void SensorTemp::setCelsius(boolean v) {
   celsiusMode = v;
 }
+
+bool SensorTemp::getCelsius() const {
+  return celsiusMode;
+}

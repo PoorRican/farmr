@@ -8,3 +8,4 @@
 
 ## Testing
 * Test SensorLevel::update()
+* Test MonitorTemp::setIdeal()

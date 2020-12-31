@@ -30,4 +30,4 @@ add_custom_target(
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-add_executable(Z_DUMMY_TARGET ${SRC_LIST} src/Reservoir.cpp include/Reservoir.h)
+add_executable(Z_DUMMY_TARGET ${SRC_LIST} src/Reservoir.cpp include/Reservoir.h src/MonitorTemp.cpp include/MonitorTemp.h src/appliances/ThermoElectricElement.cpp include/appliances/ThermoElectricElement.h)

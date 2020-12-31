@@ -25,6 +25,7 @@ public:
   void fastUpdate() final {};
   float get() const;
   void setCelsius(boolean);
+  bool getCelsius() const;
 
 protected:
   DallasTemperature *sensor;

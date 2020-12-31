@@ -20,7 +20,8 @@ public:
     None,
     Filtration,
     Nitrobacter,
-    pH
+    pH,
+    Temperature
   };
   explicit ProcessMonitor(float &ideal, uint16_t &interval);
 
