@@ -72,6 +72,9 @@ void init_sensor_levels() {
 
   // pH Sensor
   ph_sensor->setPH(7.0);
+
+  // Temp Sensor
+  sensor_temp->setTemp(25);
 }
 
 // Reservoir Operations

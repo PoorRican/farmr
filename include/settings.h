@@ -5,7 +5,7 @@
 #ifndef FARMR_SETTINGS_H
 #define FARMR_SETTINGS_H
 
-#define VERSION 0.1
+#define VERSION 0.11
 
 // pH Monitor Defualts
 #define IDEAL_PH 7.5
@@ -21,11 +21,18 @@
 #define RESERVOIR_CALIBRATION_MAX 110
 #define RESERVOIR_CALIBRATION_MIN 10
 
+// Temperature Defaults
+#define IDEAL_TEMP 23.89
+#define TEMP_MONITORING_ENABLED true
+#define TEMP_DURATION 15
+#define TEMP_INTERVAL 30
+
 #include <Arduino.h>
 #include "sensors/SensorTemp.h"
 #include "sensors/SensorLevel.h"
 #include "appliances/PumpWater.h"
 #include "appliances/PumpPh.h"
+#include "MonitorTemp.h"
 #include "MonitorPh.h"
 #include "Reservoir.h"
 #include <EEPROMex.h>
@@ -43,8 +50,13 @@ extern PumpWater *reservoir_pump;
 extern Reservoir *reservoir;
 
 // Temperature
-extern DallasTemperature temperatureSensor;
+extern OneWire oneWire;
+extern DallasTemperature *temperatureSensor;
 extern SensorTemp *sensor_temp;
+extern ThermoElectricElement *heating_element;
+extern ThermoElectricElement *cooling_element;
+extern PumpWater *pump_temp;
+extern MonitorTemp *monitor_temp;
 
 // Global Variables
 extern bool updateEEPROM;
@@ -64,6 +76,11 @@ extern uint16_t reservoirInterval;
 extern uint16_t reservoirMax;
 extern uint16_t reservoirMin;
 
+// Temperature Variables
+extern bool tempMonitoring;
+extern float idealTemp;
+extern uint16_t tempInterval;
+extern uint16_t tempDuration;
 
 template <typename T>
 struct mem_t {
@@ -117,6 +134,11 @@ private:
   mem_t<uint16_t> reservoir_calibration_max;
   mem_t<uint16_t> reservoir_calibration_min;
   mem_t<uint16_t> reservoir_threshold;
+
+  mem_t<bool> temp_mon_enabled;
+  mem_t<float> ideal_temp;
+  mem_t<uint16_t> temp_duration;
+  mem_t<uint16_t> temp_interval;
 };
 
 extern Settings settings;

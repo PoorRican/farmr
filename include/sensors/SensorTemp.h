@@ -8,9 +8,6 @@
 #include "sensor.h"
 #include <DallasTemperature.h>
 
-extern OneWire oneWire;
-extern DallasTemperature temperatureSensor;
-
 class SensorTemp: Sensor {
 public:
   SensorTemp(const uint8_t &, DallasTemperature*);
@@ -26,6 +23,15 @@ public:
   float get() const;
   void setCelsius(boolean);
   bool getCelsius() const;
+
+#ifdef SENSORLESS_OPERATION
+  /**
+   * Debug flag used for manually setting `pH`
+   */
+  void setTemp(float val) {
+    temperature = val;
+  }
+#endif
 
 protected:
   DallasTemperature *sensor;

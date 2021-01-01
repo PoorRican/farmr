@@ -3,8 +3,7 @@
 //
 
 #include "sensors/SensorTemp.h"
-
-DallasTemperature temperatureSensor(&oneWire);
+#include "pins.h"
 
 SensorTemp::SensorTemp(const uint8_t &pin, DallasTemperature *sensor) : Sensor(pin), sensor(sensor) {
 }
@@ -14,8 +13,10 @@ Sensor::SensName SensorTemp::getType() const {
 }
 
 void SensorTemp::init() {
+#ifndef SENSORLESS_OPERATION
   sensor->begin();
   sensor->setResolution(11);
+#endif
 }
 
 void SensorTemp::update() {

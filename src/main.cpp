@@ -22,8 +22,6 @@ Task ui(TASK_IMMEDIATE, TASK_FOREVER, &pollUi, &ts, true);
 Task updateSettings(100, TASK_FOREVER, &update_settings, &ts, true);
 Task updateSensors(100, TASK_FOREVER, &update_sensors, &ts, true);
 
-OneWire oneWire(ONE_WIRE_BUS);
-
 void setup() {
   Serial.begin(9600);
   while (!Serial);

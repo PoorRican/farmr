@@ -3,6 +3,7 @@
 //
 
 #include "settings.h"
+#include "appliances/ThermoElectricElement.h"
 #include "pins.h"
 
 extern Scheduler ts;
@@ -18,7 +19,13 @@ SensorLevel *reservoir_level = nullptr;
 PumpWater *reservoir_pump = nullptr;
 Reservoir *reservoir = nullptr;
 
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature *temperatureSensor = new DallasTemperature(&oneWire);
 SensorTemp *sensor_temp = nullptr;
+ThermoElectricElement *heating_element = nullptr;
+ThermoElectricElement *cooling_element = nullptr;
+PumpWater *pump_temp = nullptr;
+MonitorTemp *monitor_temp = nullptr;
 
 double swVersion = VERSION;
 bool updateEEPROM = false;
@@ -36,6 +43,12 @@ uint16_t reservoirDuration = RESERVOIR_DURATION;
 uint16_t reservoirInterval = RESERVOIR_INTERVAL;
 uint16_t reservoirMax = RESERVOIR_CALIBRATION_MAX;
 uint16_t reservoirMin = RESERVOIR_CALIBRATION_MIN;
+
+// Temperature Defaults
+bool tempMonitoring = TEMP_MONITORING_ENABLED;
+float idealTemp = IDEAL_TEMP;
+uint16_t tempInterval = TEMP_INTERVAL;
+uint16_t tempDuration = TEMP_DURATION;
 
 Settings::Settings() {
   getAddresses();
@@ -75,6 +88,12 @@ void Settings::getAddresses() {
   reservoir_calibration_max.address = EEPROM.getAddress(sizeof(unsigned int));
   reservoir_calibration_min.address = EEPROM.getAddress(sizeof(unsigned int));
   reservoir_threshold.address = EEPROM.getAddress(sizeof(unsigned int));
+
+  // Temperature Monitor
+  temp_mon_enabled.address = EEPROM.getAddress(sizeof(int));
+  ideal_temp.address = EEPROM.getAddress(sizeof(float));
+  temp_duration.address = EEPROM.getAddress(sizeof(unsigned int));
+  temp_interval.address = EEPROM.getAddress(sizeof(unsigned int));
 }
 
 void Settings::readValues() {
@@ -91,6 +110,12 @@ void Settings::readValues() {
   *(reservoir_calibration_max.value) = EEPROM.readInt(reservoir_calibration_max.address);
   *(reservoir_calibration_min.value) = EEPROM.readInt(reservoir_calibration_min.address);
   *(reservoir_threshold.value) = EEPROM.readInt(reservoir_threshold.address);
+
+  // Temperature Monitor
+  *(temp_mon_enabled.value) = (bool)EEPROM.readInt(temp_mon_enabled.address);
+  *(ideal_temp.value) = EEPROM.readFloat(ideal_temp.address);
+  *(temp_duration.value) = EEPROM.readInt(temp_duration.address);
+  *(temp_interval.value) = EEPROM.readInt(temp_interval.address);
 }
 
 void Settings::updateValues() const {
@@ -105,6 +130,11 @@ void Settings::updateValues() const {
   EEPROM.updateInt(reservoir_pump_interval.address, reservoirInterval);
   EEPROM.updateInt(reservoir_calibration_max.address, reservoirMax);
   EEPROM.updateInt(reservoir_calibration_min.address, reservoirMin);
+
+  EEPROM.updateInt(temp_mon_enabled.address, (int)tempMonitoring);
+  EEPROM.updateFloat(ideal_temp.address, idealTemp);
+  EEPROM.updateInt(temp_duration.address, tempDuration);
+  EEPROM.updateInt(temp_interval.address, tempInterval);
 }
 
 void Settings::init_objects() {
@@ -120,7 +150,11 @@ void Settings::init_objects() {
   reservoir = new Reservoir(reservoirInterval, threshold, reservoir_pump, reservoir_level);
 
   // Temperature Objects
-  sensor_temp = new SensorTemp(temp_t.sensorPin, &temperatureSensor);
+  sensor_temp = new SensorTemp(temp_t.sensorPin, temperatureSensor);
+  pump_temp = new PumpWater(temp_t.pumpPin, tempDuration);
+  heating_element = new ThermoElectricElement(temp_t.heaterPin, tempDuration);
+  cooling_element = new ThermoElectricElement(temp_t.coolerPin, tempDuration);
+  monitor_temp = new MonitorTemp(idealTemp, tempInterval, tempDuration, *sensor_temp, *pump_temp,  *heating_element, *cooling_element);
 }
 
 void Settings::writeDefaults() const {
@@ -142,6 +176,11 @@ void Settings::writeDefaults() const {
   EEPROM.updateInt(reservoir_calibration_max.address, RESERVOIR_CALIBRATION_MAX);
   EEPROM.updateInt(reservoir_calibration_min.address, RESERVOIR_CALIBRATION_MIN);
   EEPROM.updateInt(reservoir_threshold.address, RESERVOIR_THRESHOLD);
+
+  EEPROM.updateInt(temp_mon_enabled.address, (int)TEMP_MONITORING_ENABLED);
+  EEPROM.updateFloat(ideal_temp.address, IDEAL_TEMP);
+  EEPROM.updateInt(temp_duration.address, TEMP_DURATION);
+  EEPROM.updateInt(temp_interval.address, TEMP_INTERVAL);
 
   init_objects();
 }

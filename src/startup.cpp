@@ -88,9 +88,14 @@ void updatePrompt() {
 
 void init_io() {
   reservoir_pump->init();
+
   acid_pump->init();
   base_pump->init();
+
   sensor_temp->init();
+  heating_element->init();
+  cooling_element->init();
+  pump_temp->init();
 }
 
 void init_serial_operation() {
@@ -111,5 +116,9 @@ void start_services() {
   }
   if (phMonitoring) {
     ph_monitor->startPolling();
+  }
+
+  if (tempMonitoring) {
+    monitor_temp->startPolling();
   }
 }

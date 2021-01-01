@@ -4,7 +4,7 @@
 
 #include "buttons.h"
 
-AnalogButtons analogButtons(A0, INPUT, 2, 20);
+AnalogButtons analogButtons(A0, INPUT, 2, 25);
 
 Button b1 = Button(0, &bSel);               // right
 Button b2 = Button(256, &bUp);              // down
@@ -21,18 +21,22 @@ void init_buttons() {
 }
 
 void bSel(){
+  Serial.println("Sel pressed");
   nav.doNav(enterCmd);
 }
 
 void bDwn(){
+  Serial.println("Dwn pressed");
   nav.doNav(downCmd);
 }
 
 void bUp(){
+  Serial.println("Up pressed");
   nav.doNav(upCmd);
 }
 
 void bEsc(){
+  Serial.println("Esc pressed");
   nav.doNav(escCmd);
 }
 

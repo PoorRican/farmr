@@ -7,6 +7,7 @@
 #include "ui/UI_Main.h"
 #include "ui/UI_Reservoir.h"
 #include "ui/UI_PhMonitor.h"
+#include "ui/UI_TempMonitor.h"
 #include "ui/UI_Settings.h"
 
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
@@ -47,6 +48,23 @@ MENU(phMonitorMenu, "pH Monitor", doNothing, noEvent, noStyle
      );
 
 
+// pH Monitor
+
+TOGGLE(tempMonitoring, toggleTempMonitor, "Monitor: ", doExit, enterEvent, noStyle
+,VALUE("On", true, turnOnTempMonitor, noEvent)
+,VALUE("Off", false, turnOffTempMonitor, noEvent)
+);
+
+MENU(tempMonitorMenu, "Temp Monitor", doNothing, noEvent, noStyle
+,SUBMENU(toggleTempMonitor)
+,FIELD(currentTemp, "Current Temp","C", 0,0,0,0, doNothing, noEvent, noStyle)
+,FIELD(idealTemp, "Ideal Temp","C", 10,30,1,0.1, setIdealTemp, enterEvent, noStyle)
+,FIELD(tempDuration, "Duration", "m", 5,20,1,1, setTempDuration, enterEvent, noStyle)
+,FIELD(tempInterval, "Interval", "m", 25,120,5,1, setTempInterval, enterEvent, noStyle)
+,EXIT("< Back")
+);
+
+
 /// Settings Menu
 
 MENU(restoreDefaultsMenu, "Reset All", doNothing, enterEvent, noStyle
@@ -63,6 +81,7 @@ MENU(settingsMenu, "Settings", doNothing, noEvent, noStyle
 MENU(mainMenu, "Home", doNothing, noEvent, wrapStyle
      ,SUBMENU(reservoirMenu)
      ,SUBMENU(phMonitorMenu)
+     ,SUBMENU(tempMonitorMenu)
      ,SUBMENU(settingsMenu)
      );
 
@@ -73,6 +92,6 @@ MENU_OUTPUTS(out, MAX_DEPTH
 NAVROOT(nav,mainMenu,MAX_DEPTH,in,out);   //the navigation root object
 
 void pollUi() {
-  nav.poll();
   analogButtons.check();
+  nav.poll();
 }
