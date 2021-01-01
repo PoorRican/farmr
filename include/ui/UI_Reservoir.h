@@ -16,5 +16,8 @@ result setReservoirThreshold(eventMask,navNode&, prompt&);
 result setReservoirDuration(eventMask,navNode&, prompt&);
 result setReservoirInterval(eventMask,navNode&, prompt&);
 
+// Calibration Routines
+result calibrateReservoirMax(eventMask, navNode&, prompt &);
+result calibrateReservoirMin(eventMask, navNode&, prompt &);
 
 #endif //FARMR_UI_RESERVOIR_H

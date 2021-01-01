@@ -40,3 +40,20 @@ result setReservoirInterval(eventMask e, navNode& _nav, prompt &item) {
   reservoir->setInterval(reservoirInterval);
   return proceed;
 }
+
+// Calibration Routines
+result calibrateReservoirMax(eventMask e, navNode& _nav, prompt &item) {
+#ifdef VERBOSE_OUTPUT
+  Serial.print("Calibrated reservoir max");
+#endif
+  reservoir_level->calibrateMax();
+  return quit;
+}
+
+result calibrateReservoirMin(eventMask e, navNode& _nav, prompt &item) {
+#ifdef VERBOSE_OUTPUT
+  Serial.print("Calibrated reservoir min");
+#endif
+  reservoir_level->calibrateMin();
+  return quit;
+}
