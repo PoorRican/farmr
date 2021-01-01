@@ -12,14 +12,68 @@ void ProcessMonitor::addTasks(Scheduler &scheduler) {
 
 void ProcessMonitor::startPolling() {
 #ifdef VERBOSE_OUTPUT
-  Serial.println("Starting ph monitor polling");
+  String s = "Starting ";
+  switch (this->getType()) {
+    case pH: {
+      s += "pH";
+      break;
+    }
+
+    case Nitrobacter: {
+      s += "Nitrobacter";
+      break;
+    }
+
+    case Temperature: {
+      s += "Temp";
+      break;
+    }
+
+    case Filtration: {
+      s += "Filter";
+      break;
+    }
+
+    default: {
+      break;
+    }
+  }
+  s += " monitor polling...";
+  Serial.print(s);
 #endif
   pollingTimer->enableDelayed();
 }
 
 void ProcessMonitor::stopPolling() {
 #ifdef VERBOSE_OUTPUT
-  Serial.println("Stopped ph monitor polling");
+  String s = "Stopped ";
+  switch (this->getType()) {
+    case pH: {
+      s += "pH";
+      break;
+    }
+
+    case Nitrobacter: {
+      s += "Nitrobacter";
+      break;
+    }
+
+    case Temperature: {
+      s += "Temp";
+      break;
+    }
+
+    case Filtration: {
+      s += "Filter";
+      break;
+    }
+
+    default: {
+      break;
+    }
+  }
+  s += " monitor polling...";
+  Serial.print(s);
 #endif
   pollingTimer->disable();
 }
