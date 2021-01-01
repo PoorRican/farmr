@@ -33,17 +33,25 @@ MENU(reservoirMenu, "Reservoir", doNothing, noEvent, noStyle
 
 // pH Monitor
 
+MENU(phCalibrate, "Calibrate pH", doNothing, noEvent, wrapStyle
+     ,OP("Set 4.0", calibratePhFour, enterEvent)
+     ,OP("Set 7.0", calibratePhSeven, enterEvent)
+     ,OP("Set 10.0", calibratePhTen, enterEvent)
+     ,EXIT("< Back")
+     )
+
 TOGGLE(phMonitoring, togglePhMonitor, "Monitor: ", doExit, enterEvent, noStyle
        ,VALUE("On", true, turnOnPhMonitor, noEvent)
        ,VALUE("Off", false, turnOffPhMonitor, noEvent)
        );
 
-MENU(phMonitorMenu, "pH Monitor", doNothing, noEvent, noStyle
+MENU(phMonitorMenu, "pH Monitor", doNothing, noEvent, wrapStyle
      ,SUBMENU(togglePhMonitor)
      ,FIELD(currentPh, "Current pH","", 0,0,0,0, doNothing, noEvent, noStyle)
      ,FIELD(idealPh, "Ideal pH","", 1,14,1,0.1, setIdealPh, enterEvent, noStyle)
      ,FIELD(phPumpDuration, "Duration", "s", 1,10,1,1, setPhPumpDuration, enterEvent, noStyle)
      ,FIELD(phPollInterval, "Interval", "m", 5,120,5,1, setPhPollInterval, enterEvent, noStyle)
+     ,SUBMENU(phCalibrate)
      ,EXIT("< Back")
      );
 

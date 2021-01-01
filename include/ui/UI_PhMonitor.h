@@ -16,4 +16,9 @@ result setIdealPh(eventMask,navNode&, prompt&);
 result setPhPollInterval(eventMask,navNode&, prompt&);
 result setPhPumpDuration(eventMask,navNode&, prompt&);
 
+// Calibration Routines
+result calibratePhFour(eventMask,navNode&, prompt&);
+result calibratePhSeven(eventMask,navNode&, prompt&);
+result calibratePhTen(eventMask,navNode&, prompt&);
+
 #endif //FARMR_UI_PHMONITOR_H

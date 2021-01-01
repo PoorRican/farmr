@@ -5,6 +5,7 @@
 ## Implementations
 * Implement [PID](https://playground.arduino.cc/Code/PIDLibrary/) for pH and temperature control 
 * Rewrite `Sensor` class. Remove huertomato functions.
+* Adjust pH for temperature
 
 ## Testing
 * Test SensorLevel::update()

@@ -40,3 +40,17 @@ void turnOnPhMonitor() {
 void turnOffPhMonitor() {
   ph_monitor->stopPolling();
 }
+
+// Calibration Routines
+result calibratePhFour(eventMask e, navNode& _nav, prompt &item) {
+  ph_sensor->setFour();
+  return quit;
+}
+result calibratePhSeven(eventMask e, navNode& _nav, prompt &item) {
+  ph_sensor->setSeven();
+  return quit;
+}
+result calibratePhTen(eventMask e, navNode& _nav, prompt &item) {
+  ph_sensor->setTen();
+  return quit;
+}
