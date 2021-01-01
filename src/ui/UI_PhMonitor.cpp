@@ -3,6 +3,7 @@
 //
 
 #include "ui/UI_PhMonitor.h"
+#include "ui/UI_Feedback.h"
 #include "settings.h"
 
 float currentPh = 0.0;      // Placeholder
@@ -44,13 +45,16 @@ void turnOffPhMonitor() {
 // Calibration Routines
 result calibratePhFour(eventMask e, navNode& _nav, prompt &item) {
   ph_sensor->setFour();
+  nav.idleOn(alertPhCalibrated);
   return quit;
 }
 result calibratePhSeven(eventMask e, navNode& _nav, prompt &item) {
   ph_sensor->setSeven();
+  nav.idleOn(alertPhCalibrated);
   return quit;
 }
 result calibratePhTen(eventMask e, navNode& _nav, prompt &item) {
   ph_sensor->setTen();
+  nav.idleOn(alertPhCalibrated);
   return quit;
 }

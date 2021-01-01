@@ -3,6 +3,7 @@
 //
 
 #include "ui/UI_Reservoir.h"
+#include "ui/UI_Feedback.h"
 #include "settings.h"
 
 uint8_t reservoirLevel = 0;    // placeholder
@@ -46,6 +47,7 @@ result calibrateReservoirMax(eventMask e, navNode& _nav, prompt &item) {
 #ifdef VERBOSE_OUTPUT
   Serial.print("Calibrated reservoir max");
 #endif
+  nav.idleOn(alertLevelCalibrated);
   reservoir_level->calibrateMax();
   return quit;
 }
@@ -55,5 +57,6 @@ result calibrateReservoirMin(eventMask e, navNode& _nav, prompt &item) {
   Serial.print("Calibrated reservoir min");
 #endif
   reservoir_level->calibrateMin();
+  nav.idleOn(alertLevelCalibrated);
   return quit;
 }

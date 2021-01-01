@@ -106,7 +106,27 @@ MENU_OUTPUTS(out, MAX_DEPTH
 );
 NAVROOT(nav,mainMenu,MAX_DEPTH,in,out);   //the navigation root object
 
+
+// FPS Limiter
+// taken from https://github.com/neu-rah/ArduinoMenu/blob/master/examples/fullIdle/fullIdle/fullIdle.ino
+template<int step>
+struct Tick {
+  inline operator bool() {
+    return millis()>=next?next+=step,true:false;
+  }
+  inline void reset() {next=millis()+step;}
+protected:
+  unsigned long next=0;
+};
+
+template<int fps>
+struct FPS:public Tick<(1000/fps)> {};
+
+FPS<25> menuFPS;//limit menu pool to 25 frames per second
+
 void pollUi() {
   analogButtons.check();
-  nav.poll();
+  if (menuFPS) {
+    nav.poll();
+  }
 }

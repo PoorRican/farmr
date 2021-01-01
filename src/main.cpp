@@ -2,14 +2,13 @@
 
 #include <Arduino.h>
 #include <TaskScheduler.h>
-#include <OneWire.h>
 #include "settings.h"
 #include "scheduler.h"
 #include "ui/UI_Main.h"
 #include "buttons.h"
 #include "startup.h"
-#include "pins.h"
 #include "tasks.h"
+#include "ui/UI_Feedback.h"
 
 #ifdef SENSORLESS_OPERATION
 #include "sensorless.h"
@@ -28,6 +27,8 @@ void setup() {
 
   lcd.begin(16,2);
   nav.showTitle = false;
+  nav.timeOut = 15;
+  nav.idleTask = idle;
 
   init_buttons();
 
