@@ -10,7 +10,7 @@
 /**
  * Represents a heating element or peltier cooler connected to a relay
  */
-class ThermoElectricElement : public Relay {
+class ThermoElectricElement : public Relay<> {
 public:
   // Constructors
   ThermoElectricElement(const uint8_t &pin, uint16_t &duration);

@@ -11,7 +11,7 @@
 /**
  * Represents a pump that is activated for seconds at a time.
  */
-class PumpPh : public Relay {
+class PumpPh : public Relay<> {
 public:
   explicit PumpPh(const uint8_t &pin, uint16_t &duration);
   PumpPh(const PumpPh &) = default;
@@ -24,7 +24,7 @@ public:
    * Ensures that duration is an integer less than 10 seconds
    * @return true if given duration is valid.
    */
-  bool setDuration(const uint16_t&) final;
+  bool setDuration(const uint16_t &) final;
 
   void restart();
 };

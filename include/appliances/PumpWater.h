@@ -15,7 +15,7 @@
 /**
  * Represents a pump that is activated for minutes at a time.
  */
-class PumpWater : public Relay {
+class PumpWater : public Relay<> {
 public:
   // Constructors
   PumpWater(const uint8_t &pin, uint16_t &duration);
