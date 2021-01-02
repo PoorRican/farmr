@@ -28,6 +28,7 @@ bool MonitorPh::setIdeal(float &val) {
 }
 
 float MonitorPh::getCurrentPh() const {
+  sensor.update();
   return sensor.get();
 }
 

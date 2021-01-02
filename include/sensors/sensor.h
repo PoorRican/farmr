@@ -32,13 +32,9 @@ public:
   virtual SensName getType() const = 0;
   virtual void init() = 0;
   virtual void update() = 0;
-  virtual void fastUpdate() = 0;
 
 protected:
   int pin;
-  static const uint8_t sample_size = 10;  // Controls smoothness and responsiveness
-
-  virtual void smooth() = 0;
 };
 
 

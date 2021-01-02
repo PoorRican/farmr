@@ -6,7 +6,7 @@
 #include "ui/UI_Feedback.h"
 #include "settings.h"
 
-uint8_t reservoirLevel = 0;    // placeholder
+uint8_t currentLevel = 0;    // placeholder
 
 void turnOnReservoirCycle() {
   reservoir->startCycle();

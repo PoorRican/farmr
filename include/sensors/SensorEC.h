@@ -15,35 +15,30 @@ public:
 
   SensName getType() const;
 
-  void init();
-  void update();
-  void fastUpdate();
+  void init() final;
+  void update() final;
   uint16_t get() const;
-  uint16_t getRaw() const;      // returns EC in uSiemens. Should take 1000ms
   void calibrating(boolean c);
 
   // Circuit commands
-  void reset();
-  void getInfo();
-  void setLed(boolean);
-  void setContinuous();
-  void setStandby();
-  void setProbeType();
-  void setDry();
-  void setTenThousand();
-  void setFortyThousand();
+  static void reset();
+  static void getInfo();
+  static void setLed(boolean);
+  static void setContinuous();
+  static void setStandby();
+  static void setProbeType();
+  static void setDry();
+  static void setTenThousand();
+  static void setFortyThousand();
   // Adjust EC sensor readings to given temp
-  void adjustTemp(float);
+  void adjustTemp(float) const;
 
 protected:
   boolean isCalibrating = false;
-  uint8_t sample_counter = 0;
-  uint16_t readings[sample_size];
   uint16_t ec;
 
-  void smooth();
-  void clearECBuffer() const;
-  void ecToSerial();
+  static void clearECBuffer() ;
+  static void ecToSerial();
 };
 
 

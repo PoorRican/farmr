@@ -49,6 +49,11 @@ uint8_t Reservoir::getThreshold() const {
   return threshold;
 }
 
+uint8_t Reservoir::getCurrentLevel() const {
+  level->update();
+  return level->get();
+}
+
 void Reservoir::runCycle() {
   if (aboveThreshold()) {
     pump->restart();

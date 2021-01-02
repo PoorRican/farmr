@@ -16,7 +16,7 @@ void SensorLevel::init() {
 #endif
 }
 
-uint8_t SensorLevel::get() {
+uint8_t SensorLevel::get() const {
   return level;
 }
 

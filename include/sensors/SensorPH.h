@@ -17,25 +17,23 @@ public:
   SensName getType() const final;
   void init() final;
   void update() final;
-  void fastUpdate() final;
   float get() const;
-  float getRaw() const;
 
   // Avoids skewed readings
   void setCalibrating(boolean);
 
   // pH circuit commands
-  void reset();
-  void getInfo();
-  void setLed(boolean);
-  void setContinuous();
-  void setStandby();
-  void setFour();
-  void setSeven();
-  void setTen();
+  static void reset();
+  static void getInfo();
+  static void setLed(boolean);
+  static void setContinuous();
+  static void setStandby();
+  static void setFour();
+  static void setSeven();
+  static void setTen();
 
   // adjust pH readings
-  void adjustTemp(float);
+  void adjustTemp(float) const;
 
 #ifdef SENSORLESS_OPERATION
   /**
@@ -48,21 +46,18 @@ public:
 
 protected:
   boolean isCalibrating = false;
-  uint8_t sample_counter = 0;
 
-  float readings[sample_size];
   // post-smoothing value
   float pH;
 
-  void smooth() final;
   /**
    * Clear incoming buffer
    */
-  void clearBuffer();
+  static void clearBuffer();
   /**
    * Send raw sensor reading to `Serial`
    */
-  void phToSerial();
+  static void phToSerial();
 };
 
 

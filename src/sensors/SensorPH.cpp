@@ -4,11 +4,7 @@
 
 #include "sensors/SensorPH.h"
 
-SensorPH::SensorPH(const int &pin) : Sensor(pin) {
-  for (uint8_t i = 0; i < sample_size; i++) {
-    readings[i] = 0;
-  }
-}
+SensorPH::SensorPH(const int &pin) : Sensor(pin) {}
 
 Sensor::SensName SensorPH::getType() const {
   return Sensor::pH;
@@ -25,37 +21,20 @@ void SensorPH::init() {
 
 void SensorPH::update() {
 #ifndef SENSORLESS_OPERATION
-  readings[sample_counter++] = getRaw();
-  sample_counter = sample_counter % sample_size;
-  smooth();
-#endif
-}
-
-void SensorPH::fastUpdate() {
-  float p = getRaw();
-  for (uint8_t i = 0; i < sample_size; i++) {
-    readings[i] = p;
-  }
-  smooth();
-}
-
-float SensorPH::get() const {
-  return pH;
-}
-
-float SensorPH::getRaw() const {
   if (!isCalibrating) {
     Serial2.print("R\r");
     if (Serial2.available() > 0) {
       float res = Serial2.parseFloat();
       Serial2.read();
-      return res;
+      pH = res;
     }
-    return 0;     // there is an error
+    pH = 0;
   }
-  else {
-    return pH;    // last known pH
-  }
+#endif
+}
+
+float SensorPH::get() const {
+  return pH;
 }
 
 void SensorPH::setCalibrating(boolean c) {
@@ -109,21 +88,13 @@ void SensorPH::setTen() {
   Serial2.print("T\r");
 }
 
-void SensorPH::adjustTemp(float temp) {
+void SensorPH::adjustTemp(float temp) const {
   if (temp != 0 && !isCalibrating) {
     char tempArray[4];
     dtostrf(temp, 4, 2, tempArray);
     String command = (String)tempArray + "\r";
     Serial2.print(command);
   }
-}
-
-void SensorPH::smooth() {
-  float res = 0;
-  for (uint8_t i = 0; i < sample_counter; i++) {
-    res += readings[i];
-  }
-  pH = (float)(res / sample_counter);
 }
 
 void SensorPH::clearBuffer() {

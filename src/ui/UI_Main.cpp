@@ -30,7 +30,7 @@ TOGGLE(pumpingOn, toggleReservoirPump, "Relay: ", doExit, enterEvent, noStyle
 
 MENU(reservoirMenu, "Reservoir", doNothing, noEvent, wrapStyle
      ,SUBMENU(toggleReservoirPump)
-     ,FIELD(reservoirLevel, "H2O Volume", "%", 0, 0, 0, 0, doNothing, noEvent, noStyle)
+     ,FIELD(currentLevel, "H2O Volume", "%", 0, 0, 0, 0, doNothing, noEvent, noStyle)
      ,FIELD(threshold, "Threshold", "%", 1, 100, 10, 1, setReservoirThreshold, enterEvent, noStyle)
      ,FIELD(reservoirDuration, "Duration", "m", 1, 12, 1, 1, setReservoirDuration, enterEvent, noStyle)
      ,FIELD(reservoirInterval, "Interval", "h", 1, 12, 1, 1, setReservoirInterval, enterEvent, noStyle)

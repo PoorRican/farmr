@@ -7,7 +7,6 @@
 
 #include "Relay.h"
 #include <TaskSchedulerDeclarations.h>
-#include "sensors/sensor_ping.h"
 
 /**
  * Represents a pump that is activated for seconds at a time.

@@ -21,8 +21,8 @@ public:
   SensName getType() const final;
 
   void init() final;
-  uint8_t get();
-  void update();
+  uint8_t get() const;
+  void update() final;
 
   /**
    * Calibrates level minimum to current sensor reading
@@ -36,9 +36,6 @@ public:
   bool aboveThreshold() const;
   uint8_t getThreshold() const;
   bool setThreshold(const uint8_t&);
-
-  // Placeholder
-  void fastUpdate() final {}
 
 #ifdef SENSORLESS_OPERATION
   /**
@@ -60,9 +57,6 @@ protected:
    * Taken from https://www.adafruit.com/products/1786
    */
   float readResistance() const;
-
-  // Placeholder function
-  void smooth() final {}
 };
 
 #endif //FARMR_SENSORLEVEL_H

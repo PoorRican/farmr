@@ -4,12 +4,7 @@
 
 #include "sensors/SensorEC.h"
 
-SensorEC::SensorEC(const int &pin)
-: Sensor(pin) {
-  for (uint8_t i = 0; i < sample_size; i++ ) {
-    readings[i] = 0;
-  }
-}
+SensorEC::SensorEC(const int &pin) : Sensor(pin), ec(0) {}
 
 Sensor::SensName SensorEC::getType() const {
   return Sensor::Ec;
@@ -23,35 +18,20 @@ void SensorEC::init() {
 }
 
 void SensorEC::update() {
-  readings[sample_counter++] = getRaw();
-  sample_counter = sample_counter % sample_size;
-  smooth();
-}
-
-void SensorEC::fastUpdate() {
-  uint16_t e = getRaw();
-  for (uint8_t i = 0; i < sample_size; i++) {
-    readings[i] = e;
-  }
-  smooth();
-}
-
-uint16_t SensorEC::get() const {
-  return ec;
-}
-
-uint16_t SensorEC::getRaw() const {
+#ifndef SENSORLESS_OPERATION
   if (!isCalibrating) {
     if (Serial3.available() > 0) {
       uint16_t res = Serial3.parseInt();
       clearECBuffer();
-      return res;
+      ec = res;
     }
-    return 0;
+    ec = 0;
   }
-  else {
-    return ec;
-  }
+#endif
+}
+
+uint16_t SensorEC::get() const {
+  return ec;
 }
 
 void SensorEC::calibrating(boolean c) {
@@ -94,9 +74,19 @@ void SensorEC::setDry() {
 
 void SensorEC::setFortyThousand() {
   Serial3.print("Z40\r");
+#ifdef VERBOSE_OUTPUT
+  Serial.println("Calibrating EC Sensor to 10,000 uS");
+#endif
 }
 
-void SensorEC::adjustTemp(float temp) {
+void SensorEC::setTenThousand() {
+  Serial3.print("Z10\r");
+#ifdef VERBOSE_OUTPUT
+  Serial.println("Calibrating EC Sensor to 40,000 uS");
+#endif
+}
+
+void SensorEC::adjustTemp(float temp) const {
   if (temp != 0 && !isCalibrating) {
     char tempArray[4];
     dtostrf(temp, 4, 2, tempArray);
@@ -105,12 +95,10 @@ void SensorEC::adjustTemp(float temp) {
   }
 }
 
-void SensorEC::smooth() {
-  uint16_t res = 0;
-  for (uint8_t i = 0; i < sample_counter; i++) {
-    res += readings[i];
+void SensorEC::clearECBuffer() {
+  while (Serial3.available() > 0) {
+    Serial3.read();
   }
-  ec = (uint16_t)(res / sample_counter);
 }
 
 void SensorEC::ecToSerial() {

@@ -33,6 +33,7 @@ bool MonitorTemp::setIdeal(float &val) {
 }
 
 float MonitorTemp::getCurrentTemp() const {
+  sensor.update();
   return sensor.get();
 }
 

@@ -11,5 +11,5 @@
 void update_sensors() {
   currentPh = ph_monitor->getCurrentPh();
   currentTemp = monitor_temp->getCurrentTemp();
-  reservoirLevel = reservoir_level->get();
+  currentLevel = reservoir->getCurrentLevel();
 }

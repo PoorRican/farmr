@@ -7,7 +7,7 @@
 
 #include <menu.h>
 
-extern uint8_t reservoirLevel;
+extern uint8_t currentLevel;
 
 void turnOnReservoirCycle();
 void turnOffReservoirCycle();

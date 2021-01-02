@@ -37,6 +37,8 @@ public:
   uint16_t getInterval() const;
   uint8_t getThreshold() const;
 
+  uint8_t getCurrentLevel() const;
+
   void addTasks(Scheduler&);
   void runCycle();
   void startCycle();

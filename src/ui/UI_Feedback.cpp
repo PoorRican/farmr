@@ -31,7 +31,7 @@ result alertRestoreSettings(menuOut &o, idleEvent e) {
   return proceed;
 }
 
-result alertReservoirCalibrated(menuOut &o, idleEvent e) {
+result alertLevelCalibrated(menuOut &o, idleEvent e) {
   // o.clear();
   switch(e) {
     case idleStart:

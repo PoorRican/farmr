@@ -19,7 +19,6 @@ public:
 
   void init() final;
   void update() final;
-  void fastUpdate() final {};
   float get() const;
   void setCelsius(boolean);
   bool getCelsius() const;
@@ -37,11 +36,7 @@ protected:
   DallasTemperature *sensor;
 
   boolean celsiusMode = true;
-  uint8_t sample_counter = 0;
-  float readings[sample_size];
   float temperature;
-
-  void smooth() final {}
 };
 
 
