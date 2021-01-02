@@ -13,13 +13,13 @@ PumpPh::PumpPh(const uint8_t &pin, uint16_t &duration)
 bool PumpPh::setDuration(const uint16_t &sec) {
   if (sec > 0 && sec <= 10) {
     duration = sec;
-    pumpOffTimer->setInterval(sec * TASK_SECOND);
+    relayOffTimer->setInterval(sec * TASK_SECOND);
     return true;
   }
   return false;
 }
 
 void PumpPh::restart() {
-  pumpTimer->restart();
-  pumpOffTimer->restartDelayed(duration * TASK_SECOND);
+  relayTimer->restart();
+  relayOffTimer->restartDelayed(duration * TASK_SECOND);
 }

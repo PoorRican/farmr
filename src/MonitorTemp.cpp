@@ -83,10 +83,10 @@ void MonitorTemp::increase() {
   Serial.println("Attempting to raise temperature");
 #endif
   pump.restart();
-  pump.startPumpOnTimer();
+  pump.startRelayOnTimer();
 
   heatingElement.restart();
-  heatingElement.startPumpOnTimer();
+  heatingElement.startRelayOnTimer();
 }
 
 void MonitorTemp::decrease() {
@@ -94,10 +94,10 @@ void MonitorTemp::decrease() {
   Serial.println("Attempting to lower temperature");
 #endif
   pump.restart();
-  pump.startPumpOnTimer();
+  pump.startRelayOnTimer();
 
   coolingElement.restart();
-  coolingElement.startPumpOnTimer();
+  coolingElement.startRelayOnTimer();
 }
 
 void pollTemp() {

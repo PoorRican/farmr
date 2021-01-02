@@ -112,7 +112,7 @@ void init_memory() {
 
 void start_services() {
   if (pumpingOn) {
-    reservoir_pump->startPumpOnTimer();
+    reservoir_pump->startRelayOnTimer();
   }
   if (phMonitoring) {
     ph_monitor->startPolling();

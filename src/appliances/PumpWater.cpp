@@ -14,9 +14,9 @@ bool PumpWater::setDuration(const uint16_t &min) {
   if (min >= 1 && min <= 12) {
     duration = min;
 #ifdef BASIC_TESTING
-    pumpOffTimer->setInterval(duration * TASK_SECOND);
+    relayOffTimer->setInterval(duration * TASK_SECOND);
 #else
-    pumpOffTimer->setInterval(duration * TASK_MINUTE);
+    relayOffTimer->setInterval(duration * TASK_MINUTE);
 #endif
     return true;
   }
@@ -24,10 +24,10 @@ bool PumpWater::setDuration(const uint16_t &min) {
 }
 
 void PumpWater::restart() {
-  pumpTimer->restart();
+  relayTimer->restart();
 #ifdef BASIC_TESTING
-  pumpOffTimer->restartDelayed(duration * TASK_SECOND);
+  relayOffTimer->restartDelayed(duration * TASK_SECOND);
 #else
-  pumpOffTimer->restartDelayed(duration * TASK_MINUTE);
+  relayOffTimer->restartDelayed(duration * TASK_MINUTE);
 #endif
 }

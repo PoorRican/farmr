@@ -57,7 +57,7 @@ uint8_t Reservoir::getCurrentLevel() const {
 void Reservoir::runCycle() {
   if (aboveThreshold()) {
     pump->restart();
-    pump->startPumpOnTimer();
+    pump->startRelayOnTimer();
   }
 }
 

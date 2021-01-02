@@ -84,7 +84,7 @@ void MonitorPh::increase() {
   Serial.println("Attempting to increase pH");
 #endif
   basePump.restart();
-  basePump.startPumpOnTimer();
+  basePump.startRelayOnTimer();
 }
 
 void MonitorPh::decrease() {
@@ -92,7 +92,7 @@ void MonitorPh::decrease() {
   Serial.println("Attempting to decrease pH");
 #endif
   acidPump.restart();
-  acidPump.startPumpOnTimer();
+  acidPump.startRelayOnTimer();
 }
 
 void pollPH() {

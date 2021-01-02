@@ -80,16 +80,16 @@ void init_sensor_levels() {
 // Reservoir Operations
 void start_reservoir_pumping() {
   Serial.println("Starting reservoir pumping");
-  reservoir_pump->startPumpOnTimer();
+  reservoir_pump->startRelayOnTimer();
 }
 void stop_reservoir_pumping() {
   Serial.println("Stopping reservoir pumping");
-  reservoir_pump->stopPumpOnTimer();
-  reservoir_pump->stopPumpOffTimer();
+  reservoir_pump->stopRelayOnTimer();
+  reservoir_pump->stopRelayOffTimer();
 }
 
 void reservoir_pump_on() {
-  String s = "Reservoir pump is " + (String)(reservoir_pump->getPumpOn() ? "on" : "off");
+  String s = "Reservoir pump is " + (String)(reservoir_pump->getRelayOn() ? "on" : "off");
   Serial.println(s);
 }
 

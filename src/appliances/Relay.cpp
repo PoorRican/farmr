@@ -5,15 +5,18 @@
 #include "scheduler.h"
 #include "appliances/Relay.h"
 
-Relay::Relay(const uint8_t &pin, uint16_t &duration)
-: pin(pin), duration(duration) {
+Relay::Relay(const uint8_t &pin, uint16_t &duration, bool inverse)
+: pin(pin), duration(duration), inverse(inverse) {
 
-  pumpTimer = new Task(TASK_IMMEDIATE, TASK_ONCE, startPump);
-  pumpTimer->setLtsPointer(this);
-  pumpOffTimer = new Task(this->duration, TASK_ONCE, stopPump);
-  pumpOffTimer->setLtsPointer(this);
+  relayTimer = new Task(TASK_IMMEDIATE, TASK_ONCE, startRelay);
+  relayTimer->setLtsPointer(this);
+  relayOffTimer = new Task(this->duration, TASK_ONCE, stopRelay);
+  relayOffTimer->setLtsPointer(this);
 };
 
+Relay::RelayType Relay::getType() const {
+  return None;
+}
 
 void Relay::init() const {
   pinMode(pin, OUTPUT);
@@ -21,45 +24,45 @@ void Relay::init() const {
 }
 
 void Relay::addTasks(Scheduler &scheduler) {
-  scheduler.addTask(*(pumpTimer));
-  scheduler.addTask(*(pumpOffTimer));
+  scheduler.addTask(*(relayTimer));
+  scheduler.addTask(*(relayOffTimer));
 }
 
 
-void Relay::startPumpOnTimer() {
+void Relay::startRelayOnTimer() {
 #ifdef VERBOSE_OUTPUT
-  Serial.println("'startPumpOnTimer' called");
+  Serial.println("'startRelayOnTimer' called");
 #endif
-  pumpTimer->enable();
+  relayTimer->enable();
 }
 
-void Relay::stopPumpOnTimer() const {
+void Relay::stopRelayOnTimer() const {
 #ifdef VERBOSE_OUTPUT
-  Serial.println("'stopPumpOnTimer' called");
+  Serial.println("'stopRelayOnTimer' called");
 #endif
-  pumpTimer->disable();
+  relayTimer->disable();
 }
 
-void Relay::startPumpOffTimer() {
+void Relay::startRelayOffTimer() {
 #ifdef VERBOSE_OUTPUT
-  Serial.println("'startPumpOffTimer' called");
+  Serial.println("'startRelayOffTimer' called");
 #endif
-  pumpOffTimer->set(duration, TASK_ONCE, stopPump);
+  relayOffTimer->set(duration, TASK_ONCE, stopRelay);
   setDuration(duration);
-  pumpOffTimer->enableDelayed();
+  relayOffTimer->enableDelayed();
 }
 
-void Relay::stopPumpOffTimer() const {
+void Relay::stopRelayOffTimer() const {
 #ifdef VERBOSE_OUTPUT
-  Serial.println("'stopPumpOffTimer' called");
+  Serial.println("'stopRelayOffTimer' called");
 #endif
-  pumpOffTimer->disable();
+  relayOffTimer->disable();
 }
 
 
 // Getters
-bool Relay::getPumpOn() const {
-  return pumpOn;
+bool Relay::getRelayOn() const {
+  return relayOn;
 }
 
 uint16_t Relay::getDuration() const {
@@ -70,19 +73,68 @@ uint8_t Relay::getPin() const {
   return pin;
 }
 
-void Relay::setPumpOn(bool val) {
-  pumpOn = val;
+bool Relay::getInverse() const {
+  return inverse;
+}
+
+// Setters
+void Relay::setRelayOn(bool val) {
+#ifdef BASIC_TESTING
+  String s = "";
+  switch (getType()) {
+    case PumpWater: {
+      s += "Water Pump";
+      break;
+    }
+    case PumpPh: {
+      s += "pH Pump";
+      break;
+    }
+    case PumpNutrient: {
+      s += "Nutrient Pump";
+      break;
+    }
+    case ThermoElectricElement: {
+      s += "ThermoElectric Element";
+    }
+    default: {
+      s += "Unknown relay type";
+      break;
+    }
+  }
+  s += " turned ";
+  s += ((val) ? "on" : "off");
+  Serial.println(s);
+#endif
+  relayOn = val;
+}
+
+void Relay::setInverse(bool val) {
+  inverse = val;
 }
 
 // Relay routines
-void startPump() {
+void Relay::energize() {
+#ifdef Arduino_h
+  digitalWrite(pin, (inverse) ? LOW : HIGH);
+#endif
+  setRelayOn(true);
+}
+
+void Relay::deenergize() {
+#ifdef Arduino_h
+  digitalWrite(pin, (inverse) ? HIGH : LOW);
+#endif
+  setRelayOn(false);
+}
+
+void startRelay() {
   Task& t = ts.currentTask();
   Relay& p = *((Relay*) t.getLtsPointer());
 
-  digitalWrite(p.getPin(), LOW);        // logic LOW energizes relay
-  p.setPumpOn(true);
+  p.energize();
 
-  p.startPumpOffTimer();
+  p.startRelayOffTimer();
 
 #ifdef BASIC_TESTING
   String feedback = "Relay (at pumpPin " + (String)p.getPin() + ") turned on";
@@ -90,12 +142,11 @@ void startPump() {
 #endif
 }
 
-void stopPump() {
+void stopRelay() {
   Task& t = ts.currentTask();
   Relay& p = *((Relay*) t.getLtsPointer());
 
-  digitalWrite(p.getPin(), HIGH);     // logic HIGH de-energizes relay
-  p.setPumpOn(false);
+  p.deenergize();
 
 #ifdef BASIC_TESTING
   String feedback = "Relay (pumpPin " + (String)p.getPin() + ") turned off";
