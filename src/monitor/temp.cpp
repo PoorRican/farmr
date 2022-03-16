@@ -3,11 +3,11 @@
 //
 
 #include "scheduler.h"
-#include "MonitorTemp.h"
+#include "monitor/temp.h"
 
-MonitorTemp::MonitorTemp(float &ideal, uint16_t &interval, uint16_t &duration, SensorTemp &sensor, PumpWater &pump,
+MonitorTemp::MonitorTemp(float &ideal, uint16_t &interval, uint16_t &duration, SensorTemp &sensor, WaterPump &pump,
                          ThermoElectricElement &heating, ThermoElectricElement &cooling)
-    : ProcessMonitor(ideal, interval), duration(duration), sensor(sensor), pump(pump),
+    : Monitor(ideal, interval), duration(duration), sensor(sensor), pump(pump),
       heatingElement(heating), coolingElement(cooling) {
 
   pollingTimer = new Task(this->interval, TASK_FOREVER, pollTemp);
@@ -17,7 +17,7 @@ MonitorTemp::MonitorTemp(float &ideal, uint16_t &interval, uint16_t &duration, S
   setDuration(this->duration);
 }
 
-ProcessMonitor::ProcessType MonitorTemp::getType() const {
+Monitor::ProcessType MonitorTemp::getType() const {
   return Temperature;
 }
 
@@ -45,7 +45,9 @@ bool MonitorTemp::setInterval(uint16_t &val) {
 #else
     pollingTimer->setInterval(interval * TASK_MINUTE);
 #endif
+    return true;
   }
+  return false;
 }
 
 bool MonitorTemp::setDuration(uint16_t &val) {

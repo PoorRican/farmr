@@ -3,6 +3,7 @@
 //
 
 #include "appliances/ThermoElectricElement.h"
+
 ThermoElectricElement::ThermoElectricElement(const uint8_t &pin, uint16_t &duration)
     : Relay(pin, duration) {
   setDuration(duration);

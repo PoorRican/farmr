@@ -5,14 +5,14 @@
 #ifndef FARMR_MONITORTEMP_H
 #define FARMR_MONITORTEMP_H
 
-#include "ProcessMonitor.h"
-#include "sensors/SensorTemp.h"
-#include "appliances/PumpWater.h"
+#include "monitor.h"
+#include "sensors/temp.h"
+#include "appliances/WaterPump.h"
 #include "appliances/ThermoElectricElement.h"
 
-class MonitorTemp : public ProcessMonitor {
+class MonitorTemp : public Monitor {
 public:
-  MonitorTemp(float &, uint16_t &, uint16_t &, SensorTemp &, PumpWater &, ThermoElectricElement&, ThermoElectricElement&);
+  MonitorTemp(float &, uint16_t &, uint16_t &, SensorTemp &, WaterPump &, ThermoElectricElement&, ThermoElectricElement&);
 
   ProcessType getType() const final;
 
@@ -38,7 +38,7 @@ private:
   uint16_t duration;
 
   SensorTemp &sensor;
-  PumpWater &pump;
+  WaterPump &pump;
   ThermoElectricElement &heatingElement;
   ThermoElectricElement &coolingElement;
 
@@ -49,4 +49,4 @@ private:
 
 void pollTemp();
 
-#endif //FARMR_MONITORTEMP_H
+#endif //FARMR_TEMP_H

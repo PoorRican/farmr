@@ -2,9 +2,8 @@
 // Created by Josue Figueroa on 12/13/20.
 //
 
-#ifndef FARMR_PROCESSMONITOR_H
-#define FARMR_PROCESSMONITOR_H
-
+#ifndef FARMR_MONITOR_H
+#define FARMR_MONITOR_H
 
 #include <Arduino.h>
 #include <TaskSchedulerDeclarations.h>
@@ -13,8 +12,9 @@ extern Scheduler ts;
 
 /**
  * Abstract watchdog class for monitoring a process/metric (eg: pH, filtering, Nx) and controlling pumps.
+ * TODO: PID will be implemented here
  */
-class ProcessMonitor {
+class Monitor {
 public:
   enum ProcessType {
     None,
@@ -23,7 +23,7 @@ public:
     pH,
     Temperature
   };
-  explicit ProcessMonitor(float &ideal, uint16_t &interval);
+  explicit Monitor(float &ideal, uint16_t &interval);
 
   virtual ProcessType getType() const = 0;
   virtual bool setIdeal(float&) = 0;
@@ -43,8 +43,8 @@ public:
   virtual void poll() = 0;
 
 protected:
-  float ideal;         // Ideal value
-  uint16_t interval;      // Interval to control polling
+  float ideal;            // Equilibrium value
+  uint16_t interval;      // Polling interval
 
   Task *pollingTimer = nullptr;
 
@@ -53,4 +53,4 @@ protected:
 };
 
 
-#endif //FARMR_PROCESSMONITOR_H
+#endif //FARMR_MONITOR_H

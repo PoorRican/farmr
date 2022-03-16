@@ -8,34 +8,33 @@
 #include <Arduino.h>
 
 class Sensor {
-public:
-  enum SensName {
-    None,
-    Temperature,
-    Humidity,
-    Light,
-    Ec,
-    pH,
-    Level,
-    Nitrate,
-    Nitrite,
-    NH3
+  public:
+    enum SensName {
+       None,
+       Temperature,
+       Humidity,
+       Light,
+       Ec,
+       pH,
+       Level,
+       Nitrate,
+       Nitrite,
+       NH3
+     };
+    // Constructors
+    explicit Sensor(const int &pin);
+    Sensor(const Sensor&) = default;
+    Sensor& operator=(const Sensor&) = default;
+
+    // Destructor
+    virtual ~Sensor();
+
+    virtual SensName getType() const = 0;
+    virtual void init() = 0;
+    virtual void update() = 0;
+
+  protected:
+    int pin;
   };
-  // Constructors
-  explicit Sensor(const int &pin);
-  Sensor(const Sensor&) = default;
-  Sensor& operator=(const Sensor&) = default;
-
-  // Destructor
-  virtual ~Sensor();
-
-  virtual SensName getType() const = 0;
-  virtual void init() = 0;
-  virtual void update() = 0;
-
-protected:
-  int pin;
-};
-
 
 #endif //FARMR_SENSOR_H

@@ -2,7 +2,7 @@
 // Created by Josue Figueroa on 12/13/20.
 //
 
-#include "sensors/SensorPH.h"
+#include "sensors/ph.h"
 
 SensorPH::SensorPH(const int &pin) : Sensor(pin) {}
 

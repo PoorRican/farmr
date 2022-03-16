@@ -1,5 +1,5 @@
 //
-// Created by Josue Figueroa on 12/14/20.
+// Created by Josue Figueroa on 12/29/20.
 //
 
 #ifndef FARMR_SENSORTEMP_H
@@ -8,7 +8,7 @@
 #include "sensor.h"
 #include <DallasTemperature.h>
 
-class SensorTemp: Sensor {
+class SensorTemp : private Sensor {
 public:
   SensorTemp(const uint8_t &, DallasTemperature*);
   SensorTemp(const SensorTemp&) = default;
@@ -38,6 +38,5 @@ protected:
   boolean celsiusMode = true;
   float temperature;
 };
-
 
 #endif //FARMR_SENSORTEMP_H

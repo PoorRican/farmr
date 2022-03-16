@@ -2,21 +2,21 @@
 // Created by Josue Figueroa on 12/29/20.
 //
 
-#ifndef FARMR_SENSORLEVEL_H
-#define FARMR_SENSORLEVEL_H
+#ifndef FARMR_SENSORDISTANCE_H
+#define FARMR_SENSORDISTANCE_H
 
 #include "sensor.h"
 
 #define LEVEL_SERIES_RESISTOR 560
 
-class SensorLevel : public Sensor {
+class SensorDistance : public Sensor {
 public:
-  explicit SensorLevel(const uint8_t &pin);
-  SensorLevel(const SensorLevel&) = default;
-  SensorLevel& operator=(const SensorLevel&) = default;
+  explicit SensorDistance(const uint8_t &pin);
+  SensorDistance(const SensorDistance&) = default;
+  SensorDistance& operator=(const SensorDistance&) = default;
 
 
-  ~SensorLevel() override = default;
+  ~SensorDistance() override = default;
 
   SensName getType() const final;
 
@@ -59,4 +59,4 @@ protected:
   float readResistance() const;
 };
 
-#endif //FARMR_SENSORLEVEL_H
+#endif //FARMR_DISTANCE_H

@@ -42,4 +42,4 @@ protected:
 };
 
 
-#endif //FARMR_SENSOREC_H
+#endif //FARMR_EC_H

@@ -68,9 +68,9 @@ public:
 
 protected:
   bool relayOn = false;
-  bool inverse;        // Relay is energized with logic-LOW. Defaults to true
+  bool inverse;         // Relay is energized with logic-LOW. Defaults to true
   uint8_t pin;
-  T duration;   /// Stores the raw value of time to keep pump activated
+  T duration;           /// Stores the raw value of time to keep pump activated
 
   Task *relayTimer = nullptr;
   Task *relayOffTimer = nullptr;

@@ -4,25 +4,25 @@
 // TODO: should night-pumping be allowed?
 // TODO: ability to reset watering cycles
 
-#ifndef FARMR_PUMPWATER_H
-#define FARMR_PUMPWATER_H
+#ifndef FARMR_WATERPUMP_H
+#define FARMR_WATERPUMP_H
 
-#include "Relay.h"
+#include "relay.h"
 #include <TaskSchedulerDeclarations.h>
 #include <Time.h>
-#include "sensors/SensorLevel.h"
+#include "sensor/distance.h"
 
 /**
  * Represents a pump that is activated for minutes at a time.
  */
-class PumpWater : public Relay<> {
+class WaterPump : public Relay<> {
 public:
   // Constructors
-  PumpWater(const uint8_t &pin, uint16_t &duration);
-  PumpWater(const PumpWater &other) = default;
-  PumpWater& operator=(const PumpWater&) = default;
+  WaterPump(const uint8_t &pin, uint16_t &duration);
+  WaterPump(const WaterPump &other) = default;
+  WaterPump& operator=(const WaterPump&) = default;
 
-  ~PumpWater() = default;
+  ~WaterPump() = default;
 
   // Setters
   /**
@@ -36,4 +36,4 @@ public:
   void restart();
 };
 
-#endif //FARMR_PUMPWATER_H
+#endif //FARMR_WATERPUMP_H

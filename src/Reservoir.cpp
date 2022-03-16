@@ -2,18 +2,24 @@
 // Created by Josue Figueroa on 12/30/20.
 //
 
-#include "Reservoir.h"
-#include "appliances/Relay.h"
+#include "reservoir.h"
 
-extern Scheduler ts;
-
-Reservoir::Reservoir(const uint16_t &interval, const uint8_t &threshold, PumpWater *waterPump, SensorLevel *sensorLevel)
+Reservoir::Reservoir(const uint16_t &interval, const uint8_t &threshold, WaterPump *waterPump, SensorDistance *sensorLevel)
 : interval(interval), threshold(threshold), pump(waterPump), level(sensorLevel) {
+  enabled = false;
 
   cycleTimer = new Task(interval, TASK_FOREVER, cycleWater);
   cycleTimer->setLtsPointer(this);
 
   setInterval(interval);
+}
+
+void Reservoir::enableCycleTimer() {
+  enabled = true;
+}
+
+void Reservoir::disableCycleTimer() {
+  enabled = false;
 }
 
 bool Reservoir::setDuration(const uint16_t &min) {

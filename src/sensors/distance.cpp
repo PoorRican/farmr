@@ -2,25 +2,25 @@
 // Created by Josue Figueroa on 12/29/20.
 //
 
-#include "sensors/SensorLevel.h"
+#include "sensors/distance.h"
 
-SensorLevel::SensorLevel(const uint8_t &pin) : Sensor(pin) {}
+SensorDistance::SensorDistance(const uint8_t &pin) : Sensor(pin) {}
 
-Sensor::SensName SensorLevel::getType() const {
+Sensor::SensName SensorDistance::getType() const {
   return Sensor::Level;
 }
 
-void SensorLevel::init() {
+void SensorDistance::init() {
 #ifdef Arduino_h
   pinMode(pin, INPUT);
 #endif
 }
 
-uint8_t SensorLevel::get() const {
+uint8_t SensorDistance::get() const {
   return level;
 }
 
-void SensorLevel::update() {
+void SensorDistance::update() {
   // TODO: this needs to be tested
 #ifndef SENSORLESS_OPERATION
   float resistance = readResistance();
@@ -33,23 +33,23 @@ void SensorLevel::update() {
 #endif
 }
 
-void SensorLevel::calibrateMin() {
+void SensorDistance::calibrateMin() {
   min = readResistance();
 }
 
-void SensorLevel::calibrateMax() {
+void SensorDistance::calibrateMax() {
   max = readResistance();
 }
 
-bool SensorLevel::aboveThreshold() const {
+bool SensorDistance::aboveThreshold() const {
   return level >= threshold;
 }
 
-uint8_t SensorLevel::getThreshold() const {
+uint8_t SensorDistance::getThreshold() const {
   return threshold;
 }
 
-bool SensorLevel::setThreshold(const uint8_t& val) {
+bool SensorDistance::setThreshold(const uint8_t& val) {
     if (val >= 1 && val <= 100) {
       threshold = val;
       return true;
@@ -57,7 +57,7 @@ bool SensorLevel::setThreshold(const uint8_t& val) {
   return false;
 }
 
-float SensorLevel::readResistance() const {
+float SensorDistance::readResistance() const {
 #ifdef Arduino_h
   auto resistance = (float)analogRead(pin);
   resistance = ((float)1023 / resistance) - (float)1;

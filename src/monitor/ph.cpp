@@ -3,10 +3,10 @@
 //
 
 #include "scheduler.h"
-#include "MonitorPh.h"
+#include "monitor/ph.h"
 
-MonitorPh::MonitorPh(float &ideal, uint16_t &interval, SensorPH &sensor, PumpPh &acidPump, PumpPh &basePump)
-: ProcessMonitor(ideal, interval), sensor(sensor), acidPump(acidPump), basePump(basePump) {
+MonitorPh::MonitorPh(float &ideal, uint16_t &interval, SensorPH &sensor, ReagentPump &acidPump, ReagentPump &basePump)
+    : Monitor(ideal, interval), sensor(sensor), acidPump(acidPump), basePump(basePump) {
 
   pollingTimer = new Task(this->interval, TASK_FOREVER, pollPH);
   pollingTimer->setLtsPointer(this);
@@ -15,7 +15,7 @@ MonitorPh::MonitorPh(float &ideal, uint16_t &interval, SensorPH &sensor, PumpPh 
   setInterval(interval);
 }
 
-ProcessMonitor::ProcessType MonitorPh::getType() const {
+Monitor::ProcessType MonitorPh::getType() const {
   return pH;
 }
 

@@ -2,7 +2,7 @@
 // Created by Josue Figueroa on 12/28/20.
 //
 
-#include "../include/startup.h"
+#include "startup.h"
 
 void startup_msg() {
   Serial.println("*******************");

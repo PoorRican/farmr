@@ -26,8 +26,10 @@ add_custom_target(
 
 add_custom_target(
     Debug ALL
-    COMMAND platformio -c clion run --target debug "$<$<NOT:$<CONFIG:All>>:-e${CMAKE_BUILD_TYPE}>"
+    COMMAND platformio -c clion debug "$<$<NOT:$<CONFIG:All>>:-e${CMAKE_BUILD_TYPE}>"
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-add_executable(Z_DUMMY_TARGET ${SRC_LIST} src/Reservoir.cpp include/Reservoir.h src/MonitorTemp.cpp include/MonitorTemp.h src/appliances/ThermoElectricElement.cpp include/appliances/ThermoElectricElement.h src/ui/UI_TempMonitor.cpp include/ui/UI_TempMonitor.h src/ui/UI_Feedback.cpp include/ui/UI_Feedback.h)
+add_executable(Z_DUMMY_TARGET ${SRC_LIST}
+        include/ include/appliances include/monitor include/sensors include/ui
+        src/ src/ui src/monitor src/appliances src/sensors)

@@ -2,55 +2,47 @@
 // Created by Josue Figueroa on 12/12/20.
 //
 
-#include "scheduler.h"
-#include "appliances/Relay.h"
+#include "appliances/relay.h"
 
 template<class T>
 Relay<T>::Relay(const uint8_t &pin, T &duration, bool inverse)
-: pin(pin), duration(duration), inverse(inverse) {
-
+    : pin(pin), duration(duration), inverse(inverse) {
   relayTimer = new Task(TASK_IMMEDIATE, TASK_ONCE, startRelay);
   relayTimer->setLtsPointer(this);
   relayOffTimer = new Task(this->duration, TASK_ONCE, stopRelay);
   relayOffTimer->setLtsPointer(this);
-};
+}
 
-template<class T>
-typename Relay<T>::RelayType Relay<T>::getType() const {
+template<> typename Relay<>::RelayType Relay<>::getType() const {
   return None;
 }
 
-template<class T>
-void Relay<T>::init() const {
+template<> void Relay<>::init() const {
   pinMode(pin, OUTPUT);
   digitalWrite(pin, HIGH);            // immediately de-energize coil upon power applied
 }
 
-template<class T>
-void Relay<T>::addTasks(Scheduler &scheduler) {
+template<> void Relay<>::addTasks(Scheduler &scheduler) {
   scheduler.addTask(*(relayTimer));
   scheduler.addTask(*(relayOffTimer));
 }
 
 
-template<class T>
-void Relay<T>::startRelayOnTimer() {
+template<> void Relay<>::startRelayOnTimer() {
 #ifdef VERBOSE_OUTPUT
   Serial.println("'startRelayOnTimer' called");
 #endif
   relayTimer->enable();
 }
 
-template<class T>
-void Relay<T>::stopRelayOnTimer() const {
+template<> void Relay<>::stopRelayOnTimer() const {
 #ifdef VERBOSE_OUTPUT
   Serial.println("'stopRelayOnTimer' called");
 #endif
   relayTimer->disable();
 }
 
-template<class T>
-void Relay<T>::startRelayOffTimer() {
+template<> void Relay<>::startRelayOffTimer() {
 #ifdef VERBOSE_OUTPUT
   Serial.println("'startRelayOffTimer' called");
 #endif
@@ -59,8 +51,7 @@ void Relay<T>::startRelayOffTimer() {
   relayOffTimer->enableDelayed();
 }
 
-template<class T>
-void Relay<T>::stopRelayOffTimer() const {
+template<> void Relay<>::stopRelayOffTimer() const {
 #ifdef VERBOSE_OUTPUT
   Serial.println("'stopRelayOffTimer' called");
 #endif
@@ -69,8 +60,7 @@ void Relay<T>::stopRelayOffTimer() const {
 
 
 // Getters
-template<class T>
-bool Relay<T>::getRelayOn() const {
+template<> bool Relay<>::getRelayOn() const {
   return relayOn;
 }
 
@@ -79,19 +69,17 @@ T Relay<T>::getDuration() const {
   return duration;
 }
 
-template<class T>
-uint8_t Relay<T>::getPin() const {
+template<>
+uint8_t Relay<>::getPin() const {
   return pin;
 }
 
-template<class T>
-bool Relay<T>::getInverse() const {
+template<> bool Relay<>::getInverse() const {
   return inverse;
 }
 
 // Setters
-template<class T>
-void Relay<T>::setRelayOn(bool val) {
+template<> void Relay<>::setRelayOn(bool val) {
 #ifdef BASIC_TESTING
   String s = "";
   switch (getType()) {
@@ -122,22 +110,19 @@ void Relay<T>::setRelayOn(bool val) {
   relayOn = val;
 }
 
-template<class T>
-void Relay<T>::setInverse(bool val) {
+template<> void Relay<>::setInverse(bool val) {
   inverse = val;
 }
 
 // Relay routines
-template<class T>
-void Relay<T>::energize() {
+template<> void Relay<>::energize() {
 #ifdef Arduino_h
   digitalWrite(pin, (inverse) ? LOW : HIGH);
 #endif
   setRelayOn(true);
 }
 
-template<class T>
-void Relay<T>::deenergize() {
+template<> void Relay<>::deenergize() {
 #ifdef Arduino_h
   digitalWrite(pin, (inverse) ? HIGH : LOW);
 #endif

@@ -8,7 +8,7 @@
 
 #ifdef SENSORLESS_OPERATION
 
-#include <SerialCommand.h>
+#include "../lib/Arduino-SerialCommand/SerialCommand.h"
 #include "settings.h"
 
 extern SerialCommand sCmd;

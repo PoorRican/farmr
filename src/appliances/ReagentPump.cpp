@@ -2,15 +2,15 @@
 // Created by Josue Figueroa on 12/12/20.
 //
 
-#include "appliances/PumpPh.h"
+#include "appliances/ReagentPump.h"
 
-PumpPh::PumpPh(const uint8_t &pin, uint16_t &duration)
+ReagentPump::ReagentPump(const uint8_t &pin, uint16_t &duration)
 : Relay(pin, duration) {
 
   setDuration(duration);
 };
 
-bool PumpPh::setDuration(const uint16_t &sec) {
+bool ReagentPump::setDuration(const uint16_t &sec) {
   if (sec > 0 && sec <= 10) {
     duration = sec;
     relayOffTimer->setInterval(sec * TASK_SECOND);
@@ -19,7 +19,7 @@ bool PumpPh::setDuration(const uint16_t &sec) {
   return false;
 }
 
-void PumpPh::restart() {
+void ReagentPump::restart() {
   relayTimer->restart();
   relayOffTimer->restartDelayed(duration * TASK_SECOND);
 }

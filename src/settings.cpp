@@ -6,17 +6,15 @@
 #include "appliances/ThermoElectricElement.h"
 #include "pins.h"
 
-extern Scheduler ts;
-
 Settings settings;
 
-PumpPh *acid_pump = nullptr;
-PumpPh *base_pump = nullptr;
+ReagentPump *acid_pump = nullptr;
+ReagentPump *base_pump = nullptr;
 SensorPH *ph_sensor = nullptr;
 MonitorPh *ph_monitor = nullptr;
 
-SensorLevel *reservoir_level = nullptr;
-PumpWater *reservoir_pump = nullptr;
+SensorDistance *reservoir_level = nullptr;
+WaterPump *reservoir_pump = nullptr;
 Reservoir *reservoir = nullptr;
 
 OneWire oneWire(ONE_WIRE_BUS);
@@ -24,7 +22,7 @@ DallasTemperature *temperatureSensor = new DallasTemperature(&oneWire);
 SensorTemp *sensor_temp = nullptr;
 ThermoElectricElement *heating_element = nullptr;
 ThermoElectricElement *cooling_element = nullptr;
-PumpWater *pump_temp = nullptr;
+WaterPump *pump_temp = nullptr;
 MonitorTemp *monitor_temp = nullptr;
 
 double swVersion = VERSION;
@@ -139,21 +137,21 @@ void Settings::updateValues() const {
 
 void Settings::init_objects() {
   // Init pH Monitor Objects
-  acid_pump = new PumpPh(ph_monitor_t.acidPin, phPumpDuration);
-  base_pump = new PumpPh(ph_monitor_t.basePin, phPumpDuration);
-  ph_sensor = new SensorPH(ph_monitor_t.sensorPin);
+  acid_pump = new ReagentPump(phMonitor.acidPin, phPumpDuration);
+  base_pump = new ReagentPump(phMonitor.basePin, phPumpDuration);
+  ph_sensor = new SensorPH(phMonitor.sensorPin);
   ph_monitor = new MonitorPh(idealPh, phPollInterval, *ph_sensor, *acid_pump, *base_pump);
 
   // Init Reservoir Objects
-  reservoir_level = new SensorLevel(reservoir_t.sensorPin);
-  reservoir_pump = new PumpWater(reservoir_t.pumpPin, reservoirDuration);
+  reservoir_level = new SensorDistance(reservoirMonitor.sensorPin);
+  reservoir_pump = new WaterPump(reservoirMonitor.pumpPin, reservoirDuration);
   reservoir = new Reservoir(reservoirInterval, threshold, reservoir_pump, reservoir_level);
 
   // Temperature Objects
-  sensor_temp = new SensorTemp(temp_t.sensorPin, temperatureSensor);
-  pump_temp = new PumpWater(temp_t.pumpPin, tempDuration);
-  heating_element = new ThermoElectricElement(temp_t.heaterPin, tempDuration);
-  cooling_element = new ThermoElectricElement(temp_t.coolerPin, tempDuration);
+  sensor_temp = new SensorTemp(tempMonitor.sensorPin, temperatureSensor);
+  pump_temp = new WaterPump(tempMonitor.pumpPin, tempDuration);
+  heating_element = new ThermoElectricElement(tempMonitor.heaterPin, tempDuration);
+  cooling_element = new ThermoElectricElement(tempMonitor.coolerPin, tempDuration);
   monitor_temp = new MonitorTemp(idealTemp, tempInterval, tempDuration, *sensor_temp, *pump_temp,  *heating_element, *cooling_element);
 }
 

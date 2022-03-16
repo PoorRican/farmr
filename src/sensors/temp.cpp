@@ -1,9 +1,8 @@
 //
-// Created by Josue Figueroa on 12/14/20.
+// Created by Josue Figueroa on 12/29/20.
 //
 
-#include "sensors/SensorTemp.h"
-#include "pins.h"
+#include "sensors/temp.h"
 
 SensorTemp::SensorTemp(const uint8_t &pin, DallasTemperature *sensor) : Sensor(pin), sensor(sensor) {
 }

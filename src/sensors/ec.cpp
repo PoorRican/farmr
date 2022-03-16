@@ -2,7 +2,7 @@
 // Created by Josue Figueroa on 12/13/20.
 //
 
-#include "sensors/SensorEC.h"
+#include "sensors/ec.h"
 
 SensorEC::SensorEC(const int &pin) : Sensor(pin), ec(0) {}
 

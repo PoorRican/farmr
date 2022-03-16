@@ -5,9 +5,9 @@
 #ifndef FARMR_SETTINGS_H
 #define FARMR_SETTINGS_H
 
-#define VERSION 0.11
+#define VERSION 0.2
 
-// pH Monitor Defualts
+// pH Monitor Defaults
 #define IDEAL_PH 7.5
 #define PH_MONITOR_ENABLED true
 #define PH_POLL_INTERVAL 15
@@ -28,25 +28,25 @@
 #define TEMP_INTERVAL 30
 
 #include <Arduino.h>
-#include "sensors/SensorTemp.h"
-#include "sensors/SensorLevel.h"
-#include "appliances/PumpWater.h"
-#include "appliances/PumpPh.h"
-#include "MonitorTemp.h"
-#include "MonitorPh.h"
-#include "Reservoir.h"
+#include "sensors/temp.h"
+#include "sensors/distance.h"
+#include "appliances/WaterPump.h"
+#include "appliances/ReagentPump.h"
+#include "monitor/temp.h"
+#include "monitor/ph.h"
+#include "reservoir.h"
 #include <EEPROMex.h>
 
 // pH Pumps/Sensors/Monitor
-extern PumpPh *acid_pump;
-extern PumpPh *base_pump;
+extern ReagentPump *acid_pump;
+extern ReagentPump *base_pump;
 
 extern SensorPH *ph_sensor;
 extern MonitorPh *ph_monitor;
 
 // Reservoir
-extern SensorLevel *reservoir_level;
-extern PumpWater *reservoir_pump;
+extern SensorDistance *reservoir_level;
+extern WaterPump *reservoir_pump;
 extern Reservoir *reservoir;
 
 // Temperature
@@ -55,7 +55,7 @@ extern DallasTemperature *temperatureSensor;
 extern SensorTemp *sensor_temp;
 extern ThermoElectricElement *heating_element;
 extern ThermoElectricElement *cooling_element;
-extern PumpWater *pump_temp;
+extern WaterPump *pump_temp;
 extern MonitorTemp *monitor_temp;
 
 // Global Variables

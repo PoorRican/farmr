@@ -6,13 +6,14 @@
 #define FARMR_MONITORPH_H
 
 #include <Arduino.h>
-#include "ProcessMonitor.h"
-#include "sensors/SensorPH.h"
-#include "appliances/PumpPh.h"
+#include "monitor.h"
 
-class MonitorPh : public ProcessMonitor {
+#include "sensors/ph.h"
+#include "appliances/ReagentPump.h"
+
+class MonitorPh : public Monitor {
 public:
-  MonitorPh(float &, uint16_t &, SensorPH &, PumpPh &, PumpPh &);
+  MonitorPh(float &, uint16_t &, SensorPH &, ReagentPump &, ReagentPump &);
 
   ProcessType getType() const final;
 
@@ -34,11 +35,11 @@ public:
   void poll() final;
 
 private:
-                                    // to prevent buffer solution from continually being used
+  // to prevent buffer solution from continually being used
   const float tolerance = 0.2;      // tolerance between ideal and actual values
   SensorPH &sensor;
-  PumpPh &acidPump;
-  PumpPh &basePump;
+  ReagentPump &acidPump;
+  ReagentPump &basePump;
 
   void increase() final;
 

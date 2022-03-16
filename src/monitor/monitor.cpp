@@ -2,15 +2,15 @@
 // Created by Josue Figueroa on 12/13/20.
 //
 
-#include "ProcessMonitor.h"
+#include "monitor/monitor.h"
 
-ProcessMonitor::ProcessMonitor(float &ideal, uint16_t &interval) : ideal(ideal), interval(interval) {};
+Monitor::Monitor(float &ideal, uint16_t &interval) : ideal(ideal), interval(interval) {};
 
-void ProcessMonitor::addTasks(Scheduler &scheduler) {
+void Monitor::addTasks(Scheduler &scheduler) {
   scheduler.addTask(*(pollingTimer));
 }
 
-void ProcessMonitor::startPolling() {
+void Monitor::startPolling() {
 #ifdef VERBOSE_OUTPUT
   String s = "Starting ";
   switch (this->getType()) {
@@ -44,7 +44,7 @@ void ProcessMonitor::startPolling() {
   pollingTimer->enableDelayed();
 }
 
-void ProcessMonitor::stopPolling() {
+void Monitor::stopPolling() {
 #ifdef VERBOSE_OUTPUT
   String s = "Stopped ";
   switch (this->getType()) {
@@ -78,10 +78,10 @@ void ProcessMonitor::stopPolling() {
   pollingTimer->disable();
 }
 
-float ProcessMonitor::getIdeal() const {
+float Monitor::getIdeal() const {
   return ideal;
 }
 
-uint16_t ProcessMonitor::getInterval() const {
+uint16_t Monitor::getInterval() const {
   return interval;
 }

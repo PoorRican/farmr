@@ -2,8 +2,8 @@
 // Created by Josue Figueroa on 12/12/20.
 //
 
-#ifndef FARMR_PUMPPH_H
-#define FARMR_PUMPPH_H
+#ifndef FARMR_REAGENTPUMP_H
+#define FARMR_REAGENTPUMP_H
 
 #include "Relay.h"
 #include <TaskSchedulerDeclarations.h>
@@ -11,13 +11,13 @@
 /**
  * Represents a pump that is activated for seconds at a time.
  */
-class PumpPh : public Relay<> {
+class ReagentPump : public Relay<> {
 public:
-  explicit PumpPh(const uint8_t &pin, uint16_t &duration);
-  PumpPh(const PumpPh &) = default;
-  PumpPh& operator=(const PumpPh&) = default;
+  explicit ReagentPump(const uint8_t &pin, uint16_t &duration);
+  ReagentPump(const ReagentPump &) = default;
+  ReagentPump& operator=(const ReagentPump&) = default;
 
-  ~PumpPh() = default;
+  ~ReagentPump() = default;
 
   // Setters
   /**
