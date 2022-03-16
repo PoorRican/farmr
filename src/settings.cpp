@@ -3,7 +3,6 @@
 //
 
 #include "settings.h"
-#include "appliances/ThermoElectricElement.h"
 #include "pins.h"
 
 Settings settings;

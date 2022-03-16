@@ -9,8 +9,6 @@
 
 #include "relay.h"
 #include <TaskSchedulerDeclarations.h>
-#include <Time.h>
-#include "sensor/distance.h"
 
 /**
  * Represents a pump that is activated for minutes at a time.
