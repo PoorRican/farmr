@@ -14,16 +14,17 @@ LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
 chainStream<0> in(nullptr);
 
-// TODO: reservoir depth calibration
 
+// ========================================
 // Reservoir Menus
+
 MENU(reservoirCalibrate, "Calibrate Levels", doNothing, noEvent, wrapStyle
      ,OP("Calibrate Max", calibrateReservoirMax, enterEvent)
      ,OP("Calibrate Min", calibrateReservoirMin, enterEvent),
      EXIT("< BACK")
      )
 
-TOGGLE(pumpingOn, toggleReservoirPump, "Relay: ", doExit, enterEvent, noStyle
+TOGGLE(pumpingOn, toggleReservoirPump, "Reservoir: ", doExit, enterEvent, noStyle
        , VALUE("On", true, turnOnReservoirCycle, noEvent)
        , VALUE("Off", false, turnOffReservoirCycle, noEvent)
        )
@@ -38,6 +39,7 @@ MENU(reservoirMenu, "Reservoir", doNothing, noEvent, wrapStyle
      ,EXIT("< Back")
      )
 
+// ========================================
 // pH Monitor
 
 MENU(phCalibrate, "Calibrate pH", doNothing, noEvent, wrapStyle
@@ -63,7 +65,8 @@ MENU(phMonitorMenu, "pH Monitor", doNothing, noEvent, wrapStyle
      )
 
 
-// pH Monitor
+// ========================================
+// Temp Monitor
 
 TOGGLE(tempMonitoring, toggleTempMonitor, "Monitor: ", doExit, enterEvent, noStyle
 ,VALUE("On", true, turnOnTempMonitor, noEvent)
@@ -80,7 +83,8 @@ MENU(tempMonitorMenu, "Temp Monitor", doNothing, noEvent, noStyle
 )
 
 
-/// Settings Menu
+// ========================================
+// Settings Menu
 
 MENU(restoreDefaultsMenu, "Reset All", doNothing, enterEvent, noStyle
      ,OP("Yes", restoreDefaults, enterEvent)

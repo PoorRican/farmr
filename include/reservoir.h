@@ -23,9 +23,6 @@ public:
 
   ~Reservoir() = default;
 
-  /// Enables or disables water cycle timer
-  void enableCycleTimer();
-  void disableCycleTimer();
   /**
    * Duration of water cycle.
    * @var min (uint16_t) : minutes
@@ -50,12 +47,22 @@ public:
   uint8_t getCurrentLevel() const;
 
   void addTasks(Scheduler&);
+
+  /**
+   * Engage pumping
+   */
   void runCycle();
-  void startCycle();
-  void stopCycle();
+
+  /**
+   * Begins timer scheduling
+   */
+  void enableCycle();
+  /**
+   * Stops timer scheduling
+   */
+  void disableCycle();
 
 protected:
-  bool enabled;         // false by default
   uint16_t interval;
   uint8_t threshold;
 

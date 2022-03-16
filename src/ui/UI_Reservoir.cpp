@@ -9,10 +9,10 @@
 uint8_t currentLevel = 0;    // placeholder
 
 void turnOnReservoirCycle() {
-  reservoir->startCycle();
+  reservoir->enableCycle();
 }
 void turnOffReservoirCycle() {
-  reservoir->stopCycle();
+  reservoir->disableCycle();
 }
 
 result setReservoirThreshold(eventMask e, navNode& _nav, prompt &item) {

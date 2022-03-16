@@ -2,11 +2,11 @@
 // Created by Josue Figueroa on 12/30/20.
 //
 
+#include "scheduler.h"
 #include "reservoir.h"
 
 Reservoir::Reservoir(const uint16_t &interval, const uint8_t &threshold, WaterPump *waterPump, SensorDistance *sensorLevel)
 : interval(interval), threshold(threshold), pump(waterPump), level(sensorLevel) {
-  enabled = false;
 
   cycleTimer = new Task(interval, TASK_FOREVER, cycleWater);
   cycleTimer->setLtsPointer(this);
@@ -15,10 +15,12 @@ Reservoir::Reservoir(const uint16_t &interval, const uint8_t &threshold, WaterPu
 }
 
 void Reservoir::enableCycleTimer() {
+  // TODO: start task
   enabled = true;
 }
 
 void Reservoir::disableCycleTimer() {
+  // TODO: stop task
   enabled = false;
 }
 
@@ -60,6 +62,10 @@ uint8_t Reservoir::getCurrentLevel() const {
   return level->get();
 }
 
+void Reservoir::addTasks(Scheduler &scheduler) {
+  scheduler.addTask(*(cycleTimer));
+}
+
 void Reservoir::runCycle() {
   if (aboveThreshold()) {
     pump->restart();
@@ -67,14 +73,17 @@ void Reservoir::runCycle() {
   }
 }
 
-void Reservoir::addTasks(Scheduler &scheduler) {
-  scheduler.addTask(*(cycleTimer));
-}
-void Reservoir::startCycle() {
+void Reservoir::enableCycle() {
+#ifdef VERBOSE_OUTPUT
+  Serial.print("Reservoir cycle enabled");
+#endif
   cycleTimer->enableDelayed();
 }
 
-void Reservoir::stopCycle() {
+void Reservoir::disableCycle() {
+#ifdef VERBOSE_OUTPUT
+  Serial.print("Reservoir cycle disabled");
+#endif
   cycleTimer->disable();
   // TODO: immediately stop pumps
 }
