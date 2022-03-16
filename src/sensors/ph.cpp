@@ -4,7 +4,9 @@
 
 #include "sensors/ph.h"
 
-SensorPH::SensorPH(const int &pin) : Sensor(pin) {}
+SensorPH::SensorPH(const int &pin) : Sensor(pin) {
+  pH = -1;
+}
 
 Sensor::SensName SensorPH::getType() const {
   return Sensor::pH;

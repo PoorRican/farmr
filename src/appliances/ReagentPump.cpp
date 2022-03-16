@@ -8,7 +8,7 @@ ReagentPump::ReagentPump(const uint8_t &pin, uint16_t &duration)
 : Relay(pin, duration) {
 
   setDuration(duration);
-};
+}
 
 bool ReagentPump::setDuration(const uint16_t &sec) {
   if (sec > 0 && sec <= 10) {

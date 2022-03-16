@@ -49,4 +49,4 @@ private:
 
 void pollTemp();
 
-#endif //FARMR_TEMP_H
+#endif //FARMR_MONITORTEMP_H

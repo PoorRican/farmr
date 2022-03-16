@@ -46,7 +46,7 @@ bool MonitorPh::setInterval(uint16_t &val) {
 }
 
 bool MonitorPh::setDuration(uint16_t &val) {
-  bool _return = true;
+  bool _return;
   _return = acidPump.setDuration(val);
   if (_return) {
     _return = basePump.setDuration(val);

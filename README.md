@@ -4,7 +4,7 @@
 
 ### pH Buffer Solutions:
 
-Instead of using peristaltic pumps to pump buffer solutoin, 500mL syringes can be used,
+Instead of using peristaltic pumps to pump buffer solution, 500mL syringes can be used,
 with a stepper motor driving actuation of the plunger.
 
 ### Outlet Port for fraction collector/spectrophotometry/reagent testing
@@ -20,7 +20,7 @@ create an electronically actuated valve with a small inner diameter.
     * Idea:
         - Designed like a water-cooled reflux tube
         - Separate reservoir filled with mineral water, with both heating and cooling elements around the exterior.
-        - A tube bended to be a coil contains liquid to be cooled or heated.
+        - A tube bent to be a coil contains liquid to be cooled or heated.
         - Recirculating pump is used to force liquid through tank.
     * Maybe a solar water-heater or ground cooling can be used in-lieu of thermoelectric heaters
 - [12V Peristaltic Pump](https://www.adafruit.com/product/1150)
@@ -36,11 +36,11 @@ create an electronically actuated valve with a small inner diameter.
 * I do not know if these electrodes will work properly for continuous use 
   
 * Nitrate:
-    * [ThermoScientific Orion Nitrate Sensor](https://www.thermofisher.com/order/catalog/product/970701#/970701) ($1,100}
+    * [ThermoScientific Orion Nitrate Sensor](https://www.thermofisher.com/order/catalog/product/970701#/970701) ($1,100)
     * [Manual](https://www.thermofisher.com/document-connect/document-connect.html?url=https%3A%2F%2Fassets.thermofisher.com%2FTFS-Assets%2FLSG%2Fmanuals%2FD15888~.pdf&title=Tml0cmF0ZSBJb24gU2VsZWN0aXZlIEVsZWN0cm9kZQ==)
     
 * Ammonia:
-    * [ThermoScientific Orion Ammonia Sensor](https://www.thermofisher.com/order/catalog/product/9512BNWP#/9512BNWP) ($790}
+    * [ThermoScientific Orion Ammonia Sensor](https://www.thermofisher.com/order/catalog/product/9512BNWP#/9512BNWP) ($790)
     * [Manual](https://www.thermofisher.com/document-connect/document-connect.html?url=https%3A%2F%2Fassets.thermofisher.com%2FTFS-Assets%2FLSG%2Fmanuals%2FD01250~.pdf&title=U3RhbmRhcmQgQW1tb25pYSBJb24gU2VsZWN0aXZlIEVsZWN0cm9kZSAtIFVzZXIgR3VpZGU=)
 
 ## Project References

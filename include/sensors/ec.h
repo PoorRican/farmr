@@ -13,7 +13,7 @@ public:
   SensorEC(const SensorEC&) = default;
   SensorEC& operator=(const SensorEC&) = default;
 
-  SensName getType() const;
+  SensName getType() const override;
 
   void init() final;
   void update() final;
@@ -42,4 +42,4 @@ protected:
 };
 
 
-#endif //FARMR_EC_H
+#endif //FARMR_SENSOREC_H

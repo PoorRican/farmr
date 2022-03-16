@@ -59,4 +59,4 @@ protected:
   float readResistance() const;
 };
 
-#endif //FARMR_DISTANCE_H
+#endif //FARMR_SENSORDISTANCE_H

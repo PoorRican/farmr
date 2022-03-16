@@ -10,7 +10,7 @@
 #include <TaskSchedulerDeclarations.h>
 #include "settings.h"
 
-extern Scheduler ts;
+
 
 /**
  * Adds individual tasks for pumps and sensor operations to scheduler.

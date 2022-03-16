@@ -5,6 +5,7 @@
 #include "sensors/temp.h"
 
 SensorTemp::SensorTemp(const uint8_t &pin, DallasTemperature *sensor) : Sensor(pin), sensor(sensor) {
+  temperature = -1;
 }
 
 Sensor::SensName SensorTemp::getType() const {

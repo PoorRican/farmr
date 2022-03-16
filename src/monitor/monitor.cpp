@@ -4,7 +4,7 @@
 
 #include "monitor/monitor.h"
 
-Monitor::Monitor(float &ideal, uint16_t &interval) : ideal(ideal), interval(interval) {};
+Monitor::Monitor(float &ideal, uint16_t &interval) : ideal(ideal), interval(interval) {}
 
 void Monitor::addTasks(Scheduler &scheduler) {
   scheduler.addTask(*(pollingTimer));

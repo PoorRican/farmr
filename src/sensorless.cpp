@@ -3,6 +3,7 @@
 //
 
 #include "sensorless.h"
+#include <stdlib.h>
 
 // defined in "platformio.ini" build_flags
 #ifdef SENSORLESS_OPERATION
@@ -132,7 +133,7 @@ void set_ph() {
   char* arg;
   arg = sCmd.next();
   if (arg != nullptr) {
-    ph_sensor->setPH(atof(arg));
+    ph_sensor->setPH(atoi(arg));
     Serial.print("pH set to ");
     Serial.println(arg);
   }
@@ -193,7 +194,7 @@ void set_acid_pump_duration() {
   char* arg;
   arg = sCmd.next();
   if (arg != nullptr) {
-    float i = atof(arg);
+    uint16_t i = atoi(arg);
     acid_pump->setDuration(i);
     Serial.print("acid_pump duration set to ");
     Serial.println(arg);
@@ -211,7 +212,7 @@ void set_base_pump_duration() {
   char* arg;
   arg = sCmd.next();
   if (arg != nullptr) {
-    float i = atof(arg);
+    uint16_t i = atoi(arg);
     base_pump->setDuration(i);
     Serial.print("base_pump duration set to ");
     Serial.println(arg);

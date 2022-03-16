@@ -5,7 +5,7 @@
 #include "scheduler.h"
 
 void init_tasks() {
-  // TOOD: convert this to a for-loop
+  // TODO: convert this to a for-loop
 
   // Relay tasks
   acid_pump->addTasks(ts);
