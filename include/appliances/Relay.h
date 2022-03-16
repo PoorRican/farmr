@@ -18,7 +18,6 @@ extern Scheduler ts;
  *
  * `T` is the variable type used to define pump duration. eg: float. Defaults to uint16_t
  */
-template<class T=uint16_t>
 class Relay {
 public:
   enum RelayType {
@@ -34,7 +33,7 @@ public:
    * @param duration : duration of pump being applied (in minutes)
    * @param interval : time between pump activations (in hours)
    */
-  explicit Relay(const uint8_t &pin, T &duration, bool=true);
+  explicit Relay(const uint8_t &pin, uint16_t &duration, bool=true);
   Relay(const Relay&) = default;
   Relay& operator=(const Relay&) = default;
 
@@ -53,13 +52,13 @@ public:
 
   // Getters
   bool getRelayOn() const;
-  T getDuration() const;
+  uint16_t getDuration() const;
   uint8_t getPin() const;
   bool getInverse() const;
 
   // Setters
   void setRelayOn(bool);
-  virtual bool setDuration(const T&) = 0;
+  virtual bool setDuration(const uint16_t&) = 0;
   void setInverse(bool);
 
   // Relay Routines
@@ -70,7 +69,7 @@ protected:
   bool relayOn = false;
   bool inverse;         // Relay is energized with logic-LOW. Defaults to true
   uint8_t pin;
-  T duration;           /// Stores the raw value of time to keep pump activated
+  uint16_t duration;           /// Stores the raw value of time to keep pump activated
 
   Task *relayTimer = nullptr;
   Task *relayOffTimer = nullptr;

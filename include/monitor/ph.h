@@ -5,7 +5,6 @@
 #ifndef FARMR_MONITORPH_H
 #define FARMR_MONITORPH_H
 
-#include <Arduino.h>
 #include "monitor.h"
 
 #include "sensors/ph.h"

@@ -6,7 +6,7 @@
 #define FARMR_RESERVOIR_H
 
 #include <Arduino.h>
-#include "scheduler.h"
+#include <TaskSchedulerDeclarations.h>
 #include "appliances/WaterPump.h"
 #include "sensors/distance.h"
 

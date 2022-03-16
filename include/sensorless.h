@@ -5,7 +5,6 @@
 #ifndef FARMR_SENSORLESS_H
 #define FARMR_SENSORLESS_H
 
-
 #ifdef SENSORLESS_OPERATION
 
 #include "../lib/Arduino-SerialCommand/SerialCommand.h"

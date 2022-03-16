@@ -13,7 +13,7 @@
 /**
  * Represents a pump that is activated for minutes at a time.
  */
-class WaterPump : public Relay<> {
+class WaterPump : public Relay {
 public:
   // Constructors
   WaterPump(const uint8_t &pin, uint16_t &duration);
@@ -29,7 +29,7 @@ public:
    * @var min (uint16_t) : minutes
    * @return true if min greater-than 0 and less-than or equal to 12
    */
-  bool setDuration(const uint16_t&) final;
+  bool setDuration(const uint16_t&) override;
 
   void restart();
 };

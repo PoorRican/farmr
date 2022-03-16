@@ -8,8 +8,6 @@
 #include <Arduino.h>
 #include <TaskSchedulerDeclarations.h>
 
-extern Scheduler ts;
-
 /**
  * Abstract watchdog class for monitoring a process/metric (eg: pH, filtering, Nx) and controlling pumps.
  * TODO: PID will be implemented here

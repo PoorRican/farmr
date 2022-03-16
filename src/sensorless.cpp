@@ -3,7 +3,6 @@
 //
 
 #include "sensorless.h"
-#include <stdlib.h>
 
 // defined in "platformio.ini" build_flags
 #ifdef SENSORLESS_OPERATION

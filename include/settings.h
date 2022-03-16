@@ -28,14 +28,10 @@
 #define TEMP_INTERVAL 30
 
 #include <Arduino.h>
-#include "sensors/temp.h"
-#include "sensors/distance.h"
-#include "appliances/WaterPump.h"
-#include "appliances/ReagentPump.h"
+#include <EEPROMex.h>
 #include "monitor/temp.h"
 #include "monitor/ph.h"
 #include "reservoir.h"
-#include <EEPROMex.h>
 
 // pH Pumps/Sensors/Monitor
 extern ReagentPump *acid_pump;
