@@ -41,7 +41,7 @@ public:
 
   virtual RelayType getType() const;
 
-  void init() const;
+  void init();
   void addTasks(Scheduler&);
 
   // Timer Routines

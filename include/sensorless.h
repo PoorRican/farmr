@@ -36,7 +36,8 @@ void init_sensor_levels();
 void start_reservoir_pumping();
 void stop_reservoir_pumping();
 
-void reservoir_pump_on();
+void set_reservoir_pump_mode();
+void get_reservoir_pump_mode();
 
 void set_reservoir_duration();
 void get_reservoir_duration();

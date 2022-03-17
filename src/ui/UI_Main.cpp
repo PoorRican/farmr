@@ -2,6 +2,11 @@
 // Created by Josue Figueroa on 12/25/20.
 //
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "bugprone-sizeof-expression"
+#pragma clang diagnostic ignored "-Wunknown-attributes"
+#pragma clang diagnostic ignored "-Wmissing-braces"
+
 #define MAX_DEPTH 3
 
 #include "ui/UI_Main.h"
@@ -137,3 +142,5 @@ void pollUi() {
     nav.poll();
   }
 }
+
+#pragma clang diagnostic pop

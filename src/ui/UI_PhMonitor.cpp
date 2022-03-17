@@ -44,17 +44,17 @@ void turnOffPhMonitor() {
 
 // Calibration Routines
 result calibratePhFour(eventMask e, navNode& _nav, prompt &item) {
-  ph_sensor->setFour();
+  SensorPH::setFour();
   nav.idleOn(alertPhCalibrated);
   return quit;
 }
 result calibratePhSeven(eventMask e, navNode& _nav, prompt &item) {
-  ph_sensor->setSeven();
+  SensorPH::setSeven();
   nav.idleOn(alertPhCalibrated);
   return quit;
 }
 result calibratePhTen(eventMask e, navNode& _nav, prompt &item) {
-  ph_sensor->setTen();
+  SensorPH::setTen();
   nav.idleOn(alertPhCalibrated);
   return quit;
 }

@@ -57,6 +57,8 @@ public:
   // ===============================
   // Pump Control
 
+  PumpMode getPumpMode() const;
+
   /**
    * Immediately restarts cycle
    */

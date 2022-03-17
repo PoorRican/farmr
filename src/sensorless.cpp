@@ -21,10 +21,8 @@ void init_sCmd() {
   sCmd.setDefaultHandler(unrecognized_command);
 
   // reservoir commands
-  sCmd.addCommand("start_reservoir_pumping", start_reservoir_pumping);
-  sCmd.addCommand("stop_reservoir_pumping", stop_reservoir_pumping);
-
-  sCmd.addCommand("reservoir_pump_on", reservoir_pump_on);
+  sCmd.addCommand("set_reservoir_pump_mode", get_reservoir_pump_mode);
+  sCmd.addCommand("get_reservoir_pump_mode", set_reservoir_pump_mode);
 
   sCmd.addCommand("set_reservoir_duration", set_reservoir_duration);
   sCmd.addCommand("get_reservoir_duration", get_reservoir_duration);
@@ -78,18 +76,52 @@ void init_sensor_levels() {
 }
 
 // Reservoir Operations
-void start_reservoir_pumping() {
-  Serial.println("Starting reservoir pumping");
-  reservoir_pump->startRelayOnTimer();
-}
-void stop_reservoir_pumping() {
-  Serial.println("Stopping reservoir pumping");
-  reservoir_pump->stopRelayOnTimer();
-  reservoir_pump->stopRelayOffTimer();
-}
+void set_reservoir_pump_mode() {
+  char* _arg;
+  _arg = sCmd.next();
 
-void reservoir_pump_on() {
-  String s = "Reservoir pump is " + (String)(reservoir_pump->getRelayOn() ? "on" : "off");
+  String s = "";
+
+  if (_arg != nullptr) {
+    String arg(_arg);
+    if (arg.equals("on")) {
+      s += "continuous operation";
+      reservoir->enableContinuous();
+    }
+    else if (arg.equals("cycle")) {
+      s += "cycle mode";
+      reservoir->enableCycle();
+    }
+    else if (arg.equals("off")) {
+      s += "off";
+      reservoir->disableCycle();
+    }
+    else {
+      s = "an unknown mode, or an error has occurred...";
+    }
+    Serial.println("Reservoir pump set to " + s);
+  }
+}
+void get_reservoir_pump_mode() {
+  String s = "Reservoir pump is ";
+  switch (reservoir->getPumpMode()) {
+    case Reservoir::Off: {
+      s += "off";
+      break;
+    }
+    case Reservoir::Continuous: {
+      s += "in continuous operation";
+      break;
+    }
+    case Reservoir::Cycle: {
+      s += "in cycle mode";
+      break;
+    }
+    default: {
+      s += "in an unknown mode, or an error has occurred...";
+      break;
+    }
+  }
   Serial.println(s);
 }
 

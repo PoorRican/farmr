@@ -5,6 +5,8 @@
 #ifndef FARMR_MONITOR_H
 #define FARMR_MONITOR_H
 
+#define _TASK_LTS_POINTER       // Compile with support for local task storage pointer
+
 #include <Arduino.h>
 #include <TaskSchedulerDeclarations.h>
 

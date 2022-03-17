@@ -6,6 +6,7 @@
 
 WaterPump::WaterPump(const uint8_t &pin, uint16_t &duration)
 : Relay(pin, duration) {
+
   setDuration(duration);
 }
 

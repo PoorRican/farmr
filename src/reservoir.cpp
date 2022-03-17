@@ -2,11 +2,14 @@
 // Created by Josue Figueroa on 12/30/20.
 //
 
-#include "scheduler.h"
+#define _TASK_LTS_POINTER       // Compile with support for local task storage pointer
+
 #include "reservoir.h"
 
 Reservoir::Reservoir(const uint16_t &interval, const uint8_t &threshold, WaterPump *waterPump, SensorDistance *sensorLevel)
 : interval(interval), threshold(threshold), pump(waterPump), level(sensorLevel) {
+
+  mode = Off;
 
   cycleTimer = new Task(interval, TASK_FOREVER, cycleWater);
   cycleTimer->setLtsPointer(this);
@@ -54,6 +57,10 @@ uint8_t Reservoir::getCurrentLevel() const {
 
 void Reservoir::addTasks(Scheduler &scheduler) {
   scheduler.addTask(*(cycleTimer));
+}
+
+Reservoir::PumpMode Reservoir::getPumpMode() const {
+  return mode;
 }
 
 void Reservoir::runCycleNow() {

@@ -2,7 +2,6 @@
 // Created by Josue Figueroa on 12/31/20.
 //
 
-#include "scheduler.h"
 #include "monitor/temp.h"
 
 MonitorTemp::MonitorTemp(float &ideal, uint16_t &interval, uint16_t &duration, SensorTemp &sensor, WaterPump &pump,
@@ -13,6 +12,7 @@ MonitorTemp::MonitorTemp(float &ideal, uint16_t &interval, uint16_t &duration, S
   pollingTimer = new Task(this->interval, TASK_FOREVER, pollTemp);
   pollingTimer->setLtsPointer(this);
 
+  setIdeal(this->ideal);
   setInterval(this->interval);
   setDuration(this->duration);
 }

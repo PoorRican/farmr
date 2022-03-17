@@ -16,9 +16,9 @@ typename Relay::RelayType Relay::getType() const {
   return None;
 }
 
-void Relay::init() const {
+void Relay::init() {
   pinMode(pin, OUTPUT);
-  digitalWrite(pin, HIGH);            // immediately de-energize coil upon power applied
+  deenergize();
 }
 
 void Relay::addTasks(Scheduler &scheduler) {
