@@ -12,7 +12,7 @@
 
 class MonitorPh : public Monitor {
 public:
-  MonitorPh(float &, uint16_t &, SensorPH &, ReagentPump &, ReagentPump &);
+  MonitorPh(float &, uint16_t &, SensorPH *, ReagentPump *, ReagentPump *);
 
   ProcessType getType() const final;
 
@@ -36,9 +36,9 @@ public:
 private:
   // to prevent buffer solution from continually being used
   const float tolerance = 0.2;      // tolerance between ideal and actual values
-  SensorPH &sensor;
-  ReagentPump &acidPump;
-  ReagentPump &basePump;
+  SensorPH *sensor;
+  ReagentPump *acidPump;
+  ReagentPump *basePump;
 
   void increase() final;
 

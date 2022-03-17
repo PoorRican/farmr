@@ -26,7 +26,6 @@ void Relay::addTasks(Scheduler &scheduler) {
   scheduler.addTask(*(relayOffTimer));
 }
 
-
 void Relay::startRelayOnTimer() {
 #ifdef VERBOSE_OUTPUT
   Serial.println("'startRelayOnTimer' called");
@@ -125,6 +124,7 @@ void Relay::deenergize() {
 #endif
   setRelayOn(false);
 }
+
 
 void startRelay() {
   Task& t = ts.currentTask();

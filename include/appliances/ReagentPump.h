@@ -24,7 +24,7 @@ public:
    * Ensures that duration is an integer less than 10 seconds
    * @return true if given duration is valid.
    */
-  bool setDuration(const uint16_t &) override;
+  bool setDuration(const uint16_t &) final;
 
   void restart();
 };

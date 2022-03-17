@@ -139,7 +139,7 @@ void Settings::init_objects() {
   acid_pump = new ReagentPump(phMonitor.acidPin, phPumpDuration);
   base_pump = new ReagentPump(phMonitor.basePin, phPumpDuration);
   ph_sensor = new SensorPH(phMonitor.sensorPin);
-  ph_monitor = new MonitorPh(idealPh, phPollInterval, *ph_sensor, *acid_pump, *base_pump);
+  ph_monitor = new MonitorPh(idealPh, phPollInterval, ph_sensor, acid_pump, base_pump);
 
   // Init Reservoir Objects
   reservoir_level = new SensorDistance(reservoirMonitor.sensorPin);
@@ -151,7 +151,7 @@ void Settings::init_objects() {
   pump_temp = new WaterPump(tempMonitor.pumpPin, tempDuration);
   heating_element = new ThermoElectricElement(tempMonitor.heaterPin, tempDuration);
   cooling_element = new ThermoElectricElement(tempMonitor.coolerPin, tempDuration);
-  monitor_temp = new MonitorTemp(idealTemp, tempInterval, tempDuration, *sensor_temp, *pump_temp,  *heating_element, *cooling_element);
+  monitor_temp = new MonitorTemp(idealTemp, tempInterval, tempDuration, sensor_temp, pump_temp,  heating_element, cooling_element);
 }
 
 void Settings::writeDefaults() const {

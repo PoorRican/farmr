@@ -12,7 +12,7 @@
 
 class MonitorTemp : public Monitor {
 public:
-  MonitorTemp(float &, uint16_t &, uint16_t &, SensorTemp &, WaterPump &, ThermoElectricElement&, ThermoElectricElement&);
+  MonitorTemp(float &, uint16_t &, uint16_t &, SensorTemp *, WaterPump *, ThermoElectricElement *, ThermoElectricElement *);
 
   ProcessType getType() const final;
 
@@ -37,10 +37,10 @@ private:
   const float tolerance = 5.0;      // tolerance between ideal and actual values
   uint16_t duration;
 
-  SensorTemp &sensor;
-  WaterPump &pump;
-  ThermoElectricElement &heatingElement;
-  ThermoElectricElement &coolingElement;
+  SensorTemp *sensor;
+  WaterPump *pump;
+  ThermoElectricElement *heatingElement;
+  ThermoElectricElement *coolingElement;
 
   void increase() final;
 

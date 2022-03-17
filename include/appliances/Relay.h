@@ -13,10 +13,9 @@
 extern Scheduler ts;
 
 /**
- * Represents a relay controlled by a relay circuit.
- * All timing tasks are handled internally. Derivative classes only need to overwrite `setDuration`.
+ * Presents an interface to control a relay or other switching component.
  *
- * `T` is the variable type used to define pump duration. eg: float. Defaults to uint16_t
+ * All timing tasks are handled internally. Derivative classes only need to overwrite `setDuration`.
  */
 class Relay {
 public:
@@ -27,6 +26,7 @@ public:
     PumpNutrient,
     ThermoElectricElement,
   };
+
   /**
    *
    * @param pin : Output pumpPin of pump
@@ -67,9 +67,13 @@ public:
 
 protected:
   bool relayOn = false;
-  bool inverse;         // Relay is energized with logic-LOW. Defaults to true
   uint8_t pin;
-  uint16_t duration;           /// Stores the raw value of time to keep pump activated
+
+  /// Stores the raw value of time to keep pump activated
+  uint16_t duration;
+
+  /// Relay is energized with logic-LOW. Defaults to true
+  bool inverse;
 
   Task *relayTimer = nullptr;
   Task *relayOffTimer = nullptr;

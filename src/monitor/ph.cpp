@@ -4,7 +4,8 @@
 
 #include "monitor/ph.h"
 
-MonitorPh::MonitorPh(float &ideal, uint16_t &interval, SensorPH &sensor, ReagentPump &acidPump, ReagentPump &basePump)
+MonitorPh::MonitorPh(float &ideal, uint16_t &interval,
+                     SensorPH *sensor, ReagentPump *acidPump, ReagentPump *basePump)
     : Monitor(ideal, interval), sensor(sensor), acidPump(acidPump), basePump(basePump) {
 
   pollingTimer = new Task(this->interval, TASK_FOREVER, pollPH);
@@ -27,8 +28,8 @@ bool MonitorPh::setIdeal(float &val) {
 }
 
 float MonitorPh::getCurrentPh() const {
-  sensor.update();
-  return sensor.get();
+  sensor->update();
+  return sensor->get();
 }
 
 bool MonitorPh::setInterval(uint16_t &val) {
@@ -46,19 +47,19 @@ bool MonitorPh::setInterval(uint16_t &val) {
 
 bool MonitorPh::setDuration(uint16_t &val) {
   bool _return;
-  _return = acidPump.setDuration(val);
+  _return = acidPump->setDuration(val);
   if (_return) {
-    _return = basePump.setDuration(val);
+    _return = basePump->setDuration(val);
   }
   else {
-    basePump.setDuration(val);
+    basePump->setDuration(val);
   }
   return _return;
 }
 
 void MonitorPh::poll() {
-  sensor.update();
-  float _ph = sensor.get();
+  sensor->update();
+  float _ph = sensor->get();
   // NOTE: avr `abs` does not seem to support float types
   // TODO: implement PID
 #ifdef VERBOSE_OUTPUT
@@ -82,16 +83,16 @@ void MonitorPh::increase() {
 #ifdef VERBOSE_OUTPUT
   Serial.println("Attempting to increase pH");
 #endif
-  basePump.restart();
-  basePump.startRelayOnTimer();
+  basePump->restart();
+  basePump->startRelayOnTimer();
 }
 
 void MonitorPh::decrease() {
 #ifdef VERBOSE_OUTPUT
   Serial.println("Attempting to decrease pH");
 #endif
-  acidPump.restart();
-  acidPump.startRelayOnTimer();
+  acidPump->restart();
+  acidPump->startRelayOnTimer();
 }
 
 void pollPH() {

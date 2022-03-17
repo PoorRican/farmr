@@ -10,7 +10,6 @@
 - PID for `Monitor`
 
 ## Low Pri
-- Unify `Monitor` constructor declarations. Should be pointers (since they can be zero-initialized at runtime).
 - Implement `Reservoir` calibration via UI
 - Python setup/implementation script
 - Python client
