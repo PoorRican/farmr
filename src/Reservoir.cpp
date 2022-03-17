@@ -14,16 +14,6 @@ Reservoir::Reservoir(const uint16_t &interval, const uint8_t &threshold, WaterPu
   setInterval(interval);
 }
 
-void Reservoir::enableCycleTimer() {
-  // TODO: start task
-  enabled = true;
-}
-
-void Reservoir::disableCycleTimer() {
-  // TODO: stop task
-  enabled = false;
-}
-
 bool Reservoir::setDuration(const uint16_t &min) {
   return pump->setDuration(min);
 }
@@ -66,26 +56,38 @@ void Reservoir::addTasks(Scheduler &scheduler) {
   scheduler.addTask(*(cycleTimer));
 }
 
-void Reservoir::runCycle() {
+void Reservoir::runCycleNow() {
   if (aboveThreshold()) {
     pump->restart();
     pump->startRelayOnTimer();
+    mode = PumpMode::Cycle;
   }
+}
+
+void Reservoir::enableContinuous() {
+#ifdef VERBOSE_OUTPUT
+  Serial.print("Reservoir pump set to continuous operation.");
+#endif
+  cycleTimer->disable();
+  pump->energize();
+  mode = PumpMode::Continuous;
 }
 
 void Reservoir::enableCycle() {
 #ifdef VERBOSE_OUTPUT
-  Serial.print("Reservoir cycle enabled");
+  Serial.print("Reservoir cycle enabled.");
 #endif
   cycleTimer->enableDelayed();
+  mode = PumpMode::Cycle;
 }
 
 void Reservoir::disableCycle() {
 #ifdef VERBOSE_OUTPUT
-  Serial.print("Reservoir cycle disabled");
+  Serial.print("Reservoir cycle disabled. Pump turned off.");
 #endif
   cycleTimer->disable();
-  // TODO: immediately stop pumps
+  pump->deenergize();
+  mode = PumpMode::Off;
 }
 
 bool Reservoir::aboveThreshold() const {
@@ -96,9 +98,9 @@ void cycleWater() {
   Task& t = ts.currentTask();
   Reservoir& r = *((Reservoir*) t.getLtsPointer());
 
-  r.runCycle();
+  r.runCycleNow();
 
-#ifdef BASIC_TESTING
+#ifdef VERBOSE_OUTPUT
   Serial.println("Began reservoir water cycle");
 #endif
 }

@@ -9,6 +9,7 @@
 
 extern uint8_t currentLevel;
 
+void continuousReservoirPumping();
 void turnOnReservoirCycle();
 void turnOffReservoirCycle();
 

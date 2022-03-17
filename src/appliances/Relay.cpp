@@ -77,7 +77,7 @@ bool Relay::getInverse() const {
 
 // Setters
 void Relay::setRelayOn(bool val) {
-#ifdef BASIC_TESTING
+#ifdef VERBOSE_OUTPUT
   String s = "";
   switch (getType()) {
     case PumpWater: {

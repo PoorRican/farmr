@@ -1,7 +1,13 @@
 # TODO:
 
 ## High Pri
-- Implement manual reservoir pump control for DWC
+- Logging:
+  - Temp
+  - pH
+  - EC
+  - Reservoir levels
+  - NH3/Nitrate/Nitrite
+- PID for `Monitor`
 
 ## Low Pri
 - Unify `Monitor` constructor declarations. Should be pointers (since they can be zero-initialized at runtime).

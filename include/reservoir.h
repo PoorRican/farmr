@@ -23,6 +23,12 @@ public:
 
   ~Reservoir() = default;
 
+  enum PumpMode {
+    Off,
+    Cycle,
+    Continuous
+  };
+
   /**
    * Duration of water cycle.
    * @var min (uint16_t) : minutes
@@ -48,21 +54,32 @@ public:
 
   void addTasks(Scheduler&);
 
-  /**
-   * Engage pumping
-   */
-  void runCycle();
+  // ===============================
+  // Pump Control
 
   /**
-   * Begins timer scheduling
+   * Immediately restarts cycle
+   */
+  void runCycleNow();
+
+  /**
+   * Immediately turns on pumps. Disables cycle.
+   * This is meant to be used for DWC systems.
+   */
+  void enableContinuous();
+
+  /**
+   * Begins timer scheduling.
+   * Meant for NFT systems or any other system that requires a cycle.
    */
   void enableCycle();
   /**
-   * Stops timer scheduling
+   * Stops timer scheduling, turns off pump
    */
   void disableCycle();
 
 protected:
+  PumpMode mode;
   uint16_t interval;
   uint8_t threshold;
 

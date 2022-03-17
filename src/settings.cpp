@@ -34,7 +34,7 @@ uint16_t phPumpDuration = PH_POLL_DURATION;
 uint16_t phPollInterval = PH_POLL_INTERVAL;
 
 // Reservoir Variables
-bool pumpingOn = RESERVOIR_PUMPING_ENABLED;
+Reservoir::PumpMode pumpMode = (Reservoir::PumpMode)RESERVOIR_PUMP_MODE;
 uint16_t threshold = RESERVOIR_THRESHOLD;
 uint16_t reservoirDuration = RESERVOIR_DURATION;
 uint16_t reservoirInterval = RESERVOIR_INTERVAL;
@@ -59,7 +59,7 @@ Settings::Settings() {
   ph_polling_interval.value = &phPollInterval;
 
   // Init Reservoir pointers
-  reservoir_pump_enabled.value = &pumpingOn;
+  reservoir_pump_mode.value = &pumpMode;
   reservoir_pump_duration.value = &reservoirDuration;
   reservoir_pump_interval.value = &reservoirInterval;
   reservoir_calibration_max.value = &reservoirMax;
@@ -79,7 +79,7 @@ void Settings::getAddresses() {
   ph_polling_interval.address = EEPROM.getAddress(sizeof(unsigned int));
 
   // Reservoir
-  reservoir_pump_enabled.address = EEPROM.getAddress(sizeof(int));
+  reservoir_pump_mode.address = EEPROM.getAddress(sizeof(Reservoir::PumpMode));
   reservoir_pump_duration.address = EEPROM.getAddress(sizeof(unsigned int));
   reservoir_pump_interval.address = EEPROM.getAddress(sizeof(unsigned int));
   reservoir_calibration_max.address = EEPROM.getAddress(sizeof(unsigned int));
@@ -101,7 +101,7 @@ void Settings::readValues() {
   *(ph_polling_interval.value) = EEPROM.readInt(ph_polling_interval.address);
 
   // Reservoir
-  *(reservoir_pump_enabled.value) = (bool)EEPROM.readInt(reservoir_pump_enabled.address);
+  *(reservoir_pump_mode.value) = (Reservoir::PumpMode)EEPROM.readInt(reservoir_pump_mode.address);
   *(reservoir_pump_duration.value) = EEPROM.readInt(reservoir_pump_duration.address);
   *(reservoir_pump_interval.value) = EEPROM.readInt(reservoir_pump_interval.address);
   *(reservoir_calibration_max.value) = EEPROM.readInt(reservoir_calibration_max.address);
@@ -121,7 +121,7 @@ void Settings::updateValues() const {
   EEPROM.updateInt(ph_pump_duration.address, phPumpDuration);
   EEPROM.updateInt(ph_polling_interval.address, phPollInterval);
 
-  EEPROM.updateInt(reservoir_pump_enabled.address, (int)pumpingOn);
+  EEPROM.updateInt(reservoir_pump_mode.address, (int)pumpMode);
   EEPROM.updateInt(reservoir_threshold.address, threshold);
   EEPROM.updateInt(reservoir_pump_duration.address, reservoirDuration);
   EEPROM.updateInt(reservoir_pump_interval.address, reservoirInterval);
@@ -167,7 +167,7 @@ void Settings::writeDefaults() const {
   EEPROM.updateInt(ph_polling_interval.address, PH_POLL_DURATION);
 
   // Reservoir
-  EEPROM.updateInt(reservoir_pump_enabled.address, (int)RESERVOIR_PUMPING_ENABLED);
+  EEPROM.updateInt(reservoir_pump_mode.address, (int)RESERVOIR_PUMP_MODE);
   EEPROM.updateInt(reservoir_pump_duration.address, RESERVOIR_DURATION);
   EEPROM.updateInt(reservoir_pump_interval.address, RESERVOIR_INTERVAL);
   EEPROM.updateInt(reservoir_calibration_max.address, RESERVOIR_CALIBRATION_MAX);

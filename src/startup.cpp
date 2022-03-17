@@ -111,7 +111,7 @@ void init_memory() {
 }
 
 void start_services() {
-  if (pumpingOn) {
+  if (pumpMode) {
     reservoir_pump->startRelayOnTimer();
   }
   if (phMonitoring) {

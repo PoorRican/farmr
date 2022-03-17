@@ -8,12 +8,23 @@
 
 uint8_t currentLevel = 0;    // placeholder
 
+
+// ===================================
+// Pump mode callbacks
+
+void continuousReservoirPumping() {
+  reservoir->enableContinuous();
+}
 void turnOnReservoirCycle() {
   reservoir->enableCycle();
 }
 void turnOffReservoirCycle() {
   reservoir->disableCycle();
 }
+
+
+// ===================================
+// Reservoir attribute callbacks
 
 result setReservoirThreshold(eventMask e, navNode& _nav, prompt &item) {
 #ifdef VERBOSE_OUTPUT
@@ -42,7 +53,9 @@ result setReservoirInterval(eventMask e, navNode& _nav, prompt &item) {
   return proceed;
 }
 
+// ===================================
 // Calibration Routines
+
 result calibrateReservoirMax(eventMask e, navNode& _nav, prompt &item) {
 #ifdef VERBOSE_OUTPUT
   Serial.print("Calibrated reservoir max");

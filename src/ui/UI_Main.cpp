@@ -10,6 +10,8 @@
 #include "ui/UI_TempMonitor.h"
 #include "ui/UI_Settings.h"
 
+#include "reservoir.h"
+
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
 
 chainStream<0> in(nullptr);
@@ -24,13 +26,14 @@ MENU(reservoirCalibrate, "Calibrate Levels", doNothing, noEvent, wrapStyle
      EXIT("< BACK")
      )
 
-TOGGLE(pumpingOn, toggleReservoirPump, "Reservoir: ", doExit, enterEvent, noStyle
-       , VALUE("On", true, turnOnReservoirCycle, noEvent)
-       , VALUE("Off", false, turnOffReservoirCycle, noEvent)
+TOGGLE(pumpMode, reservoirPumpMode, "Pump: ", doExit, enterEvent, noStyle
+       , VALUE("On", Reservoir::Continuous, continuousReservoirPumping, noEvent)
+       , VALUE("Cycle", Reservoir::Cycle, turnOnReservoirCycle, noEvent)
+       , VALUE("Off", Reservoir::Off, turnOffReservoirCycle, noEvent)
        )
 
 MENU(reservoirMenu, "Reservoir", doNothing, noEvent, wrapStyle
-     ,SUBMENU(toggleReservoirPump)
+     ,SUBMENU(reservoirPumpMode)
      ,FIELD(currentLevel, "H2O Volume", "%", 0, 0, 0, 0, doNothing, noEvent, noStyle)
      ,FIELD(threshold, "Threshold", "%", 1, 100, 10, 1, setReservoirThreshold, enterEvent, noStyle)
      ,FIELD(reservoirDuration, "Duration", "m", 1, 12, 1, 1, setReservoirDuration, enterEvent, noStyle)

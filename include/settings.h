@@ -14,7 +14,7 @@
 #define PH_POLL_DURATION 2
 
 // Reservoir Defaults
-#define RESERVOIR_PUMPING_ENABLED false
+#define RESERVOIR_PUMP_MODE 0   // this should default to `PumpMode::Off`
 #define RESERVOIR_THRESHOLD 25
 #define RESERVOIR_DURATION 5
 #define RESERVOIR_INTERVAL 4
@@ -65,7 +65,7 @@ extern uint16_t phPollInterval;
 extern uint16_t phPumpDuration;
 
 // Reservoir Variables
-extern bool pumpingOn;
+extern Reservoir::PumpMode pumpMode;
 extern uint16_t threshold;
 extern uint16_t reservoirDuration;
 extern uint16_t reservoirInterval;
@@ -124,7 +124,7 @@ private:
   mem_t<uint16_t> ph_pump_duration;
   mem_t<uint16_t> ph_polling_interval;
 
-  mem_t<bool> reservoir_pump_enabled;
+  mem_t<Reservoir::PumpMode> reservoir_pump_mode;
   mem_t<uint16_t> reservoir_pump_duration;
   mem_t<uint16_t> reservoir_pump_interval;
   mem_t<uint16_t> reservoir_calibration_max;
