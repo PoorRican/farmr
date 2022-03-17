@@ -30,12 +30,12 @@ void setup() {
   nav.timeOut = 15;
   nav.idleTask = idle;
 
-  init_buttons();
+  init_buttons();       // begin to accept button presses
 
-  startup_msg();
-  show_flags();
+  startup_msg();        // show splash screen on LCD
+  show_flags();         // print out build flags to serial
 
-  init_memory();
+  init_memory();        // dump EEPROM onto RAM
   init_io();            // objects must be created before pumpPin initialization
 
   // Build flags

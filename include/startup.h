@@ -37,7 +37,9 @@ void init_io();
 void init_serial_operation();
 
 /**
- * Initializes both EEPROM and RAM
+ * Initializes both EEPROM and RAM.
+ * Reads from EEPROM and dumps onto RAM.
+ * If a new version is detected, reset to defaults.
  */
 void init_memory();
 

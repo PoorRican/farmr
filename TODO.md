@@ -1,7 +1,7 @@
 # TODO:
 
 ## High Pri
-- Logging:
+- Logging (via Eth/SD Card):
   - Temp
   - pH
   - EC
@@ -12,6 +12,10 @@
 ## Low Pri
 - Unify `Monitor` constructor declarations. Should be pointers (since they can be zero-initialized at runtime).
 - Implement `Reservoir` calibration via UI
+- Python setup/implementation script
+- Python client
+- Show build flags in settings menu
 
 ## Test:
 - Pump/cycle timing
+- pumpMode
