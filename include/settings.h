@@ -9,7 +9,7 @@
 
 // pH Monitor Defaults
 #define IDEAL_PH 7.5
-#define PH_MONITOR_ENABLED true
+#define PH_MONITOR_ENABLED false
 #define PH_POLL_INTERVAL 15
 #define PH_POLL_DURATION 2
 
@@ -23,7 +23,7 @@
 
 // Temperature Defaults
 #define IDEAL_TEMP 23.89
-#define TEMP_MONITORING_ENABLED true
+#define TEMP_MONITORING_ENABLED false
 #define TEMP_DURATION 15
 #define TEMP_INTERVAL 30
 
