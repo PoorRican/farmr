@@ -9,7 +9,7 @@
 #include "ui/UI_Reservoir.h"
 
 void update_sensors() {
-  currentPh = ph_monitor->getCurrentPh();
-  currentTemp = monitor_temp->getCurrentTemp();
+  currentPh = ph_monitor->getPh();
+  currentTemp = monitor_temp->getTemp();
   currentLevel = reservoir->getCurrentLevel();
 }

@@ -7,7 +7,7 @@
 MonitorTemp::MonitorTemp(float &ideal, uint16_t &interval, uint16_t &duration,
                          SensorTemp *sensor, WaterPump *pump,
                          ThermoElectricElement *heating, ThermoElectricElement *cooling)
-    : Monitor(ideal, interval), duration(duration), sensor(sensor), pump(pump),
+    : Monitor(ideal, interval, duration), sensor(sensor), pump(pump),
       heatingElement(heating), coolingElement(cooling) {
 
   pollingTimer = new Task(this->interval, TASK_FOREVER, pollTemp);
@@ -16,6 +16,16 @@ MonitorTemp::MonitorTemp(float &ideal, uint16_t &interval, uint16_t &duration,
   setIdeal(this->ideal);
   setInterval(this->interval);
   setDuration(this->duration);
+
+  this->temperature = -1;
+
+  // PID setup
+  this->pid_mode = Conservative;
+  this->pid = new PID((double*)(&this->temperature), (double*)(&this->duration), (double*)(&this->ideal),
+                      cons.Kp, cons.Ki, cons.Kd, DIRECT);
+
+  this->window_size = 5;      // don't exceed pumping for 5 minutes
+  this->initPid();
 }
 
 Monitor::ProcessType MonitorTemp::getType() const {
@@ -33,9 +43,10 @@ bool MonitorTemp::setIdeal(float &val) {
   return false;
 }
 
-float MonitorTemp::getCurrentTemp() const {
+float MonitorTemp::getTemp() {
   sensor->update();
-  return sensor->get();
+  this->temperature = sensor->get();
+  return this->temperature;
 }
 
 bool MonitorTemp::setInterval(uint16_t &val) {
@@ -56,22 +67,27 @@ bool MonitorTemp::setDuration(uint16_t &val) {
   valid = pump->setDuration(val);
   valid = heatingElement->setDuration(val) && valid;
   valid = coolingElement->setDuration(val) && valid;
+
+  duration = val;
+
   return valid;
 }
 
 void MonitorTemp::poll() {
-  sensor->update();
-  float temp = sensor->get();
+  // update temperature
+  this->getTemp();
 #ifdef VERBOSE_OUTPUT
-  // assuming String operations are quicker than multiple Serial operations
-  String s = "\nTemperature is " + (String)temp + ((sensor->getCelsius() ? "C" : "F"));
+  String s = "\nTemperature is " + (String)temperature + ((sensor->getCelsius() ? "C" : "F"));
   s = s + "Ideal is " + (String)ideal + ((sensor->getCelsius() ? "C" : "F"));
   Serial.println(s);
 #endif
-  if (temp < ideal && (ideal - temp) >= tolerance) {
+
+  pid->Compute();
+
+  if (temperature < ideal && (ideal - temperature) >= tolerance) {
     increase();
   }
-  else if (temp > ideal && (temp - ideal) >= tolerance) {
+  else if (temperature > ideal && (temperature - ideal) >= tolerance) {
     decrease();
   }
 #ifdef VERBOSE_OUTPUT

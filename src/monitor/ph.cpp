@@ -4,15 +4,27 @@
 
 #include "monitor/ph.h"
 
-MonitorPh::MonitorPh(float &ideal, uint16_t &interval,
+MonitorPh::MonitorPh(float &ideal, uint16_t &interval, uint16_t &duration,
                      SensorPH *sensor, ReagentPump *acidPump, ReagentPump *basePump)
-    : Monitor(ideal, interval), sensor(sensor), acidPump(acidPump), basePump(basePump) {
+    : Monitor(ideal, interval, duration), sensor(sensor), acidPump(acidPump), basePump(basePump) {
 
   pollingTimer = new Task(this->interval, TASK_FOREVER, pollPH);
   pollingTimer->setLtsPointer(this);
 
-  setIdeal(ideal);
-  setInterval(interval);
+  setIdeal(this->ideal);
+  setInterval(this->interval);
+  setDuration(this->duration);
+
+  this->ph = -1;
+
+  // PID setup
+  this->pid_mode = Conservative;
+  this->pid = new PID((double*)(&this->ph), (double*)(&this->duration), (double*)(&this->ideal),
+                      cons.Kp, cons.Ki, cons.Kp, DIRECT);
+
+
+  this->window_size = 5;      // don't exceed pumping buffer for 5 seconds
+  this->initPid();
 }
 
 Monitor::ProcessType MonitorPh::getType() const {
@@ -27,9 +39,10 @@ bool MonitorPh::setIdeal(float &val) {
   return false;
 }
 
-float MonitorPh::getCurrentPh() const {
+float MonitorPh::getPh() {
   sensor->update();
-  return sensor->get();
+  this->ph = sensor->get();
+  return this->ph;
 }
 
 bool MonitorPh::setInterval(uint16_t &val) {
@@ -46,30 +59,29 @@ bool MonitorPh::setInterval(uint16_t &val) {
 }
 
 bool MonitorPh::setDuration(uint16_t &val) {
-  bool _return;
-  _return = acidPump->setDuration(val);
-  if (_return) {
-    _return = basePump->setDuration(val);
-  }
-  else {
-    basePump->setDuration(val);
-  }
-  return _return;
+  bool valid;
+  valid = acidPump->setDuration(val);
+  valid = basePump->setDuration(val) && valid;
+
+  duration = val;
+
+  return valid;
 }
 
 void MonitorPh::poll() {
-  sensor->update();
-  float _ph = sensor->get();
-  // NOTE: avr `abs` does not seem to support float types
-  // TODO: implement PID
+  // update ph
+  this->getPh();
 #ifdef VERBOSE_OUTPUT
-  String s = "\npH is " + (String)_ph + ". Ideal is " + (String)ideal;
+  String s = "\npH is " + (String)ph + ". Ideal is " + (String)ideal;
   Serial.println(s);
 #endif
-  if (_ph < ideal && (ideal - _ph) >= tolerance) {
+
+  pid->Compute();
+
+  if (ph < ideal && (ideal - ph) >= tolerance) {
     increase();
   }
-  else if (_ph > ideal && (_ph - ideal) >= tolerance) {
+  else if (ph > ideal && (ph - ideal) >= tolerance) {
     decrease();
   }
 #ifdef VERBOSE_OUTPUT

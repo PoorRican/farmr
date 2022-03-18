@@ -139,7 +139,7 @@ void Settings::init_objects() {
   acid_pump = new ReagentPump(phMonitor.acidPin, phPumpDuration);
   base_pump = new ReagentPump(phMonitor.basePin, phPumpDuration);
   ph_sensor = new SensorPH(phMonitor.sensorPin);
-  ph_monitor = new MonitorPh(idealPh, phPollInterval, ph_sensor, acid_pump, base_pump);
+  ph_monitor = new MonitorPh(idealPh, phPollInterval, phPumpDuration, ph_sensor, acid_pump, base_pump);
 
   // Init Reservoir Objects
   reservoir_level = new SensorDistance(reservoirMonitor.sensorPin);

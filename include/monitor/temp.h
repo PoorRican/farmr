@@ -22,7 +22,7 @@ public:
    */
   bool setIdeal(float &) final;
 
-  float getCurrentTemp() const;
+  float getTemp();
 
   /**
    * Constrains value to 15 to 120 minutes.
@@ -33,9 +33,11 @@ public:
 
   void poll() final;
 
-private:
-  const float tolerance = 5.0;      // tolerance between ideal and actual values
+protected:
+  const float tolerance = 2.5;      // tolerance between ideal and actual values
   uint16_t duration;
+
+  float temperature;
 
   SensorTemp *sensor;
   WaterPump *pump;
@@ -43,7 +45,6 @@ private:
   ThermoElectricElement *coolingElement;
 
   void increase() final;
-
   void decrease() final;
 };
 

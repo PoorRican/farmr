@@ -12,7 +12,7 @@
 
 class MonitorPh : public Monitor {
 public:
-  MonitorPh(float &, uint16_t &, SensorPH *, ReagentPump *, ReagentPump *);
+  MonitorPh(float &, uint16_t &, uint16_t &, SensorPH *, ReagentPump *, ReagentPump *);
 
   ProcessType getType() const final;
 
@@ -22,7 +22,7 @@ public:
    */
   bool setIdeal(float &) final;
 
-  float getCurrentPh() const;
+  float getPh();
 
   /**
    * Constrains value to 5 to 120 seconds.
@@ -33,15 +33,18 @@ public:
 
   void poll() final;
 
-private:
+protected:
+  // tolerance between ideal and actual values
   // to prevent buffer solution from continually being used
-  const float tolerance = 0.2;      // tolerance between ideal and actual values
+  const float tolerance = 0.1;
+
+  float ph{};
+
   SensorPH *sensor;
   ReagentPump *acidPump;
   ReagentPump *basePump;
 
   void increase() final;
-
   void decrease() final;
 
 };

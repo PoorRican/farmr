@@ -9,10 +9,30 @@
 
 #include <Arduino.h>
 #include <TaskSchedulerDeclarations.h>
+#include <PID_v1.h>
+
+/// Stores P,I,D function tuning values
+struct tuning_param_t {
+  double Kp;
+  double Ki;
+  double Kd;
+};
+
+enum pid_tuning_mode_t {
+  Aggressive,
+  Conservative
+};
 
 /**
  * Abstract watchdog class for monitoring a process/metric (eg: pH, filtering, Nx) and controlling pumps.
- * TODO: PID will be implemented here
+ *
+ * Derived classes should define a duration, which defines a max window size. Using time proportioning control (TPC),
+ * the PID output is normalized in relation to this window size.
+ *
+ * There is also an aggressive and conservative PID tuning that alternate depending on how close the input is to setpoint.
+ * Both tunings are adjustable via Serial commands, as it is not practical for UI.
+ *
+ * Implementation of TPC and adaptive tunings are based on the examples included in the PID library.
  */
 class Monitor {
 public:
@@ -23,11 +43,13 @@ public:
     pH,
     Temperature
   };
-  explicit Monitor(float &ideal, uint16_t &interval);
+  explicit Monitor(float &ideal, uint16_t &interval, uint16_t &duration);
 
   virtual ProcessType getType() const = 0;
+
   virtual bool setIdeal(float&) = 0;
   float getIdeal() const;
+
   virtual bool setInterval(uint16_t&) = 0;
   uint16_t getInterval() const;
 
@@ -42,11 +64,60 @@ public:
    */
   virtual void poll() = 0;
 
-protected:
-  float ideal;            // Equilibrium value
-  uint16_t interval;      // Polling interval
+  // PID Methods
+  /**
+   * Sets PID to normalize output, and starts the PID
+   */
+  void initPid();
 
-  Task *pollingTimer = nullptr;
+  /**
+   * Switches tune PID tuning mode
+   * @param tune desired aggressiveness
+   */
+  void switchPidMode(pid_tuning_mode_t tune);
+  /**
+   * @return current PID aggressiveness mode
+   */
+  pid_tuning_mode_t getPidMode() const;
+
+  /**
+   * Change parameters for aggressive tune
+   */
+  void setAggressiveTune(double &, double &, double&);
+  /**
+   * Get parameters for aggressive tune
+   */
+  tuning_param_t getAggressiveTune() const;
+
+  /**
+   * Change parameters for conservative tune
+   */
+  void setConservativeTune(double &, double &, double&);
+  /**
+   * Get parameters for conservative tune
+   */
+  tuning_param_t getConservativeTune() const;
+
+protected:
+  float ideal;            // Equilibrium/setpoint value
+  uint16_t interval;      // Polling interval
+  uint16_t duration;      // TPC output
+
+  /// Defines a maximum time for PID output.
+  /// Must be overwritten by derived classes
+  uint16_t window_size;
+
+  Task *pollingTimer;
+
+  /// current PID tuning
+  pid_tuning_mode_t pid_mode;
+
+  /// aggressive tuning parameter. When far away from setpoint.
+  tuning_param_t aggr = {4, 0.2, 1};
+  /// conservative tuning parameter. When close to setpoint.
+  tuning_param_t cons = {1, 0.05, 0.25};
+
+  PID *pid;
 
   virtual void increase() = 0;
   virtual void decrease() = 0;

@@ -4,10 +4,19 @@
 
 #include "monitor/monitor.h"
 
-Monitor::Monitor(float &ideal, uint16_t &interval) : ideal(ideal), interval(interval) {}
+Monitor::Monitor(float &ideal, uint16_t &interval, uint16_t& duration)
+      : ideal(ideal), interval(interval), duration(duration) {}
 
 void Monitor::addTasks(Scheduler &scheduler) {
   scheduler.addTask(*(pollingTimer));
+}
+
+float Monitor::getIdeal() const {
+  return ideal;
+}
+
+uint16_t Monitor::getInterval() const {
+  return interval;
 }
 
 void Monitor::startPolling() {
@@ -78,10 +87,51 @@ void Monitor::stopPolling() {
   pollingTimer->disable();
 }
 
-float Monitor::getIdeal() const {
-  return ideal;
+
+// =====================
+// PID Methods
+
+void Monitor::initPid() {
+  // normalize output
+  pid->SetOutputLimits(0, window_size);
+
+  // is this necessary?
+  pid->SetMode(AUTOMATIC);
 }
 
-uint16_t Monitor::getInterval() const {
-  return interval;
+void Monitor::switchPidMode(pid_tuning_mode_t tune) {
+  switch (tune) {
+    case Aggressive: {
+      pid->SetTunings(aggr.Kp, aggr.Ki, aggr.Kd);
+      break;
+    }
+    case Conservative: {
+      pid->SetTunings(cons.Kp, cons.Ki, cons.Kd);
+      break;
+    }
+    default: {
+      // TODO: log error. How did we get here?
+      break;
+    }
+  }
+}
+
+pid_tuning_mode_t Monitor::getPidMode() const {
+  return pid_mode;
+}
+
+void Monitor::setAggressiveTune(double &Kp, double &Ki, double &Kd) {
+  aggr = {Kp, Ki, Kd};
+}
+
+tuning_param_t Monitor::getAggressiveTune() const {
+  return aggr;
+}
+
+void Monitor::setConservativeTune(double &Kp, double &Ki, double &Kd) {
+  cons = {Kp, Ki, Kd};
+}
+
+tuning_param_t Monitor::getConservativeTune() const {
+  return cons;
 }
