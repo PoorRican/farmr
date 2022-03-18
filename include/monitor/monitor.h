@@ -47,8 +47,8 @@ public:
 
   virtual ProcessType getType() const = 0;
 
-  virtual bool setIdeal(double&) = 0;
-  double getIdeal() const;
+  virtual bool setSetpoint(double&) = 0;
+  double getSetpoint() const;
 
   virtual bool setInterval(uint16_t&) = 0;
   uint16_t getInterval() const;
@@ -59,7 +59,7 @@ public:
   void stopPolling();
   /**
    * Main function and called by polling timer.
-   * Measure area of responsibility then attempt to get to ideal.
+   * Measure area of responsibility then attempt to get to setpoint.
    * Uses `read`, `increase`, and `decrease`.
    */
   virtual void poll() = 0;
@@ -99,7 +99,7 @@ public:
   tuning_param_t getConservativeTune() const;
 
 protected:
-  double ideal;           // Equilibrium/setpoint value
+  double setpoint;        // Equilibrium/setpoint value
   uint16_t interval;      // Polling interval
   uint16_t duration;      // TPC output
 

@@ -13,7 +13,7 @@ MonitorTemp::MonitorTemp(double &ideal, uint16_t &interval, uint16_t &duration,
   pollingTimer = new Task(this->interval, TASK_FOREVER, pollTemp);
   pollingTimer->setLtsPointer(this);
 
-  setIdeal(this->ideal);
+  setSetpoint(this->setpoint);
   setInterval(this->interval);
   setDuration(this->duration);
 
@@ -21,7 +21,7 @@ MonitorTemp::MonitorTemp(double &ideal, uint16_t &interval, uint16_t &duration,
 
   // PID setup
   this->pid_mode = Conservative;
-  this->pid = new PID((double*)(&this->temperature), (double*)(&this->duration), (double*)(&this->ideal),
+  this->pid = new PID((double*)(&this->temperature), (double*)(&this->duration), (double*)(&this->setpoint),
                       cons.Kp, cons.Ki, cons.Kd, DIRECT);
 
   this->window_size = 5;      // don't exceed pumping for 5 minutes
@@ -32,12 +32,12 @@ Monitor::ProcessType MonitorTemp::getType() const {
   return Temperature;
 }
 
-bool MonitorTemp::setIdeal(double &val) {
+bool MonitorTemp::setSetpoint(double &val) {
   // constrain to realistic temperatures
   // TODO: this needs to be tested
   if ((sensor->getCelsius() && val > 10 && val < 38) ||
       (!sensor->getCelsius() && val > 50 && val < 100)) {
-    ideal = val;
+    setpoint = val;
     return true;
   }
   return false;
@@ -78,12 +78,12 @@ void MonitorTemp::poll() {
   this->getTemp();
 #ifdef VERBOSE_OUTPUT
   String s = "\nTemperature is " + (String)temperature + ((sensor->getCelsius() ? "C" : "F"));
-  s = s + "Ideal is " + (String)ideal + ((sensor->getCelsius() ? "C" : "F"));
+  s = s + "Ideal is " + (String)setpoint + ((sensor->getCelsius() ? "C" : "F"));
   Serial.println(s);
 #endif
 
   // Compute PID
-  double gap = abs(temperature-ideal);
+  double gap = abs(temperature - setpoint);
   if (gap <= gap_threshold) {
     switchPidMode(pid_tuning_mode_t::Conservative);
   }
@@ -92,10 +92,10 @@ void MonitorTemp::poll() {
   }
   pid->Compute();
 
-  if (temperature < ideal && (ideal - temperature) >= tolerance) {
+  if (temperature < setpoint && (setpoint - temperature) >= tolerance) {
     increase();
   }
-  else if (temperature > ideal && (temperature - ideal) >= tolerance) {
+  else if (temperature > setpoint && (temperature - setpoint) >= tolerance) {
     decrease();
   }
 #ifdef VERBOSE_OUTPUT

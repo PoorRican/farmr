@@ -19,7 +19,7 @@ result setIdealTemp(eventMask e, navNode& _nav, prompt &item) {
   Serial.print("Ideal temperature set to ");
   Serial.println(idealTemp);
 #endif
-  monitor_temp->setIdeal(idealTemp);
+  monitor_temp->setSetpoint(idealTemp);
   return proceed;
 }
 

@@ -13,7 +13,7 @@ result setIdealPh(eventMask e, navNode& _nav, prompt &item) {
   Serial.print("Ideal pH set to ");
   Serial.println(idealPh);
 #endif
-  ph_monitor->setIdeal(idealPh);
+  ph_monitor->setSetpoint(idealPh);
   return proceed;
 }
 

@@ -1,4 +1,29 @@
-# Build
+# Operation
+
+## Monitoring
+
+### Reservoir
+
+Reservoir functionality is meant to manage main water loop plumbing in both NFT and DWC type setups.
+There are 3 modes: `Off`, `Cycle`, and `Continuous`.
+
+- `Off` turns off any pumping and disables any timers.
+- `Cycle` enables a pump timer, where the pump will be run at a certain `interval` for a certain `duration`.
+This mode is meant for NFT style systems where "dosed" applications of water are preferred.
+- `Continuous` operation is simply leaving the pump energized without turning off.
+This would be setpoint for DWC loops where there is a high volume of water in the system.
+
+An ultrasonic sensor for determining reservoir (aka sump) height or volume is intended to supplement the system to act as
+a failsafe against dry-operation of the pump. Sensor data is also logged for high-level system analysis.
+
+An analog failsafe (ie: flow sensor) should be implemented in the event that the pump fails. This has not been
+implemented in software nor has an implementation designed.
+
+### pH
+
+One of the most important metrics 
+
+# Construction
 
 ## Ideas
 

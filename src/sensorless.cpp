@@ -41,8 +41,8 @@ void init_sCmd() {
   sCmd.addCommand("set_ph_interval", set_ph_monitor_polling_interval);
   sCmd.addCommand("get_ph_interval", get_ph_monitor_polling_interval);
 
-  sCmd.addCommand("set_ph.ideal", set_ph_monitor_ideal);
-  sCmd.addCommand("get_ph.ideal", get_ph_monitor_ideal);
+  sCmd.addCommand("set_ph.setpoint", set_ph_monitor_ideal);
+  sCmd.addCommand("get_ph.setpoint", get_ph_monitor_ideal);
 
   sCmd.addCommand("set_acid_pump_duration", set_acid_pump_duration);
   sCmd.addCommand("get_acid_pump_duration", get_acid_pump_duration);
@@ -208,8 +208,8 @@ void set_ph_monitor_ideal() {
   arg = sCmd.next();
   if (arg != nullptr) {
     double i = atof(arg);
-    ph_monitor->setIdeal(i);
-    Serial.print("ideal pH set to ");
+    ph_monitor->setSetpoint(i);
+    Serial.print("setpoint pH set to ");
     Serial.println(arg);
   }
   else {
@@ -217,8 +217,8 @@ void set_ph_monitor_ideal() {
   }
 }
 void get_ph_monitor_ideal() {
-  Serial.print("ideal pH is currently ");
-  Serial.println(ph_monitor->getIdeal());
+  Serial.print("setpoint pH is currently ");
+  Serial.println(ph_monitor->getSetpoint());
 }
 
 void set_acid_pump_duration() {

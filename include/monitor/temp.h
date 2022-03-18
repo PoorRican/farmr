@@ -20,7 +20,7 @@ public:
    * Constrains value to 1.0 and 14.0
    * @return
    */
-  bool setIdeal(double &) final;
+  bool setSetpoint(double &) final;
 
   double getTemp();
 
@@ -34,7 +34,7 @@ public:
   void poll() final;
 
 protected:
-  /// tolerance between ideal and actual values
+  /// tolerance between setpoint and actual values
   constexpr static double tolerance = 1.5;
 
   /// change PID tuning when within this gap

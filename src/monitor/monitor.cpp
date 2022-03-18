@@ -5,14 +5,14 @@
 #include "monitor/monitor.h"
 
 Monitor::Monitor(double &ideal, uint16_t &interval, uint16_t& duration)
-      : ideal(ideal), interval(interval), duration(duration) {}
+      : setpoint(ideal), interval(interval), duration(duration) {}
 
 void Monitor::addTasks(Scheduler &scheduler) {
   scheduler.addTask(*(pollingTimer));
 }
 
-double Monitor::getIdeal() const {
-  return ideal;
+double Monitor::getSetpoint() const {
+  return setpoint;
 }
 
 uint16_t Monitor::getInterval() const {
