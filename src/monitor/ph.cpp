@@ -15,14 +15,7 @@ MonitorPh::MonitorPh(double &ideal, uint16_t &interval, uint16_t &duration,
   setInterval(this->interval);
   setDuration(this->duration);
 
-  this->ph = -1;
-
-  // PID setup
-  this->pid_mode = Conservative;
-  this->pid = new PID((double*)(&this->ph), (double*)(&this->duration), (double*)(&this->setpoint),
-                      cons.Kp, cons.Ki, cons.Kp, DIRECT);
-
-
+  // Final PID setup
   this->window_size = 5;      // don't exceed pumping buffer for 5 seconds
   this->initPid();
 }
@@ -41,8 +34,8 @@ bool MonitorPh::setSetpoint(double &val) {
 
 double MonitorPh::getPh() {
   sensor->update();
-  this->ph = sensor->get();
-  return this->ph;
+  this->input = sensor->get();
+  return this->input;
 }
 
 bool MonitorPh::setInterval(uint16_t &val) {
@@ -73,12 +66,12 @@ void MonitorPh::poll() {
   this->getPh();
 
 #ifdef VERBOSE_OUTPUT
-  String s = "\npH is " + (String)ph + ". Ideal is " + (String)setpoint;
+  String s = "\npH is " + (String)input + ". Ideal is " + (String)setpoint;
   Serial.println(s);
 #endif
 
   // Compute PID
-  double gap = abs(ph - setpoint);
+  double gap = abs(input - setpoint);
   if (gap <= gap_threshold) {
     switchPidMode(pid_tuning_mode_t::Conservative);
   }
@@ -87,10 +80,10 @@ void MonitorPh::poll() {
   }
   pid->Compute();
 
-  if (ph < setpoint && (setpoint - ph) >= tolerance) {
+  if (input < setpoint && (setpoint - input) >= tolerance) {
     increase();
   }
-  else if (ph > setpoint && (ph - setpoint) >= tolerance) {
+  else if (input > setpoint && (input - setpoint) >= tolerance) {
     decrease();
   }
 #ifdef VERBOSE_OUTPUT

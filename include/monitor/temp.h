@@ -40,8 +40,6 @@ protected:
   /// change PID tuning when within this gap
   constexpr static double gap_threshold = 5.0;
 
-  double temperature;
-
   SensorTemp *sensor;
   WaterPump *pump;
   ThermoElectricElement *heatingElement;

@@ -41,8 +41,6 @@ protected:
   /// change PID tuning when within this gap
   constexpr static double gap_threshold = 0.9;
 
-  double ph{};
-
   SensorPH *sensor;
   ReagentPump *acidPump;
   ReagentPump *basePump;

@@ -17,13 +17,7 @@ MonitorTemp::MonitorTemp(double &ideal, uint16_t &interval, uint16_t &duration,
   setInterval(this->interval);
   setDuration(this->duration);
 
-  this->temperature = -1;
-
-  // PID setup
-  this->pid_mode = Conservative;
-  this->pid = new PID((double*)(&this->temperature), (double*)(&this->duration), (double*)(&this->setpoint),
-                      cons.Kp, cons.Ki, cons.Kd, DIRECT);
-
+  // Final PID setup
   this->window_size = 5;      // don't exceed pumping for 5 minutes
   this->initPid();
 }
@@ -45,8 +39,8 @@ bool MonitorTemp::setSetpoint(double &val) {
 
 double MonitorTemp::getTemp() {
   sensor->update();
-  this->temperature = sensor->get();
-  return this->temperature;
+  this->input = sensor->get();
+  return this->input;
 }
 
 bool MonitorTemp::setInterval(uint16_t &val) {
@@ -77,13 +71,13 @@ void MonitorTemp::poll() {
   // update temperature
   this->getTemp();
 #ifdef VERBOSE_OUTPUT
-  String s = "\nTemperature is " + (String)temperature + ((sensor->getCelsius() ? "C" : "F"));
+  String s = "\nTemperature is " + (String)input + ((sensor->getCelsius() ? "C" : "F"));
   s = s + "Ideal is " + (String)setpoint + ((sensor->getCelsius() ? "C" : "F"));
   Serial.println(s);
 #endif
 
   // Compute PID
-  double gap = abs(temperature - setpoint);
+  double gap = abs(input - setpoint);
   if (gap <= gap_threshold) {
     switchPidMode(pid_tuning_mode_t::Conservative);
   }
@@ -92,10 +86,10 @@ void MonitorTemp::poll() {
   }
   pid->Compute();
 
-  if (temperature < setpoint && (setpoint - temperature) >= tolerance) {
+  if (input < setpoint && (setpoint - input) >= tolerance) {
     increase();
   }
-  else if (temperature > setpoint && (temperature - setpoint) >= tolerance) {
+  else if (input > setpoint && (input - setpoint) >= tolerance) {
     decrease();
   }
 #ifdef VERBOSE_OUTPUT

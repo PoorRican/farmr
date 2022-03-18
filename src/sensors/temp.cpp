@@ -22,7 +22,7 @@ void SensorTemp::init() {
 void SensorTemp::update() {
 #ifndef SENSORLESS_OPERATION
   sensor->requestTemperatures();
-  temperature = (celsiusMode) ? sensor->getTempCByIndex(0) : sensor->getTempFByIndex(0);
+  input = (celsiusMode) ? sensor->getTempCByIndex(0) : sensor->getTempFByIndex(0);
 #endif
 }
 

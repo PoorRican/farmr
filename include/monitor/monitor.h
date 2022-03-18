@@ -99,9 +99,17 @@ public:
   tuning_param_t getConservativeTune() const;
 
 protected:
-  double setpoint;        // Equilibrium/setpoint value
-  uint16_t interval;      // Polling interval
-  uint16_t duration;      // TPC output
+  /// Equilibrium/setpoint value
+  double setpoint;
+
+  /// Sensor data used as input for PID-function
+  double input;
+
+  /// Polling interval
+  uint16_t interval;
+
+  /// TPC output
+  uint16_t duration;
 
   /// Defines a maximum time for PID output.
   /// Must be overwritten by derived classes

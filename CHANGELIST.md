@@ -8,3 +8,4 @@
 ## v0.22:
 - Sensor inputs are now `double` values instead of `float`
 - Renamed `Monitor::ideal` and associated methods to `setpoint`
+- Unify sensor data in `Monitor`

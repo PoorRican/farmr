@@ -5,7 +5,14 @@
 #include "monitor/monitor.h"
 
 Monitor::Monitor(double &ideal, uint16_t &interval, uint16_t& duration)
-      : setpoint(ideal), interval(interval), duration(duration) {}
+      : setpoint(ideal), interval(interval), duration(duration) {
+  this->input = -1;
+
+  // PID setup
+  this->pid_mode = Conservative;
+  this->pid = new PID((double*)(&this->input), (double*)(&this->duration), (double*)(&this->setpoint),
+                      cons.Kp, cons.Ki, cons.Kp, DIRECT);
+}
 
 void Monitor::addTasks(Scheduler &scheduler) {
   scheduler.addTask(*(pollingTimer));
