@@ -207,7 +207,7 @@ void set_ph_monitor_ideal() {
   char* arg;
   arg = sCmd.next();
   if (arg != nullptr) {
-    float i = atof(arg);
+    double i = atof(arg);
     ph_monitor->setIdeal(i);
     Serial.print("ideal pH set to ");
     Serial.println(arg);

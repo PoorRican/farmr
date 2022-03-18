@@ -4,7 +4,7 @@
 
 #include "sensors/ph.h"
 
-SensorPH::SensorPH(const int &pin) : Sensor(pin) {
+SensorPH::SensorPH(const uint8_t &pin) : Sensor(pin) {
   pH = -1;
 }
 
@@ -35,7 +35,7 @@ void SensorPH::update() {
 #endif
 }
 
-float SensorPH::get() const {
+double SensorPH::get() const {
   return pH;
 }
 
@@ -90,7 +90,7 @@ void SensorPH::setTen() {
   Serial2.print("T\r");
 }
 
-void SensorPH::adjustTemp(float temp) const {
+void SensorPH::adjustTemp(double temp) const {
   if (temp != 0 && !isCalibrating) {
     char tempArray[4];
     dtostrf(temp, 4, 2, tempArray);

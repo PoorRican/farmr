@@ -12,7 +12,7 @@
 
 class MonitorTemp : public Monitor {
 public:
-  MonitorTemp(float &, uint16_t &, uint16_t &, SensorTemp *, WaterPump *, ThermoElectricElement *, ThermoElectricElement *);
+  MonitorTemp(double &, uint16_t &, uint16_t &, SensorTemp *, WaterPump *, ThermoElectricElement *, ThermoElectricElement *);
 
   ProcessType getType() const final;
 
@@ -20,9 +20,9 @@ public:
    * Constrains value to 1.0 and 14.0
    * @return
    */
-  bool setIdeal(float &) final;
+  bool setIdeal(double &) final;
 
-  float getTemp();
+  double getTemp();
 
   /**
    * Constrains value to 15 to 120 minutes.
@@ -35,12 +35,12 @@ public:
 
 protected:
   /// tolerance between ideal and actual values
-  constexpr static float tolerance = 1.5;
+  constexpr static double tolerance = 1.5;
 
   /// change PID tuning when within this gap
   constexpr static double gap_threshold = 5.0;
 
-  float temperature;
+  double temperature;
 
   SensorTemp *sensor;
   WaterPump *pump;

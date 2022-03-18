@@ -9,7 +9,7 @@
 
 class SensorPH : private Sensor {
   public:
-    explicit SensorPH(const int &pin);
+    explicit SensorPH(const uint8_t &pin);
     SensorPH(const SensorPH&) = default;
     SensorPH& operator=(const SensorPH&) = default;
     ~SensorPH() override = default;
@@ -17,7 +17,7 @@ class SensorPH : private Sensor {
     SensName getType() const final;
     void init() final;
     void update() final;
-    float get() const;
+    double get() const;
 
     // Avoids skewed readings
     void setCalibrating(bool);
@@ -33,13 +33,13 @@ class SensorPH : private Sensor {
     static void setTen();
 
     // adjust pH readings
-    void adjustTemp(float) const;
+    void adjustTemp(double) const;
 
   #ifdef SENSORLESS_OPERATION
     /**
     * Debug flag used for manually setting `pH`
     */
-    void setPH(float val) {
+    void setPH(double val) {
       pH = val;
     }
   #endif
@@ -48,7 +48,7 @@ class SensorPH : private Sensor {
     bool isCalibrating = false;
 
     // post-smoothing value
-    float pH;
+    double pH;
 
     /**
     * Clear incoming buffer

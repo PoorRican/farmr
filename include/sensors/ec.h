@@ -9,7 +9,7 @@
 
 class SensorEC: public Sensor {
 public:
-  explicit SensorEC(const int &pin);
+  explicit SensorEC(const uint8_t &pin);
   SensorEC(const SensorEC&) = default;
   SensorEC& operator=(const SensorEC&) = default;
 
@@ -17,7 +17,7 @@ public:
 
   void init() final;
   void update() final;
-  uint16_t get() const;
+  double get() const;
   void calibrating(boolean c);
 
   // Circuit commands
@@ -31,11 +31,11 @@ public:
   static void setTenThousand();
   static void setFortyThousand();
   // Adjust EC sensor readings to given temp
-  void adjustTemp(float) const;
+  void adjustTemp(double) const;
 
 protected:
   boolean isCalibrating = false;
-  uint16_t ec;
+  double ec;
 
   static void clearECBuffer() ;
   static void ecToSerial();

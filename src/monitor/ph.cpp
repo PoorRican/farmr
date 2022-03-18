@@ -4,7 +4,7 @@
 
 #include "monitor/ph.h"
 
-MonitorPh::MonitorPh(float &ideal, uint16_t &interval, uint16_t &duration,
+MonitorPh::MonitorPh(double &ideal, uint16_t &interval, uint16_t &duration,
                      SensorPH *sensor, ReagentPump *acidPump, ReagentPump *basePump)
     : Monitor(ideal, interval, duration), sensor(sensor), acidPump(acidPump), basePump(basePump) {
 
@@ -31,7 +31,7 @@ Monitor::ProcessType MonitorPh::getType() const {
   return pH;
 }
 
-bool MonitorPh::setIdeal(float &val) {
+bool MonitorPh::setIdeal(double &val) {
   if (val >= 1.0 && val <= 14.0 ) {
     ideal = val;
     return true;
@@ -39,7 +39,7 @@ bool MonitorPh::setIdeal(float &val) {
   return false;
 }
 
-float MonitorPh::getPh() {
+double MonitorPh::getPh() {
   sensor->update();
   this->ph = sensor->get();
   return this->ph;

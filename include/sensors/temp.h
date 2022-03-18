@@ -19,7 +19,7 @@ public:
 
   void init() final;
   void update() final;
-  float get() const;
+  double get() const;
   void setCelsius(boolean);
   bool getCelsius() const;
 
@@ -27,7 +27,7 @@ public:
   /**
    * Debug flag used for manually setting `pH`
    */
-  void setTemp(float val) {
+  void setTemp(double val) {
     temperature = val;
   }
 #endif
@@ -36,7 +36,7 @@ protected:
   DallasTemperature *sensor;
 
   boolean celsiusMode = true;
-  float temperature;
+  double temperature;
 };
 
 #endif //FARMR_SENSORTEMP_H

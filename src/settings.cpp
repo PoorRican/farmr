@@ -29,7 +29,7 @@ bool updateEEPROM = false;
 
 // pH Monitor Variables
 bool phMonitoring = PH_MONITOR_ENABLED;
-float idealPh = IDEAL_PH;
+double idealPh = IDEAL_PH;
 uint16_t phPumpDuration = PH_POLL_DURATION;
 uint16_t phPollInterval = PH_POLL_INTERVAL;
 
@@ -43,7 +43,7 @@ uint16_t reservoirMin = RESERVOIR_CALIBRATION_MIN;
 
 // Temperature Defaults
 bool tempMonitoring = TEMP_MONITORING_ENABLED;
-float idealTemp = IDEAL_TEMP;
+double idealTemp = IDEAL_TEMP;
 uint16_t tempInterval = TEMP_INTERVAL;
 uint16_t tempDuration = TEMP_DURATION;
 
@@ -70,11 +70,11 @@ Settings::Settings() {
 void Settings::getAddresses() {
   // NOTE: this order MUST remain constant
 
-  version.address = EEPROM.getAddress(sizeof(float));
+  version.address = EEPROM.getAddress(sizeof(double));
 
   // pH Relay/Monitor
   ph_mon_enabled.address = EEPROM.getAddress(sizeof(int));
-  ideal_ph.address = EEPROM.getAddress(sizeof(float));
+  ideal_ph.address = EEPROM.getAddress(sizeof(double));
   ph_pump_duration.address = EEPROM.getAddress(sizeof(unsigned int));
   ph_polling_interval.address = EEPROM.getAddress(sizeof(unsigned int));
 
@@ -88,7 +88,7 @@ void Settings::getAddresses() {
 
   // Temperature Monitor
   temp_mon_enabled.address = EEPROM.getAddress(sizeof(int));
-  ideal_temp.address = EEPROM.getAddress(sizeof(float));
+  ideal_temp.address = EEPROM.getAddress(sizeof(double));
   temp_duration.address = EEPROM.getAddress(sizeof(unsigned int));
   temp_interval.address = EEPROM.getAddress(sizeof(unsigned int));
 }

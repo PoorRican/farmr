@@ -22,7 +22,7 @@ class Sensor {
        NH3
      };
     // Constructors
-    explicit Sensor(const int &pin);
+    explicit Sensor(const uint8_t &pin);
     Sensor(const Sensor&) = default;
     Sensor& operator=(const Sensor&) = default;
 
@@ -34,7 +34,7 @@ class Sensor {
     virtual void update() = 0;
 
   protected:
-    int pin;
+    uint8_t pin;
   };
 
 #endif //FARMR_SENSOR_H

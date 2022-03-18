@@ -4,7 +4,7 @@
 
 #include "sensors/ec.h"
 
-SensorEC::SensorEC(const int &pin) : Sensor(pin), ec(0) {}
+SensorEC::SensorEC(const uint8_t &pin) : Sensor(pin), ec(0) {}
 
 Sensor::SensName SensorEC::getType() const {
   return Sensor::Ec;
@@ -30,7 +30,7 @@ void SensorEC::update() {
 #endif
 }
 
-uint16_t SensorEC::get() const {
+double SensorEC::get() const {
   return ec;
 }
 
@@ -86,7 +86,7 @@ void SensorEC::setTenThousand() {
 #endif
 }
 
-void SensorEC::adjustTemp(float temp) const {
+void SensorEC::adjustTemp(double temp) const {
   if (temp != 0 && !isCalibrating) {
     char tempArray[4];
     dtostrf(temp, 4, 2, tempArray);

@@ -5,7 +5,7 @@
 #include "sensors/sensor.h"
 
 // Constructors
-Sensor::Sensor(const int &pin) : pin(pin) {}
+Sensor::Sensor(const uint8_t &pin) : pin(pin) {}
 
 // Destructor
 Sensor::~Sensor() = default;

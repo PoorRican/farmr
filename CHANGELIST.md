@@ -6,3 +6,4 @@
 - Implemented continuous reservoir pump mode
 
 ## v0.22:
+- Sensor inputs are now `double` values instead of `float`

@@ -4,14 +4,14 @@
 
 #include "monitor/monitor.h"
 
-Monitor::Monitor(float &ideal, uint16_t &interval, uint16_t& duration)
+Monitor::Monitor(double &ideal, uint16_t &interval, uint16_t& duration)
       : ideal(ideal), interval(interval), duration(duration) {}
 
 void Monitor::addTasks(Scheduler &scheduler) {
   scheduler.addTask(*(pollingTimer));
 }
 
-float Monitor::getIdeal() const {
+double Monitor::getIdeal() const {
   return ideal;
 }
 

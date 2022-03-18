@@ -43,12 +43,12 @@ public:
     pH,
     Temperature
   };
-  explicit Monitor(float &ideal, uint16_t &interval, uint16_t &duration);
+  explicit Monitor(double &ideal, uint16_t &interval, uint16_t &duration);
 
   virtual ProcessType getType() const = 0;
 
-  virtual bool setIdeal(float&) = 0;
-  float getIdeal() const;
+  virtual bool setIdeal(double&) = 0;
+  double getIdeal() const;
 
   virtual bool setInterval(uint16_t&) = 0;
   uint16_t getInterval() const;
@@ -99,7 +99,7 @@ public:
   tuning_param_t getConservativeTune() const;
 
 protected:
-  float ideal;            // Equilibrium/setpoint value
+  double ideal;           // Equilibrium/setpoint value
   uint16_t interval;      // Polling interval
   uint16_t duration;      // TPC output
 

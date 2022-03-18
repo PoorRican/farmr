@@ -26,7 +26,7 @@ void SensorTemp::update() {
 #endif
 }
 
-float SensorTemp::get() const {
+double SensorTemp::get() const {
   return temperature;
 }
 

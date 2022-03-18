@@ -4,7 +4,7 @@
 
 #include "monitor/temp.h"
 
-MonitorTemp::MonitorTemp(float &ideal, uint16_t &interval, uint16_t &duration,
+MonitorTemp::MonitorTemp(double &ideal, uint16_t &interval, uint16_t &duration,
                          SensorTemp *sensor, WaterPump *pump,
                          ThermoElectricElement *heating, ThermoElectricElement *cooling)
     : Monitor(ideal, interval, duration), sensor(sensor), pump(pump),
@@ -32,7 +32,7 @@ Monitor::ProcessType MonitorTemp::getType() const {
   return Temperature;
 }
 
-bool MonitorTemp::setIdeal(float &val) {
+bool MonitorTemp::setIdeal(double &val) {
   // constrain to realistic temperatures
   // TODO: this needs to be tested
   if ((sensor->getCelsius() && val > 10 && val < 38) ||
@@ -43,7 +43,7 @@ bool MonitorTemp::setIdeal(float &val) {
   return false;
 }
 
-float MonitorTemp::getTemp() {
+double MonitorTemp::getTemp() {
   sensor->update();
   this->temperature = sensor->get();
   return this->temperature;

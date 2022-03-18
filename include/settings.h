@@ -60,7 +60,7 @@ extern double swVersion;
 
 // pH Monitor Variables
 extern bool phMonitoring;
-extern float idealPh;
+extern double idealPh;
 extern uint16_t phPollInterval;
 extern uint16_t phPumpDuration;
 
@@ -74,7 +74,7 @@ extern uint16_t reservoirMin;
 
 // Temperature Variables
 extern bool tempMonitoring;
-extern float idealTemp;
+extern double idealTemp;
 extern uint16_t tempInterval;
 extern uint16_t tempDuration;
 
@@ -120,7 +120,7 @@ private:
   mem_t<double> version;
 
   mem_t<bool> ph_mon_enabled;
-  mem_t<float> ideal_ph;
+  mem_t<double> ideal_ph;
   mem_t<uint16_t> ph_pump_duration;
   mem_t<uint16_t> ph_polling_interval;
 
@@ -132,7 +132,7 @@ private:
   mem_t<uint16_t> reservoir_threshold;
 
   mem_t<bool> temp_mon_enabled;
-  mem_t<float> ideal_temp;
+  mem_t<double> ideal_temp;
   mem_t<uint16_t> temp_duration;
   mem_t<uint16_t> temp_interval;
 };
