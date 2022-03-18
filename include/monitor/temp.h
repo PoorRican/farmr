@@ -34,8 +34,11 @@ public:
   void poll() final;
 
 protected:
-  const float tolerance = 2.5;      // tolerance between ideal and actual values
-  uint16_t duration;
+  /// tolerance between ideal and actual values
+  constexpr static float tolerance = 1.5;
+
+  /// change PID tuning when within this gap
+  constexpr static double gap_threshold = 5.0;
 
   float temperature;
 

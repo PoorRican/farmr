@@ -82,6 +82,14 @@ void MonitorTemp::poll() {
   Serial.println(s);
 #endif
 
+  // Compute PID
+  double gap = abs(temperature-ideal);
+  if (gap <= gap_threshold) {
+    switchPidMode(pid_tuning_mode_t::Conservative);
+  }
+  else {
+    switchPidMode(pid_tuning_mode_t::Aggressive);
+  }
   pid->Compute();
 
   if (temperature < ideal && (ideal - temperature) >= tolerance) {

@@ -34,9 +34,12 @@ public:
   void poll() final;
 
 protected:
-  // tolerance between ideal and actual values
-  // to prevent buffer solution from continually being used
-  const float tolerance = 0.1;
+  /// tolerance between ideal and actual values
+  /// to prevent buffer solution from continually being used
+  constexpr static float tolerance = 0.1;
+
+  /// change PID tuning when within this gap
+  constexpr static double gap_threshold = 0.9;
 
   float ph{};
 

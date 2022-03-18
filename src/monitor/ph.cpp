@@ -71,11 +71,20 @@ bool MonitorPh::setDuration(uint16_t &val) {
 void MonitorPh::poll() {
   // update ph
   this->getPh();
+
 #ifdef VERBOSE_OUTPUT
   String s = "\npH is " + (String)ph + ". Ideal is " + (String)ideal;
   Serial.println(s);
 #endif
 
+  // Compute PID
+  double gap = abs(ph-ideal);
+  if (gap <= gap_threshold) {
+    switchPidMode(pid_tuning_mode_t::Conservative);
+  }
+  else {
+    switchPidMode(pid_tuning_mode_t::Aggressive);
+  }
   pid->Compute();
 
   if (ph < ideal && (ideal - ph) >= tolerance) {

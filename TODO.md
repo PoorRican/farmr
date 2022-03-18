@@ -1,8 +1,5 @@
 # TODO:
 
-- dynamic tuning in `Monitor::poll`
-
-
 ## Functionality
 
 ### High Pri
