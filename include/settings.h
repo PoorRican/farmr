@@ -5,7 +5,7 @@
 #ifndef FARMR_SETTINGS_H
 #define FARMR_SETTINGS_H
 
-#define VERSION 0.2
+#define VERSION 0.21
 
 // pH Monitor Defaults
 #define IDEAL_PH 7.5
