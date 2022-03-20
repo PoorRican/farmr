@@ -7,7 +7,12 @@
 
 #include "sensor.h"
 
-class SensorPH : private Sensor {
+/**
+ * Interface for pH sensor.
+ *
+ * Communicates over `Serial2`.
+ */
+class SensorPH : public Sensor {
   public:
     explicit SensorPH(const uint8_t &pin);
     SensorPH(const SensorPH&) = default;
@@ -53,6 +58,7 @@ class SensorPH : private Sensor {
     * Clear incoming buffer
     */
     static void clearBuffer();
+
     /**
      * DEPRECATED
      * Send raw sensor reading to `Serial`

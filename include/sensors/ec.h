@@ -43,6 +43,11 @@ protected:
   double ec;
 
   static void clearECBuffer() ;
+
+  /**
+   * DEPRECATED
+   * Send raw sensor reading to `Serial`
+   */
   static void ecToSerial();
 };
 

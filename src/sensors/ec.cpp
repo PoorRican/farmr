@@ -2,6 +2,7 @@
 // Created by Josue Figueroa on 12/13/20.
 //
 
+#include "logger.h"
 #include "sensors/ec.h"
 
 SensorEC::SensorEC(const uint8_t &pin) : Sensor(pin), ec(0) {}
@@ -74,15 +75,16 @@ void SensorEC::setDry() {
 
 void SensorEC::setFortyThousand() {
   Serial3.print("Z40\r");
+
 #ifdef VERBOSE_OUTPUT
-  Serial.println("Calibrating EC Sensor to 10,000 uS");
+  logger.verbose("Calibrating EC Sensor to 10,000 uS");
 #endif
 }
 
 void SensorEC::setTenThousand() {
   Serial3.print("Z10\r");
 #ifdef VERBOSE_OUTPUT
-  Serial.println("Calibrating EC Sensor to 40,000 uS");
+  logger.verbose("Calibrating EC Sensor to 40,000 uS");
 #endif
 }
 

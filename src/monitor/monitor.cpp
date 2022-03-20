@@ -2,6 +2,7 @@
 // Created by Josue Figueroa on 12/13/20.
 //
 
+#include "logger.h"
 #include "monitor/monitor.h"
 
 Monitor::Monitor(double &ideal, uint16_t &interval, uint16_t& duration)
@@ -55,8 +56,9 @@ void Monitor::startPolling() {
     }
   }
   s += " monitor polling...";
-  Serial.print(s);
+  logger.verbose((char*)&s);
 #endif
+
   pollingTimer->enableDelayed();
 }
 
@@ -89,7 +91,7 @@ void Monitor::stopPolling() {
     }
   }
   s += " monitor polling...";
-  Serial.print(s);
+  logger.verbose((char*)&s);
 #endif
   pollingTimer->disable();
 }
@@ -117,7 +119,7 @@ void Monitor::switchPidMode(pid_tuning_mode_t tune) {
       break;
     }
     default: {
-      // TODO: log error. How did we get here?
+      logger.error("Incorrect tune set for monitor PID. How did we get here?...");
       break;
     }
   }
@@ -128,6 +130,10 @@ pid_tuning_mode_t Monitor::getPidMode() const {
 }
 
 void Monitor::setAggressiveTune(double &Kp, double &Ki, double &Kd) {
+#ifdef BASIC_TESTING
+  logger.debug("Monitor set to aggressive tune.");
+#endif
+
   aggr = {Kp, Ki, Kd};
 }
 
@@ -136,6 +142,10 @@ tuning_param_t Monitor::getAggressiveTune() const {
 }
 
 void Monitor::setConservativeTune(double &Kp, double &Ki, double &Kd) {
+#ifdef BASIC_TESTING
+  logger.debug("Monitor set to conservative tune.");
+#endif
+
   cons = {Kp, Ki, Kd};
 }
 

@@ -2,9 +2,12 @@
 // Created by Josue Figueroa on 12/28/20.
 //
 
+#include "logger.h"
 #include "startup.h"
 
 void startup_msg() {
+  logger.warning(":::Startup:::");
+
   Serial.println("*******************");
   Serial.println("*      FARMR      *");
   Serial.println("*******************\n");
@@ -51,7 +54,7 @@ void updatePrompt() {
   if (settings.checkVersion()) {
 
 #ifdef VERBOSE_OUTPUT
-    Serial.println("New Version Detected!!\n");
+    logger.verbose("New Version Detected!!");
 #endif
 
     lcd.setCursor(0, 0);
@@ -81,7 +84,7 @@ void updatePrompt() {
   }
 #ifdef VERBOSE_OUTPUT
   else {
-    Serial.println("No new version detected\n");
+    logger.verbose("No new version detected");
   }
 #endif
 }

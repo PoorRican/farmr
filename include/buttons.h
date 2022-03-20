@@ -28,6 +28,10 @@ void bUp();
 void bSel();
 void bEsc();
 
+/**
+ * Single-use func that cancels automatic reset to default settings during startup
+ * when a new version is detected.
+ */
 void cancelUpdate();
 
 #endif //FARMR_BUTTONS_H

@@ -2,6 +2,7 @@
 // Created by Josue Figueroa on 12/13/20.
 //
 
+#include "logger.h"
 #include "sensors/ph.h"
 
 SensorPH::SensorPH(const uint8_t &pin) : Sensor(pin) {
@@ -71,22 +72,25 @@ void SensorPH::setStandby() {
 
 void SensorPH::setFour() {
 #ifdef VERBOSE_OUTPUT
-  Serial.println("Calibrated pH for 4.0");
+  logger.verbose("Calibrated pH for 4.0");
 #endif
+
   Serial2.print("F\r");
 }
 
 void SensorPH::setSeven() {
 #ifdef VERBOSE_OUTPUT
-  Serial.println("Calibrated pH for 7.0");
+  logger.verbose("Calibrated pH for 7.0");
 #endif
+
   Serial2.print("T\r");
 }
 
 void SensorPH::setTen() {
 #ifdef VERBOSE_OUTPUT
-  Serial.println("Calibrated pH for 10.0");
+  logger.verbose("Calibrated pH for 10.0");
 #endif
+
   Serial2.print("T\r");
 }
 

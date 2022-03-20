@@ -4,6 +4,7 @@
 
 #define _TASK_LTS_POINTER       // Compile with support for local task storage pointer
 
+#include "logger.h"
 #include "reservoir.h"
 
 Reservoir::Reservoir(const uint16_t &interval, const uint8_t &threshold, WaterPump *waterPump, SensorDistance *sensorLevel)
@@ -73,8 +74,9 @@ void Reservoir::runCycleNow() {
 
 void Reservoir::enableContinuous() {
 #ifdef VERBOSE_OUTPUT
-  Serial.print("Reservoir pump set to continuous operation.");
+  logger.verbose("Reservoir pump set to continuous operation.");
 #endif
+
   cycleTimer->disable();
   pump->energize();
   mode = PumpMode::Continuous;
@@ -82,16 +84,18 @@ void Reservoir::enableContinuous() {
 
 void Reservoir::enableCycle() {
 #ifdef VERBOSE_OUTPUT
-  Serial.print("Reservoir cycle enabled.");
+  logger.verbose("Reservoir cycle enabled.");
 #endif
+
   cycleTimer->enableDelayed();
   mode = PumpMode::Cycle;
 }
 
 void Reservoir::disableCycle() {
 #ifdef VERBOSE_OUTPUT
-  Serial.print("Reservoir cycle disabled. Pump turned off.");
+  logger.verbose("Reservoir cycle disabled. Pump turned off.");
 #endif
+
   cycleTimer->disable();
   pump->deenergize();
   mode = PumpMode::Off;
@@ -108,6 +112,6 @@ void cycleWater() {
   r.runCycleNow();
 
 #ifdef VERBOSE_OUTPUT
-  Serial.println("Began reservoir water cycle");
+  logger.verbose("Began reservoir water cycle");
 #endif
 }

@@ -2,6 +2,7 @@
 // Created by Josue Figueroa on 12/13/20.
 //
 
+#include "logger.h"
 #include "monitor/ph.h"
 
 MonitorPh::MonitorPh(double &ideal, uint16_t &interval, uint16_t &duration,
@@ -27,8 +28,20 @@ Monitor::ProcessType MonitorPh::getType() const {
 bool MonitorPh::setSetpoint(double &val) {
   if (val >= 1.0 && val <= 14.0 ) {
     setpoint = val;
+
+#ifdef VERBOSE_OUTPUT
+    char* s = nullptr;
+    sprintf(s, "pH Monitor setpoint set to %f", val);
+    logger.error(s);
+#endif
+
     return true;
   }
+
+  char* s = nullptr;
+  sprintf(s, "Incorrect setpoint (%f) set for pH Monitor", val);
+  logger.error(s);
+
   return false;
 }
 
@@ -40,14 +53,28 @@ double MonitorPh::getPh() {
 
 bool MonitorPh::setInterval(uint16_t &val) {
   if (val >= 1 && val <= 120 ) {
+
+#ifdef VERBOSE_OUTPUT
+    char* s = nullptr;
+    sprintf(s, "pH Monitor polling interval set to %d", val);
+    logger.verbose(s);
+#endif
+
     interval = val;
+
 #ifdef BASIC_TESTING
     pollingTimer->setInterval(interval * TASK_SECOND);
 #else
     pollingTimer->setInterval(interval * TASK_MINUTE);
 #endif
+
     return true;
   }
+
+  char* s = nullptr;
+  sprintf(s, "Incorrect polling interval (%d) set for pH monitor", val);
+  logger.error(s);
+
   return false;
 }
 
@@ -55,6 +82,12 @@ bool MonitorPh::setDuration(uint16_t &val) {
   bool valid;
   valid = acidPump->setDuration(val);
   valid = basePump->setDuration(val) && valid;
+
+#ifdef VERBOSE_OUTPUT
+  char* s = nullptr;
+  sprintf(s, "pH monitor duration set to %d", val);
+  logger.verbose(s);
+#endif
 
   duration = val;
 
@@ -67,7 +100,7 @@ void MonitorPh::poll() {
 
 #ifdef VERBOSE_OUTPUT
   String s = "\npH is " + (String)input + ". Ideal is " + (String)setpoint;
-  Serial.println(s);
+  logger.verbose((char*)&s);
 #endif
 
   // Compute PID
@@ -88,23 +121,27 @@ void MonitorPh::poll() {
   }
 #ifdef VERBOSE_OUTPUT
   else {
-    Serial.println("pH is within tolerance...");
+    logger.verbose("pH is within tolerance...");
   }
 #endif
 }
 
 void MonitorPh::increase() {
-#ifdef VERBOSE_OUTPUT
-  Serial.println("Attempting to increase pH");
+
+#ifdef BASIC_TESTING
+  logger.debug("Attempting to increase pH");
 #endif
+
   basePump->restart();
   basePump->startRelayOnTimer();
 }
 
 void MonitorPh::decrease() {
-#ifdef VERBOSE_OUTPUT
-  Serial.println("Attempting to decrease pH");
+
+#ifdef BASIC_TESTING
+  logger.debug("Attempting to decrease pH");
 #endif
+
   acidPump->restart();
   acidPump->startRelayOnTimer();
 }

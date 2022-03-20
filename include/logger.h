@@ -119,5 +119,6 @@ protected:
   void log(data_t &entry);
 };
 
+extern Logger logger;
 
 #endif //FARMR_LOGGER_H

@@ -2,6 +2,7 @@
 // Created by Josue Figueroa on 12/27/20.
 //
 
+#include "logger.h"
 #include "buttons.h"
 
 AnalogButtons analogButtons(A0, INPUT, 2, 25);
@@ -21,28 +22,36 @@ void init_buttons() {
 }
 
 void bSel(){
-  Serial.println("Sel pressed");
+#ifdef BASIC_TESTING
+  logger.debug("Sel pressed");
+#endif
   nav.doNav(enterCmd);
 }
 
 void bDwn(){
-  Serial.println("Dwn pressed");
+#ifdef BASIC_TESTING
+  logger.debug("Dwn pressed");
+#endif
   nav.doNav(downCmd);
 }
 
 void bUp(){
-  Serial.println("Up pressed");
+#ifdef BASIC_TESTING
+  logger.debug("Up pressed");
+#endif
   nav.doNav(upCmd);
 }
 
 void bEsc(){
-  Serial.println("Esc pressed");
+#ifdef BASIC_TESTING
+  logger.debug("Esc pressed");
+#endif
   nav.doNav(escCmd);
 }
 
 void cancelUpdate() {
 #ifdef VERBOSE_OUTPUT
-  Serial.println("Sel button pressed...");
+  logger.debug("Sel button pressed...");
 #endif
   updateEEPROM = true;
 }

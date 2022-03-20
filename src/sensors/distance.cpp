@@ -2,6 +2,7 @@
 // Created by Josue Figueroa on 12/29/20.
 //
 
+#include "logger.h"
 #include "sensors/distance.h"
 
 SensorDistance::SensorDistance(const uint8_t &pin) : Sensor(pin) {}
@@ -51,9 +52,21 @@ uint8_t SensorDistance::getThreshold() const {
 
 bool SensorDistance::setThreshold(const uint8_t& val) {
     if (val >= 1 && val <= 100) {
+
+#ifdef VERBOSE_OUTPUT
+      char* s = nullptr;
+      sprintf(s, "Distance sensor threshold set to %d", val);
+      logger.verbose(s);
+#endif
+
       threshold = val;
       return true;
     }
+
+  char* s = nullptr;
+  sprintf(s, "Incorrect threshold (%d) set for distance sensor", val);
+  logger.error(s);
+
   return false;
 }
 

@@ -2,6 +2,7 @@
 // Created by Josue Figueroa on 12/19/20.
 //
 
+#include "logger.h"
 #include "settings.h"
 #include "pins.h"
 
@@ -155,9 +156,10 @@ void Settings::init_objects() {
 }
 
 void Settings::writeDefaults() const {
-#ifdef BASIC_TESTING
-  Serial.println("Restoring default values...");
+#ifdef VERBOSE_OUTPUT
+  logger.verbose("Restoring default values...");
 #endif
+
   updateVersion();
 
   // pH Relay/Monitor
@@ -184,19 +186,25 @@ void Settings::writeDefaults() const {
 
 bool Settings::checkVersion() const {
   double storedVersion = EEPROM.readDouble(version.address);
+
 #ifdef BASIC_TESTING
-  Serial.print("SW Version: ");
-  Serial.println(swVersion);
-  Serial.print("EEPROM Version: ");
-  Serial.println(storedVersion);
+  char *s = nullptr;
+  sprintf(s, "SW Version: %f", swVersion);
+  logger.debug(s);
+
+  s = nullptr;
+  sprintf(s, "EEPROM Version: %f", storedVersion);
+  logger.debug(s);
 #endif
+
   return swVersion != storedVersion;
 }
 
 void Settings::updateVersion() const {
 #ifdef VERBOSE_OUTPUT
-  Serial.println("Updated version value on EEPROM");
+  logger.verbose("Updated version value on EEPROM");
 #endif
+
   EEPROM.writeDouble(version.address, swVersion);
 }
 
