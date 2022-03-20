@@ -5,7 +5,7 @@
 #ifndef FARMR_REAGENTPUMP_H
 #define FARMR_REAGENTPUMP_H
 
-#include "relay.h"
+#include "Relay.h"
 #include <TaskSchedulerDeclarations.h>
 
 /**

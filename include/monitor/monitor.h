@@ -113,9 +113,9 @@ protected:
 
   /// Defines a maximum time for PID output.
   /// Must be overwritten by derived classes
-  uint16_t window_size;
+  uint16_t window_size{};
 
-  Task *pollingTimer;
+  Task *pollingTimer{};
 
   /// current PID tuning
   pid_tuning_mode_t pid_mode;

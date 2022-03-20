@@ -2,7 +2,7 @@
 // Created by Josue Figueroa on 12/12/20.
 //
 
-#include "appliances/relay.h"
+#include "appliances/Relay.h"
 
 Relay::Relay(const uint8_t &pin, uint16_t &duration, bool inverse)
     : pin(pin), duration(duration), inverse(inverse) {

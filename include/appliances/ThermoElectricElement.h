@@ -5,7 +5,7 @@
 #ifndef FARMR_THERMOELECTRICELEMENT_H
 #define FARMR_THERMOELECTRICELEMENT_H
 
-#include "relay.h"
+#include "Relay.h"
 
 /**
  * Represents a heating element or peltier cooler connected to a relay
