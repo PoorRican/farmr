@@ -117,7 +117,7 @@ void Settings::readValues() {
 
 void Settings::updateValues() const {
   EEPROM.updateInt(ph_mon_enabled.address, (int)phMonitoring);
-  EEPROM.updateFloat(ideal_ph.address, idealPh);
+  EEPROM.updateDouble(ideal_ph.address, idealPh);
   EEPROM.updateInt(ph_pump_duration.address, phPumpDuration);
   EEPROM.updateInt(ph_polling_interval.address, phPollInterval);
 
@@ -129,7 +129,7 @@ void Settings::updateValues() const {
   EEPROM.updateInt(reservoir_calibration_min.address, reservoirMin);
 
   EEPROM.updateInt(temp_mon_enabled.address, (int)tempMonitoring);
-  EEPROM.updateFloat(ideal_temp.address, idealTemp);
+  EEPROM.updateDouble(ideal_temp.address, idealTemp);
   EEPROM.updateInt(temp_duration.address, tempDuration);
   EEPROM.updateInt(temp_interval.address, tempInterval);
 }
