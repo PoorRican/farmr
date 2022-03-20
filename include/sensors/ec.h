@@ -7,6 +7,11 @@
 
 #include "sensor.h"
 
+/**
+ * Interface for ec sensor.
+ *
+ * Communicates over `Serial3`.
+ */
 class SensorEC: public Sensor {
 public:
   explicit SensorEC(const uint8_t &pin);

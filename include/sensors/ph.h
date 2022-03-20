@@ -47,7 +47,6 @@ class SensorPH : private Sensor {
   protected:
     bool isCalibrating = false;
 
-    // post-smoothing value
     double pH;
 
     /**
@@ -55,8 +54,9 @@ class SensorPH : private Sensor {
     */
     static void clearBuffer();
     /**
-    * Send raw sensor reading to `Serial`
-    */
+     * DEPRECATED
+     * Send raw sensor reading to `Serial`
+     */
     static void phToSerial();
   };
 
